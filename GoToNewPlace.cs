@@ -25,7 +25,7 @@ public class GoToNewPlace : MonoBehaviour
     {
         if (objName == "Player")
         {
-            if (!needsClick || (needsClick && Input.GetAxis("Fire3") > 0.2))
+            if (!needsClick || (needsClick && Input.GetAxis("Fire1") > 0.2))
             {
                 FindObjectOfType<PlayerController>().nextUuid = uuid;
                 SceneManager.LoadScene(newPlaceName);
