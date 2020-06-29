@@ -28,6 +28,7 @@ public class DamagePlayer : MonoBehaviour
         _stats = GetComponent<CharacterStats>();
     }
 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Si el enemigo colisiona con el Player

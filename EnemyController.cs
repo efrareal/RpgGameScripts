@@ -20,12 +20,18 @@ public class EnemyController : MonoBehaviour
 
     public Vector2 directionToMove;
 
+    private Transform thePlayer;
+
     //Animacion
     private Animator _animator;
+
+    private int xPos;
+    private int yPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        thePlayer = GameObject.FindWithTag("Player").GetComponent<Transform>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         //Para que arranque moviendose
@@ -34,6 +40,28 @@ public class EnemyController : MonoBehaviour
         
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+            
+            Debug.Log("Player entró en la zona de vision");
+            isMoving = true;
+            this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, 1.15f*speed * Time.deltaTime);
+            _animator.SetFloat("Horizontal", directionToMove.x);
+            _animator.SetFloat("Vertical", directionToMove.y);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+
+            Debug.Log("Player salio de la zona de vision");
+            isMoving = false;
+
+        }
+    }
     // Update is called once per frame
     void Update()
     {
