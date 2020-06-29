@@ -31,6 +31,8 @@ public class WeaponManager : MonoBehaviour
         weapons[activeWeapon].SetActive(false);
         weapons[newWeapon].SetActive(true);
         activeWeapon = newWeapon;
+
+        FindObjectOfType<UIManager>().ChangeAvatarImage(weapons[activeWeapon].GetComponent<SpriteRenderer>().sprite);
     }
     public void DeactivateWeapon(bool condition)
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
+using UnityEditor;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,8 +15,14 @@ public class UIManager : MonoBehaviour
 
     public HealthManager playerHealthManager;
     public CharacterStats playerStats;
-    
+    private WeaponManager weaponManager;
 
+    private void Start()
+    {
+        weaponManager = FindObjectOfType<WeaponManager>();
+        inventoryPanel.SetActive(false);
+        menuPanel.SetActive(false);
+    }
 
     // Update is called once per frame
     void Update()
@@ -41,31 +48,32 @@ public class UIManager : MonoBehaviour
         playerExpBar.maxValue = playerStats.expToLevelUp[playerStats.level];
         playerExpBar.minValue = playerStats.expToLevelUp[playerStats.level -1];
         playerExpBar.value = playerStats.exp;
-        
 
+        
     }
 
-    public GameObject inventoryPanel;
+    public GameObject inventoryPanel, menuPanel;
     public Button inventoryButton;
     public void ToggleInventory()
     {
         inventoryPanel.SetActive(!inventoryPanel.activeInHierarchy);
+        menuPanel.SetActive(!menuPanel.activeInHierarchy);
         if (inventoryPanel.activeInHierarchy)
         {
-            foreach(Transform t in inventoryPanel.transform)
+            Time.timeScale = 0;
+            foreach (Transform t in inventoryPanel.transform)
             {
                 Destroy(t.gameObject);
             }
-            Debug.Log("Objetos destruidos");
             FillInventory();
-            Debug.Log("Inventario cargado!");
         }
+        else { Time.timeScale = 1; }
     }
 
     public void FillInventory()
     {
-        WeaponManager weaponManager = FindObjectOfType<WeaponManager>();
-        List<GameObject> weapons = GameObject.FindObjectOfType<WeaponManager>().GetAllWeapons();
+        
+        List<GameObject> weapons =weaponManager.GetAllWeapons();
         int i = 0;
         foreach(GameObject w in weapons)
         {
@@ -76,5 +84,39 @@ public class UIManager : MonoBehaviour
             tempB.image.sprite = w.GetComponent<SpriteRenderer>().sprite;
             i++;
         }
+    }
+
+    public void ShowOnly(int type)
+    {
+        foreach(Transform t in inventoryPanel.transform)
+        {
+            t.gameObject.SetActive((int)t.GetComponent<InventoryButton>().type == type);
+
+        }
+    }
+
+    public void ShowAll()
+    {
+        foreach(Transform t in inventoryPanel.transform)
+        {
+            t.gameObject.SetActive(true);
+        }
+    }
+
+    public void ChangeAvatarImage(Sprite sprite)
+    {
+        playerAvatar.sprite = sprite;
+    }
+    public void HealthChanged()
+    {
+
+    }
+    public void LevelChanged()
+    {
+
+    }
+    public void ExpChanged()
+    {
+
     }
 }
