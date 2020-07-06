@@ -45,9 +45,10 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             
-            Debug.Log("Player entró en la zona de vision");
+            //Debug.Log("Player entró en la zona de vision");
             isMoving = true;
             this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, 1.15f*speed * Time.deltaTime);
+            directionToMove = thePlayer.position - this.transform.position;
             _animator.SetFloat("Horizontal", directionToMove.x);
             _animator.SetFloat("Vertical", directionToMove.y);
         }
@@ -57,7 +58,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
 
-            Debug.Log("Player salio de la zona de vision");
+            //Debug.Log("Player salio de la zona de vision");
             isMoving = false;
 
         }

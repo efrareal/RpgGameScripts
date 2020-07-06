@@ -22,7 +22,7 @@ public class WeaponManager : MonoBehaviour
         
         for (int i=0; i < weapons.Count; i++)
         {
-            weapons[i].SetActive(i == activeWeapon);
+            weapons[i].SetActive(false);
         }
     }
 
