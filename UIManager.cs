@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
         weaponManager = FindObjectOfType<WeaponManager>();
         inventoryPanel.SetActive(false);
         menuPanel.SetActive(false);
+        menuStats.SetActive(false);
     }
 
     // Update is called once per frame
@@ -52,12 +53,13 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public GameObject inventoryPanel, menuPanel;
+    public GameObject inventoryPanel, menuPanel, menuStats;
     public Button inventoryButton;
     public void ToggleInventory()
     {
         inventoryPanel.SetActive(!inventoryPanel.activeInHierarchy);
         menuPanel.SetActive(!menuPanel.activeInHierarchy);
+        menuStats.SetActive(!menuStats.activeInHierarchy);
         if (inventoryPanel.activeInHierarchy)
         {
             Time.timeScale = 0;
@@ -66,6 +68,7 @@ public class UIManager : MonoBehaviour
                 Destroy(t.gameObject);
             }
             FillInventory();
+            MenuStatsFill();
         }
         else { Time.timeScale = 1; }
     }
@@ -106,6 +109,31 @@ public class UIManager : MonoBehaviour
     public void ChangeAvatarImage(Sprite sprite)
     {
         playerAvatar.sprite = sprite;
+    }
+
+    public Text levelStatText;
+    public Text expStatText;
+    public Text exptoNextLevelText;
+    public Text strText;
+    public Text defText;
+    public Text matText;
+    public Text mdfText;
+    public Text spdText;
+    public Text lckText;
+    public Text accText;
+    public void MenuStatsFill()
+    {
+        levelStatText.text = "Level: " + playerStats.level;
+        expStatText.text = "Exp: " + playerStats.exp;
+        exptoNextLevelText.text = "Exp to next level: " + playerStats.expToLevelUp[playerStats.level];
+
+        strText.text = "STR: " + playerStats.strengthLevels[playerStats.level];
+        defText.text = "DEF: " + playerStats.defenseLevels[playerStats.level];
+        matText.text = "MAT: " + playerStats.magicAttLevels[playerStats.level];
+        mdfText.text = "MDF: " + playerStats.magicDefLevels[playerStats.level];
+        spdText.text = "SPD: " + playerStats.speedLevels[playerStats.level];
+        lckText.text = "LCK: " + playerStats.luckLevels[playerStats.level];
+        accText.text = "ACC: " + playerStats.accuracyLevels[playerStats.level];
     }
     public void HealthChanged()
     {
