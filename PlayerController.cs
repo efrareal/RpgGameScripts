@@ -28,20 +28,20 @@ public class PlayerController : MonoBehaviour
     public float attackTime;
     private float attackTimeCounter;
 
-    private bool bowing = false;
-    public float bowTime;
-    private float bowTimeCounter;
-    public GameObject arrow;
-    public Transform shootPosition;
-    public float arrowSpeed;
-    private WeaponManager weapon;
+    //private bool bowing = false;
+    //public float bowTime;
+    //private float bowTimeCounter;
+    //public GameObject arrow;
+    //public Transform shootPosition;
+    //public float arrowSpeed;
+    //private WeaponManager weapon;
 
     public bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        weapon = FindObjectOfType<WeaponManager>();
+        //weapon = FindObjectOfType<WeaponManager>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         if (!playerCreated)
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
                 _animator.SetBool(ATT, false);
             }
         }
-        if (bowing)
+        /*if (bowing)
         {
             weapon.DeactivateWeapon(false);
             bowTimeCounter -= Time.deltaTime;
@@ -87,19 +87,17 @@ public class PlayerController : MonoBehaviour
                 Rigidbody2D arrowRB = newArrow.GetComponent<Rigidbody2D>();
                 arrowRB.velocity = lastMovement * arrowSpeed;
             }
-        }
-        else 
-        {
+        }*/
             
-            if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Fire3"))
-            {
-                attacking = true;
-                weapon.DeactivateWeapon(true);
-                attackTimeCounter = attackTime;
-                _rigidbody.velocity = Vector2.zero;
-                _animator.SetBool(ATT, true);
-            }
-
+        if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Fire3"))
+        {
+            attacking = true;
+            //weapon.DeactivateWeapon(true);
+            attackTimeCounter = attackTime;
+            _rigidbody.velocity = Vector2.zero;
+            _animator.SetBool(ATT, true);
+        }
+            /*
             if (Input.GetButtonDown("Jump"))
             {
                 bowing = true;
@@ -108,11 +106,11 @@ public class PlayerController : MonoBehaviour
                 _animator.SetBool(SECWEAPON, true);
                 
             }
+            */
 
-        }
 
         // S = V*T
-        if((Mathf.Abs(Input.GetAxisRaw(AXIS_H)) > 0.2f) && !attacking && !bowing)
+        if((Mathf.Abs(Input.GetAxisRaw(AXIS_H)) > 0.2f) && !attacking) //&& !bowing)
         {
             //Vector3 translation = new Vector3(Input.GetAxisRaw(AXIS_H) * speed * Time.deltaTime, 0, 0);
             //this.transform.Translate(translation);
@@ -121,7 +119,7 @@ public class PlayerController : MonoBehaviour
             lastMovement = new Vector2(Input.GetAxisRaw(AXIS_H), 0);
         }
 
-        if ((Mathf.Abs(Input.GetAxisRaw(AXIS_V)) > 0.2f) && !attacking && !bowing)
+        if ((Mathf.Abs(Input.GetAxisRaw(AXIS_V)) > 0.2f) && !attacking) //&& !bowing)
         {
             //Vector3 translation = new Vector3(0, Input.GetAxisRaw(AXIS_V) * speed * Time.deltaTime, 0);
             //this.transform.Translate(translation);
