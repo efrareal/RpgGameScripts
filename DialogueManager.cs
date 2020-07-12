@@ -10,32 +10,54 @@ public class DialogueManager : MonoBehaviour
     public Image avatarImage;
     public bool dialogueActive;
 
+    public string[] dialogueLines;
+    public int currentDialogueLine;
+
+    private PlayerController thePlayer;
+
     private void Start()
     {
         dialogueActive = false;
         dialogueBox.SetActive(false);
+        thePlayer = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(dialogueActive && Input.GetKeyDown(KeyCode.Space))
+        if (dialogueActive && Input.GetMouseButtonDown(0))
         {
-            dialogueActive = false;
-            avatarImage.enabled = false;
-            dialogueBox.SetActive(false);
+            currentDialogueLine++;
+
+            if (currentDialogueLine >= dialogueLines.Length)
+            {
+                thePlayer.isTalking = false;
+                currentDialogueLine = 0;
+
+                dialogueActive = false;
+                avatarImage.enabled = false;
+                dialogueBox.SetActive(false);
+            }
+            else
+            {
+                dialogueText.text = dialogueLines[currentDialogueLine];
+            }
         }
     }
 
-    public void ShowDialogue(string text)
+    public void ShowDialogue(string[] lines)
     {
+        currentDialogueLine = 0;
+        dialogueLines = lines;
         dialogueActive = true;
         dialogueBox.SetActive(true);
-        dialogueText.text = text;
+        dialogueText.text = dialogueLines[currentDialogueLine];
+        thePlayer.isTalking = true;
+
     }
-    public void ShowDialogue(string text, Sprite sprite)
+    public void ShowDialogue(string[] lines, Sprite sprite)
     {
-        ShowDialogue(text);
+        ShowDialogue(lines);
         avatarImage.enabled = true;
         avatarImage.sprite = sprite;
     }

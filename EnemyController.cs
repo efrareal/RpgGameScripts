@@ -47,7 +47,7 @@ public class EnemyController : MonoBehaviour
             
             //Debug.Log("Player entró en la zona de vision");
             isMoving = true;
-            this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, 1.15f*speed * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, speed * Time.deltaTime);
             directionToMove = thePlayer.position - this.transform.position;
             _animator.SetFloat("Horizontal", directionToMove.x);
             _animator.SetFloat("Vertical", directionToMove.y);

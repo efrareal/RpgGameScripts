@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     //private WeaponManager weapon;
 
     public bool canMove = true;
+    public bool isTalking;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
         //weapon = FindObjectOfType<WeaponManager>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
+        isTalking = false;
         if (!playerCreated)
         {
             DontDestroyOnLoad(this.transform.gameObject);
@@ -58,6 +60,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isTalking)
+        {
+            _rigidbody.velocity = Vector2.zero;
+            return;
+        }
 
         this.walking = false;
 
@@ -68,6 +75,10 @@ public class PlayerController : MonoBehaviour
 
         if (attacking)
         {
+            if (!canMove)
+            {
+                return;
+            }
             attackTimeCounter -= Time.deltaTime;
             if(attackTimeCounter < 0)
             {
