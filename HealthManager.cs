@@ -24,6 +24,9 @@ public class HealthManager : MonoBehaviour
     private SpriteRenderer _characterRenderer;
 
     public int expWhenDefeated;
+    private QuestEnemy quest;
+    private QuestManager questManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +34,10 @@ public class HealthManager : MonoBehaviour
         //Apenas arranca y asigna el maxHealth a la vida al "nacer"
         UpdateMaxHealth(maxHealth);
         _characterRenderer = GetComponent<SpriteRenderer>();
+
+        //QuestEnemy
+        quest = GetComponent<QuestEnemy>();
+        questManager = FindObjectOfType<QuestManager>();
 
     }
 
@@ -46,10 +53,11 @@ public class HealthManager : MonoBehaviour
         //Validar vida del Player o Enemy
         if(currentHealth < 0)
         {
-            //Asigna experiencia al "Player"
+            //Asigna experiencia al "Player" cuando el enemigo muere
             if (gameObject.tag.Equals("Enemy"))
             {
                 GameObject.FindWithTag("Player").GetComponent<CharacterStats>().AddExperience(expWhenDefeated);
+                questManager.enemyKilled = quest;
             }
             gameObject.SetActive(false);
         }
@@ -79,6 +87,15 @@ public class HealthManager : MonoBehaviour
                                              _characterRenderer.color.g,
                                              _characterRenderer.color.b,
                                              (visible ? 1.0f : 0.0f)); // Si Visible es "true", Transparencia 100%, si es "False" 0%
+    }
+
+    public void AddHealthPoints(int value)
+    {
+        if((currentHealth + value) >= maxHealth){
+            currentHealth = maxHealth;
+            return;
+        }
+        currentHealth += value;
     }
 
     // Update is called once per frame

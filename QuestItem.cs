@@ -8,6 +8,7 @@ public class QuestItem : MonoBehaviour
     public int questID;
     private QuestManager questManager;
     public string itemName;
+    private ItemsManager itemsManager;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -15,6 +16,7 @@ public class QuestItem : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             questManager = FindObjectOfType<QuestManager>();
+            itemsManager = FindObjectOfType<ItemsManager>();
             Quest q = questManager.QuestWithID(questID);
             if(q == null)
             {
@@ -24,6 +26,8 @@ public class QuestItem : MonoBehaviour
             if (q.questStarted && !q.questCompleted)
             {
                 questManager.itemCollected = this;
+                itemsManager.AddQuestItem(this.gameObject);
+                //this.transform.parent = collision.gameObject.transform;
                 gameObject.SetActive(false);
             }
         }

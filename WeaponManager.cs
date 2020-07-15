@@ -9,6 +9,16 @@ public class WeaponManager : MonoBehaviour
 
     public List<GameObject> GetAllWeapons()
     {
+        /*weapons = new List<GameObject>();
+        foreach (Transform weapon in transform)
+        {
+            weapons.Add(weapon.gameObject);
+        }
+
+        for (int i = 0; i < weapons.Count; i++)
+        {
+            weapons[i].SetActive(false);
+        }*/
         return weapons;
     }
     // Start is called before the first frame update

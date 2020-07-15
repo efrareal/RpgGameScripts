@@ -63,6 +63,8 @@ public class PlayerController : MonoBehaviour
         if (isTalking)
         {
             _rigidbody.velocity = Vector2.zero;
+            _animator.SetBool(ATT, false);
+            _animator.SetBool(WALK, false);
             return;
         }
 
@@ -70,15 +72,16 @@ public class PlayerController : MonoBehaviour
 
         if (!canMove)
         {
+            //_animator.SetBool(ATT, false);
             return;
         }
 
         if (attacking)
         {
-            if (!canMove)
+            /*if (!canMove)
             {
                 return;
-            }
+            }*/
             attackTimeCounter -= Time.deltaTime;
             if(attackTimeCounter < 0)
             {

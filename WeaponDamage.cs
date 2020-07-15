@@ -11,6 +11,8 @@ public class WeaponDamage : MonoBehaviour
     private GameObject hitPoint;
     public GameObject canvasDamage;
 
+    public GameObject hpPoints;
+
     private CharacterStats stats;
 
     private void Start()
@@ -54,6 +56,9 @@ public class WeaponDamage : MonoBehaviour
                     //Animacion del letrero de puntos
                     var clone2 = (GameObject)Instantiate(canvasDamage, hitPoint.transform.position, Quaternion.Euler(Vector3.zero));
                     clone2.GetComponent<DamageNumber>().damagePoints = "CRIT " + totalDamage;
+
+                    //Suelta HP Points si hay daño critico
+                    Destroy(Instantiate(hpPoints, hitPoint.transform.position, hpPoints.transform.rotation), 7.0f);
                 }
             }
             else

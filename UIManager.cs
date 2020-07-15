@@ -16,10 +16,12 @@ public class UIManager : MonoBehaviour
     public HealthManager playerHealthManager;
     public CharacterStats playerStats;
     private WeaponManager weaponManager;
+    private ItemsManager itemsManager;
 
     private void Start()
     {
         weaponManager = FindObjectOfType<WeaponManager>();
+        itemsManager = FindObjectOfType<ItemsManager>();
         inventoryPanel.SetActive(false);
         menuPanel.SetActive(false);
         menuStats.SetActive(false);
@@ -80,13 +82,34 @@ public class UIManager : MonoBehaviour
         int i = 0;
         foreach(GameObject w in weapons)
         {
-            Button tempB = Instantiate(inventoryButton, inventoryPanel.transform);
-            tempB.GetComponent<InventoryButton>().type = InventoryButton.ItemType.WEAPON;
-            tempB.GetComponent<InventoryButton>().itemIdx = i;
-            tempB.onClick.AddListener(()=> tempB.GetComponent<InventoryButton>().ActivateButton());
-            tempB.image.sprite = w.GetComponent<SpriteRenderer>().sprite;
+            AddItemToInventory(w, InventoryButton.ItemType.WEAPON, i);
             i++;
         }
+
+        List<GameObject> keyItems = itemsManager.GetQuestItems();
+        i= 0;
+        foreach(GameObject item in keyItems)
+        {
+            AddItemToInventory(item, InventoryButton.ItemType.SPECIAL_ITEMS, i);
+            i++;
+        }
+
+        List<GameObject> potionsItems = itemsManager.GetRegularItems();
+        i = 0;
+        foreach (GameObject ritem in potionsItems)
+        {
+            AddItemToInventory(ritem, InventoryButton.ItemType.ITEM, i);
+            i++;
+        }
+    }
+
+    private void AddItemToInventory(GameObject item, InventoryButton.ItemType type, int pos)
+    {
+        Button tempB = Instantiate(inventoryButton, inventoryPanel.transform);
+        tempB.GetComponent<InventoryButton>().type = type;
+        tempB.GetComponent<InventoryButton>().itemIdx = pos;
+        tempB.onClick.AddListener(() => tempB.GetComponent<InventoryButton>().ActivateButton());
+        tempB.image.sprite = item.GetComponent<SpriteRenderer>().sprite;
     }
 
     public void ShowOnly(int type)

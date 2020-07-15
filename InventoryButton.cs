@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryButton : MonoBehaviour
 {
-    public enum ItemType { WEAPON = 0, ITEM = 1, ARMOR = 2, ACCESORY = 3};
+    public enum ItemType { WEAPON = 0, ITEM = 1, ARMOR = 2, ACCESORY = 3, SPECIAL_ITEMS = 4};
 
     public int itemIdx;
     public ItemType type;
@@ -17,7 +17,9 @@ public class InventoryButton : MonoBehaviour
                 FindObjectOfType<WeaponManager>().ChangeWeapon(itemIdx);
                 break;
             case ItemType.ITEM:
-                Debug.Log("En construccion...");
+                //Consumir item
+                FindObjectOfType<ItemsManager>().UsePotion(itemIdx);
+                Destroy(this.gameObject);
                 break;
             case ItemType.ARMOR:
                 Debug.Log("En construccion...");
@@ -25,18 +27,11 @@ public class InventoryButton : MonoBehaviour
             case ItemType.ACCESORY:
                 Debug.Log("En construccion...");
                 break;
+            case ItemType.SPECIAL_ITEMS:
+                QuestItem item =FindObjectOfType<ItemsManager>().GetItemAt(itemIdx);
+                Debug.Log(item.itemName);
+                break;
 
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -9,7 +9,6 @@ public class DamageNumber : MonoBehaviour
 
     public float damageSpeed;
     public string damagePoints;
-    
 
     public Text damageText;
     public TMP_Text damageTextPro;
@@ -20,7 +19,6 @@ public class DamageNumber : MonoBehaviour
         if(damageText != null)
         {
             damageText.text = damagePoints;
-            
         }
         if(damageTextPro != null)
         {

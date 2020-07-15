@@ -12,6 +12,9 @@ public class NPCDialogue : MonoBehaviour
     private DialogueManager dialogueManager;
     private bool playerInTheZone;
 
+    public bool isChest;
+    private Animator chestAnimator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,34 @@ public class NPCDialogue : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             playerInTheZone = true;
+            if (isChest)
+            {
+                chestAnimator = gameObject.GetComponentInParent<Animator>();
+                chestAnimator.SetBool("isOpened", true);
+                string[] finalDialogue = new string[npcDialogueLines.Length];
+
+                int i = 0;
+                foreach (string line in npcDialogueLines)
+                {
+                    finalDialogue[i++] = (npcName != null ? npcName + "\n" : "") + line;
+                }
+
+
+                if (npcSprite != null)
+                {
+                    dialogueManager.ShowDialogue(finalDialogue, npcSprite);
+
+                }
+                else
+                {
+                    dialogueManager.ShowDialogue(finalDialogue);
+                }
+
+                if (gameObject.GetComponentInParent<NPCMovement>() != null)
+                {
+                    gameObject.GetComponentInParent<NPCMovement>().isTalking = true;
+                }
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -38,6 +69,12 @@ public class NPCDialogue : MonoBehaviour
     {
         if (playerInTheZone && Input.GetButtonDown("Jump"))
         {
+            /*if (isChest)
+            {
+                chestAnimator = gameObject.GetComponentInParent<Animator>();
+                chestAnimator.SetBool("isOpened", true);
+            }*/
+
             string[] finalDialogue = new string[npcDialogueLines.Length];
 
             int i = 0;
