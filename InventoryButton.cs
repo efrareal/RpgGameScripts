@@ -18,8 +18,15 @@ public class InventoryButton : MonoBehaviour
                 break;
             case ItemType.ITEM:
                 //Consumir item
-                FindObjectOfType<ItemsManager>().UsePotion(itemIdx);
-                Destroy(this.gameObject);
+                GameObject regItem = FindObjectOfType<ItemsManager>().GetRegularItemAt(itemIdx);
+
+                //Si el item es una Potion, entonces llamaa UsePotion
+                if(regItem.GetComponent<ItemPickUp>().itemName == "Potion")
+                {
+                    FindObjectOfType<ItemsManager>().UsePotion(itemIdx);
+                    Destroy(this.gameObject);
+                }
+
                 break;
             case ItemType.ARMOR:
                 Debug.Log("En construccion...");

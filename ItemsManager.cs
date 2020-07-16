@@ -28,6 +28,7 @@ public class ItemsManager : MonoBehaviour
     public void UsePotion(int pos)
     {
         currentPotions--;
+        Destroy(regularItems[pos].gameObject);
         regularItems.RemoveAt(pos);
         playerHealthManager.AddHealthPoints(potionvalue);
     }
@@ -35,6 +36,11 @@ public class ItemsManager : MonoBehaviour
     public List<GameObject> GetRegularItems()
     {
         return regularItems;
+    }
+
+    public GameObject GetRegularItemAt(int pos)
+    {
+        return regularItems[pos];
     }
 
     public void AddHP(int hpvalue)
