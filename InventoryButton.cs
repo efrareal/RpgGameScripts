@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryButton : MonoBehaviour
 {
@@ -8,6 +9,14 @@ public class InventoryButton : MonoBehaviour
 
     public int itemIdx;
     public ItemType type;
+    private UIManager uiManager;
+    public Text itemText;
+
+    private void Start()
+    {
+        uiManager = FindObjectOfType<UIManager>();
+        ///itemText.text = "";
+    }
 
     public void ActivateButton()
     {
@@ -15,18 +24,12 @@ public class InventoryButton : MonoBehaviour
         {
             case ItemType.WEAPON:
                 FindObjectOfType<WeaponManager>().ChangeWeapon(itemIdx);
+                uiManager.MenuStatsFill();
                 break;
             case ItemType.ITEM:
                 //Consumir item
-                GameObject regItem = FindObjectOfType<ItemsManager>().GetRegularItemAt(itemIdx);
-
-                //Si el item es una Potion, entonces llamaa UsePotion
-                if(regItem.GetComponent<ItemPickUp>().itemName == "Potion")
-                {
-                    FindObjectOfType<ItemsManager>().UsePotion(itemIdx);
-                    Destroy(this.gameObject);
-                }
-
+                FindObjectOfType<ItemsManager>().UsePotion();
+                itemText.text = "" + FindObjectOfType<ItemsManager>().currentPotions;
                 break;
             case ItemType.ARMOR:
                 Debug.Log("En construccion...");

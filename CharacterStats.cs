@@ -32,14 +32,17 @@ public class CharacterStats : MonoBehaviour
 
     private HealthManager healthManager;
     private PlayerController playerController;
+    private WeaponManager weaponManager;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        weaponManager = FindObjectOfType<WeaponManager>();
         healthManager = GetComponent<HealthManager>();
         playerController = GetComponent<PlayerController>();
-        
+        AddStatsToCharacter(0,0,0,0,0,0,0);
+
         //Vida del Enemigo
         healthManager.UpdateMaxHealth(hpLevels[level]);
         if (gameObject.tag.Equals("Enemy"))
@@ -59,7 +62,7 @@ public class CharacterStats : MonoBehaviour
         this.exp += exp;
 
         // Cuando llegue al ultimo Nivel no se rompa el juego
-        if (level >= expToLevelUp.Length)
+        if (level >= (expToLevelUp.Length -1))
         {
             return;
         }
@@ -68,7 +71,31 @@ public class CharacterStats : MonoBehaviour
         {
             level++;
             healthManager.UpdateMaxHealth(hpLevels[level]);
+            weaponManager.ChangeWeapon(weaponManager.activeWeapon); 
+
             playerController.attackTime -= (float)speedLevels[level]/ MAX_STAT_VAL;
         }
+    }
+
+
+    public int newhpLevels;
+    public int newmpLevels;
+    public int newstrengthLevels;
+    public int newdefenseLevels;
+    public int newmagicAttLevels;
+    public int newmagicDefLevels;
+    public int newspeedLevels;
+    public int newluckLevels;
+    public int newaccuracyLevels;
+
+    public void AddStatsToCharacter(int str, int def, int mat, int mdf, int spd, int lck, int acc)
+    {
+        newstrengthLevels = strengthLevels[level] + str;
+        newdefenseLevels = defenseLevels[level] + def;
+        newmagicAttLevels = magicAttLevels[level] + mat;
+        newmagicDefLevels = magicDefLevels[level] + mdf;
+        newspeedLevels = speedLevels[level] + spd;
+        newluckLevels = luckLevels[level] + lck;
+        newaccuracyLevels = accuracyLevels[level] + acc;
     }
 }

@@ -6,16 +6,20 @@ public class WeaponManager : MonoBehaviour
 {
     private List<GameObject> weapons;
     public int activeWeapon;
+    private CharacterStats thePlayerStats;
 
     public List<GameObject> GetAllWeapons()
     {
-        /*weapons = new List<GameObject>();
+        weapons = new List<GameObject>();
         foreach (Transform weapon in transform)
         {
-            weapons.Add(weapon.gameObject);
+            if (weapon.GetComponent<WeaponDamage>().inInventory)
+            {
+                weapons.Add(weapon.gameObject);
+            }
         }
 
-        for (int i = 0; i < weapons.Count; i++)
+        /*for (int i = 0; i < weapons.Count; i++)
         {
             weapons[i].SetActive(false);
         }*/
@@ -24,10 +28,14 @@ public class WeaponManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        thePlayerStats = FindObjectOfType<PlayerController>().GetComponent<CharacterStats>();
         weapons = new List<GameObject>();
         foreach(Transform weapon in transform)
         {
-            weapons.Add(weapon.gameObject);
+            if (weapon.GetComponent<WeaponDamage>().inInventory)
+            {
+                weapons.Add(weapon.gameObject);
+            }
         }
         
         for (int i=0; i < weapons.Count; i++)
@@ -42,6 +50,14 @@ public class WeaponManager : MonoBehaviour
         weapons[newWeapon].SetActive(true);
         activeWeapon = newWeapon;
 
+        thePlayerStats.AddStatsToCharacter(weapons[newWeapon].GetComponent<WARStats>().strength,
+                                           weapons[newWeapon].GetComponent<WARStats>().defense,
+                                           weapons[newWeapon].GetComponent<WARStats>().magicAtt,
+                                           weapons[newWeapon].GetComponent<WARStats>().magicDef,
+                                           weapons[newWeapon].GetComponent<WARStats>().speed,
+                                           weapons[newWeapon].GetComponent<WARStats>().luck,
+                                           weapons[newWeapon].GetComponent<WARStats>().accuracy);
+
         FindObjectOfType<UIManager>().ChangeAvatarImage(weapons[activeWeapon].GetComponent<SpriteRenderer>().sprite);
     }
     public void DeactivateWeapon(bool condition)
@@ -49,6 +65,20 @@ public class WeaponManager : MonoBehaviour
         weapons[activeWeapon].SetActive(condition);
     }
 
-
+    public List<GameObject> GetAllNotInInvetoryWeapons()
+    {
+        weapons = new List<GameObject>();
+        foreach (Transform weapon in transform)
+        {
+            if (!weapon.GetComponent<WeaponDamage>().inInventory)
+            {
+                weapons.Add(weapon.gameObject);
+            }
+        }
+        return weapons;
+    }
 
 }
+
+
+

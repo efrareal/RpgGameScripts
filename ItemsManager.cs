@@ -8,6 +8,7 @@ public class ItemsManager : MonoBehaviour
     private HealthManager playerHealthManager;
     public int hpPointsValue= 5;
     public int potionvalue = 50;
+    public GameObject potionObject;
     //private int potionValue = 100;
 
     private void Start()
@@ -19,18 +20,25 @@ public class ItemsManager : MonoBehaviour
     private List<GameObject> questItems = new List<GameObject>();
     private List<GameObject> regularItems = new List<GameObject>();
 
-    public void AddPotions(int potionCollected, GameObject potion)
+    public void AddPotions(int potionCollected)
     {
         currentPotions += potionCollected;
-        regularItems.Add(potion);
+        //regularItems.Add(potion);
     }
 
-    public void UsePotion(int pos)
+    public void UsePotion()
     {
+        if (currentPotions <= 0)
+        {
+            currentPotions = 0;
+            return;
+        }
         currentPotions--;
-        Destroy(regularItems[pos].gameObject);
-        regularItems.RemoveAt(pos);
         playerHealthManager.AddHealthPoints(potionvalue);
+        if(currentPotions < 0)
+        {
+            currentPotions = 0;
+        }
     }
 
     public List<GameObject> GetRegularItems()

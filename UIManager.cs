@@ -82,7 +82,7 @@ public class UIManager : MonoBehaviour
         int i = 0;
         foreach(GameObject w in weapons)
         {
-            AddItemToInventory(w, InventoryButton.ItemType.WEAPON, i);
+            AddItemToInventory(w, InventoryButton.ItemType.WEAPON, i, "");
             i++;
         }
 
@@ -90,27 +90,37 @@ public class UIManager : MonoBehaviour
         i= 0;
         foreach(GameObject item in keyItems)
         {
-            AddItemToInventory(item, InventoryButton.ItemType.SPECIAL_ITEMS, i);
+            AddItemToInventory(item, InventoryButton.ItemType.SPECIAL_ITEMS, i, "");
             i++;
         }
 
-        List<GameObject> potionsItems = itemsManager.GetRegularItems();
+        /*List<GameObject> potionsItems = itemsManager.GetRegularItems();
         i = 0;
         foreach (GameObject ritem in potionsItems)
         {
             AddItemToInventory(ritem, InventoryButton.ItemType.ITEM, i);
             i++;
+        }*/
+
+        if (itemsManager.currentPotions > 0)
+        {
+            GameObject potionObject = itemsManager.potionObject;
+            int potionsQuantity = itemsManager.currentPotions;
+            i = 0;
+            AddItemToInventory(potionObject, InventoryButton.ItemType.ITEM, i, "" + potionsQuantity);
         }
     }
 
-    private void AddItemToInventory(GameObject item, InventoryButton.ItemType type, int pos)
+    private void AddItemToInventory(GameObject item, InventoryButton.ItemType type, int pos, string valuetext)
     {
         Button tempB = Instantiate(inventoryButton, inventoryPanel.transform);
         tempB.GetComponent<InventoryButton>().type = type;
         tempB.GetComponent<InventoryButton>().itemIdx = pos;
+        tempB.GetComponent<InventoryButton>().itemText.text = valuetext;
         tempB.onClick.AddListener(() => tempB.GetComponent<InventoryButton>().ActivateButton());
         tempB.image.sprite = item.GetComponent<SpriteRenderer>().sprite;
     }
+
 
     public void ShowOnly(int type)
     {
@@ -150,6 +160,7 @@ public class UIManager : MonoBehaviour
         expStatText.text = "Exp: " + playerStats.exp;
         exptoNextLevelText.text = "Exp to next level: " + playerStats.expToLevelUp[playerStats.level];
 
+        /*
         strText.text = "STR: " + playerStats.strengthLevels[playerStats.level];
         defText.text = "DEF: " + playerStats.defenseLevels[playerStats.level];
         matText.text = "MAT: " + playerStats.magicAttLevels[playerStats.level];
@@ -157,6 +168,14 @@ public class UIManager : MonoBehaviour
         spdText.text = "SPD: " + playerStats.speedLevels[playerStats.level];
         lckText.text = "LCK: " + playerStats.luckLevels[playerStats.level];
         accText.text = "ACC: " + playerStats.accuracyLevels[playerStats.level];
+        */
+        strText.text = "STR: " + playerStats.newstrengthLevels;
+        defText.text = "DEF: " + playerStats.newdefenseLevels;
+        matText.text = "MAT: " + playerStats.newmagicAttLevels;
+        mdfText.text = "MDF: " + playerStats.newmagicDefLevels;
+        spdText.text = "SPD: " + playerStats.newspeedLevels;
+        lckText.text = "LCK: " + playerStats.newluckLevels;
+        accText.text = "ACC: " + playerStats.newaccuracyLevels;
     }
     public void HealthChanged()
     {

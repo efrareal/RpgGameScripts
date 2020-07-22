@@ -15,11 +15,6 @@ public class GoToNewPlace : MonoBehaviour
         Teleport(collision.gameObject.name);
     }
 
-    //Esto puede ser usado para abrir cofres
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        Teleport(collision.gameObject.tag);
-    }
 
     private void Teleport(string objName)
     {
@@ -28,6 +23,7 @@ public class GoToNewPlace : MonoBehaviour
             if (!needsClick || (needsClick && Input.GetAxis("Fire1") > 0.2))
             {
                 FindObjectOfType<PlayerController>().nextUuid = uuid;
+                //Debug.LogFormat("Se enviara al player al nextuuid = {0}", FindObjectOfType<PlayerController>().nextUuid);
                 SceneManager.LoadScene(newPlaceName);
             }
         }

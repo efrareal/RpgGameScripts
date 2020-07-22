@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ItemPickUp : MonoBehaviour
 {
@@ -13,7 +14,17 @@ public class ItemPickUp : MonoBehaviour
 
     private ItemsManager itemsManager;
 
-    private void OnLevelWasLoaded(int level)
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (itemHasBeenCollected)
         {
@@ -33,7 +44,7 @@ public class ItemPickUp : MonoBehaviour
         {
             if(itemName == "Potion")
             {
-                itemsManager.AddPotions(1,this.gameObject);
+                itemsManager.AddPotions(1);
                 //this.transform.parent = GameObject.Find("Inventory Player").transform;
                 gameObject.SetActive(false);
                 itemHasBeenCollected = true;

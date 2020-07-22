@@ -14,6 +14,9 @@ public class WeaponDamage : MonoBehaviour
     public GameObject hpPoints;
 
     private CharacterStats stats;
+    public string weaponName;
+
+    public bool inInventory;
 
     private void Start()
     {
@@ -28,18 +31,19 @@ public class WeaponDamage : MonoBehaviour
         {
             //Toma en cuenta la defensa del enemigo
             CharacterStats enemyStats = collision.gameObject.GetComponent<CharacterStats>();
-            float enemyFactor = 1.0f - (float)enemyStats.defenseLevels[enemyStats.level] / CharacterStats.MAX_STAT_VAL;
+            //float enemyFactor = 1.0f - (float)enemyStats.defenseLevels[enemyStats.level] / CharacterStats.MAX_STAT_VAL;
+            float enemyFactor = 1.0f - (float)enemyStats.newdefenseLevels / CharacterStats.MAX_STAT_VAL;
 
             //Toma en cuenta el nivel de Fuerza del Player
-            float playerFactor = 1.0f + (float)stats.strengthLevels[stats.level] / CharacterStats.MAX_STAT_VAL;
+            float playerFactor = 1.0f + (float)stats.newstrengthLevels / CharacterStats.MAX_STAT_VAL;
 
 
             int totalDamage = (int)((float)damage * playerFactor * enemyFactor);
 
             //Accuracy(Player) vs. Luck(Enemy) 
-            if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < stats.accuracyLevels[stats.level])
+            if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < stats.newaccuracyLevels)
             {
-                if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.luckLevels[enemyStats.level])
+                if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.newluckLevels)
                 {
                     totalDamage = 0;
                 }
@@ -64,7 +68,7 @@ public class WeaponDamage : MonoBehaviour
             else
             {
                 //Ataque normal probabilidad de que dañe al enemigo
-                if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.luckLevels[enemyStats.level])
+                if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.newluckLevels)
                 {
                     totalDamage = 0;
                 }
