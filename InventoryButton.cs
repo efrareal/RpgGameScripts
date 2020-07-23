@@ -9,14 +9,9 @@ public class InventoryButton : MonoBehaviour
 
     public int itemIdx;
     public ItemType type;
-    private UIManager uiManager;
+    //private UIManager uiManager;
     public Text itemText;
 
-    private void Start()
-    {
-        uiManager = FindObjectOfType<UIManager>();
-        ///itemText.text = "";
-    }
 
     public void ActivateButton()
     {
@@ -24,7 +19,23 @@ public class InventoryButton : MonoBehaviour
         {
             case ItemType.WEAPON:
                 FindObjectOfType<WeaponManager>().ChangeWeapon(itemIdx);
-                uiManager.MenuStatsFill();
+                FindObjectOfType<UIManager>().MenuStatsFill();
+
+                //Limpia antes de mostrar
+                FindObjectOfType<UIManager>().ChangeDescriptionText();
+                //FindObjectOfType<UIManager>().ChangeDescriptionText(FindObjectOfType<WeaponManager>().GetWeaponAt(itemIdx).weaponName);
+                FindObjectOfType<UIManager>().ChangeDescriptionText
+                    (
+                        FindObjectOfType<WeaponManager>().GetWeaponAt(itemIdx).weaponName,
+                        ""+ FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).strength,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).defense,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).magicAtt,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).magicDef,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).speed,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).luck,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).accuracy,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponAt(itemIdx).damage
+                    );
                 break;
             case ItemType.ITEM:
                 //Consumir item
@@ -39,9 +50,16 @@ public class InventoryButton : MonoBehaviour
                 break;
             case ItemType.SPECIAL_ITEMS:
                 QuestItem item =FindObjectOfType<ItemsManager>().GetItemAt(itemIdx);
-                Debug.Log(item.itemName);
+                //Limpia la descripcion;
+                FindObjectOfType<UIManager>().ChangeDescriptionText();
+                FindObjectOfType<UIManager>().ChangeDescriptionText(item.itemName);
                 break;
 
         }
+    }
+
+    void ShowDescription()
+    {
+
     }
 }

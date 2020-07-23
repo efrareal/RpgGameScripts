@@ -25,7 +25,7 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dialogueActive && Input.GetMouseButtonDown(0))
+        if (dialogueActive && Input.GetButtonDown("Jump"))
         {
             currentDialogueLine++;
 

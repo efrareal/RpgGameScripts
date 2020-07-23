@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D _rigidbody;
 
     private bool isMoving;
+    private bool wasHit;
 
     [Tooltip("Tiempo que tarda el enemigo entre pasos sucesivos")]
     public float timeBetweenSteps;
@@ -44,7 +45,15 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-            
+            if (wasHit)
+            {
+                isMoving = true;
+                this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, -2* speed * Time.deltaTime);
+                directionToMove = this.transform.position - thePlayer.position;
+                _animator.SetFloat("Horizontal", directionToMove.x);
+                _animator.SetFloat("Vertical", directionToMove.y);
+                return;
+            }
             //Debug.Log("Player entró en la zona de vision");
             isMoving = true;
             this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, speed * Time.deltaTime);
@@ -60,6 +69,7 @@ public class EnemyController : MonoBehaviour
 
             //Debug.Log("Player salio de la zona de vision");
             isMoving = false;
+            wasHit = false;
 
         }
     }
@@ -93,5 +103,10 @@ public class EnemyController : MonoBehaviour
                 _animator.SetFloat("Vertical", directionToMove.y);
             }
         }
+    }
+
+    public void EnemyWasHit()
+    {
+        wasHit = true;
     }
 }

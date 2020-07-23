@@ -10,14 +10,18 @@ public class Chest : MonoBehaviour
     private WeaponManager weaponManager;
     private List<GameObject> notInInventoryWeapons;
     public string chestID;
+    public string chestText;
+    public Sprite rewardSprite;
 
     private Animator _animator;
+    private DialogueManager dialogueManager;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        dialogueManager = FindObjectOfType<DialogueManager>();
         _animator = GetComponent<Animator>();
         weaponManager = FindObjectOfType<WeaponManager>();
 
@@ -47,6 +51,7 @@ public class Chest : MonoBehaviour
                     }
                 }
                 PlayerPrefs.SetString(chestID, "opened");
+                dialogueManager.ShowDialogue(new string[] { "Chest: \n" +chestText }, rewardSprite);
             }
 
         }

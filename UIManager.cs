@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
         inventoryPanel.SetActive(false);
         menuPanel.SetActive(false);
         menuStats.SetActive(false);
+        descriptionMenu.SetActive(false);
     }
 
     // Update is called once per frame
@@ -55,13 +56,28 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public GameObject inventoryPanel, menuPanel, menuStats;
+    public GameObject inventoryPanel, menuPanel, menuStats, descriptionMenu;
     public Button inventoryButton;
+    
+    //DescriptionBox Info
+    public Text descriptionText;
+    public Text strTextDesc;
+    public Text defTextDesc;
+    public Text matTextDesc;
+    public Text mdfTextDesc;
+    public Text spdTextDesc;
+    public Text lckTextDesc;
+    public Text accTextDesc;
+    public Text baseDamageDesc;
+
     public void ToggleInventory()
     {
+        ChangeDescriptionText();
         inventoryPanel.SetActive(!inventoryPanel.activeInHierarchy);
         menuPanel.SetActive(!menuPanel.activeInHierarchy);
         menuStats.SetActive(!menuStats.activeInHierarchy);
+        descriptionMenu.SetActive(!descriptionMenu.activeInHierarchy);
+
         if (inventoryPanel.activeInHierarchy)
         {
             Time.timeScale = 0;
@@ -189,4 +205,37 @@ public class UIManager : MonoBehaviour
     {
 
     }
+
+    public void ChangeDescriptionText()
+    {
+        descriptionText.text = "";
+        strTextDesc.text = "";
+        defTextDesc.text = "";
+        matTextDesc.text = "";
+        mdfTextDesc.text = "";
+        spdTextDesc.text = "";
+        lckTextDesc.text = "";
+        accTextDesc.text = "";
+        baseDamageDesc.text = "";
+    }
+
+    public void ChangeDescriptionText(string description)
+    {
+        descriptionText.text = "Description: " + description;
+    }
+
+    public void ChangeDescriptionText(string desc, string strdesc, string defdesc, string matdesc, string mdfdesc,
+                                      string spddesc, string lckdesc, string accdesc, string damagedesc)
+    {
+        descriptionText.text = "Description: " + desc;
+        strTextDesc.text = "STR: " + strdesc;
+        defTextDesc.text = "DEF: " + defdesc;
+        matTextDesc.text = "MAT: " +matdesc;
+        mdfTextDesc.text = "MDF: " +mdfdesc;
+        spdTextDesc.text = "SPD: " +spddesc;
+        lckTextDesc.text = "LCK: " +lckdesc;
+        accTextDesc.text = "ACC: " +accdesc;
+        baseDamageDesc.text = "Damage: " +damagedesc;
+    }
+
 }

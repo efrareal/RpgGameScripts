@@ -109,6 +109,7 @@ public class WeaponDamage : MonoBehaviour
 
             //Reduce daño a vida
             collision.gameObject.GetComponent<HealthManager>().DamageCharacter(totalDamage);
+            collision.gameObject.GetComponent<EnemyController>().EnemyWasHit();
         }
     }
 }
