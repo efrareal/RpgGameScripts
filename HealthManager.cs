@@ -64,8 +64,8 @@ public class HealthManager : MonoBehaviour
         //Si la duracion del Flash es positiva, entonces aplica el flash
         if(flashLength > 0)
         {
-            GetComponent<CircleCollider2D>().enabled = false; //Desactiva el Coliider para que no reciba daño
-            GetComponent<PlayerController>().canMove = false; //El jugador no podra moverse (Revisar PlayerController)
+            //GetComponent<CircleCollider2D>().enabled = false; //Desactiva el Coliider para que no reciba daño
+            //GetComponent<PlayerController>().canMove = false; //El jugador no podra moverse (Revisar PlayerController)
             flashActive = true; // Activa el Flash
             flashCounter = flashLength; //Asigna el contador de Flashing
         }
@@ -134,8 +134,8 @@ public class HealthManager : MonoBehaviour
                 //Normaliza la conficion del Character!!!
                 ToggleColor(true);
                 flashActive = false;
-                GetComponent<CircleCollider2D>().enabled = true;
-                GetComponent<PlayerController>().canMove = true;
+                //GetComponent<CircleCollider2D>().enabled = true;
+                //GetComponent<PlayerController>().canMove = true;
             }
         }
 

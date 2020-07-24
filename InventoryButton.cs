@@ -19,23 +19,7 @@ public class InventoryButton : MonoBehaviour
         {
             case ItemType.WEAPON:
                 FindObjectOfType<WeaponManager>().ChangeWeapon(itemIdx);
-                FindObjectOfType<UIManager>().MenuStatsFill();
-
-                //Limpia antes de mostrar
-                FindObjectOfType<UIManager>().ChangeDescriptionText();
-                //FindObjectOfType<UIManager>().ChangeDescriptionText(FindObjectOfType<WeaponManager>().GetWeaponAt(itemIdx).weaponName);
-                FindObjectOfType<UIManager>().ChangeDescriptionText
-                    (
-                        FindObjectOfType<WeaponManager>().GetWeaponAt(itemIdx).weaponName,
-                        ""+ FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).strength,
-                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).defense,
-                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).magicAtt,
-                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).magicDef,
-                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).speed,
-                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).luck,
-                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).accuracy,
-                        "" + FindObjectOfType<WeaponManager>().GetWeaponAt(itemIdx).damage
-                    );
+                //FindObjectOfType<UIManager>().MenuStatsFill();
                 break;
             case ItemType.ITEM:
                 //Consumir item
@@ -49,7 +33,49 @@ public class InventoryButton : MonoBehaviour
                 Debug.Log("En construccion...");
                 break;
             case ItemType.SPECIAL_ITEMS:
-                QuestItem item =FindObjectOfType<ItemsManager>().GetItemAt(itemIdx);
+                Debug.Log("Equipar anillo, pendiente");
+                break;
+
+        }
+        ShowDescription();
+    }
+
+    public void ShowDescription()
+    {
+        switch (type)
+        {
+            case ItemType.WEAPON:
+                //Limpia antes de mostrar
+                FindObjectOfType<UIManager>().ChangeDescriptionText();
+                FindObjectOfType<UIManager>().ChangeDescriptionText
+                    (
+                        FindObjectOfType<WeaponManager>().GetWeaponAt(itemIdx).weaponName,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).strength,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).defense,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).magicAtt,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).magicDef,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).speed,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).luck,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponStatsAt(itemIdx).accuracy,
+                        "" + FindObjectOfType<WeaponManager>().GetWeaponAt(itemIdx).damage
+                    );
+                //Cambia el panel de Stats del personaje
+                FindObjectOfType<UIManager>().MenuStatsFill();
+                break;
+            case ItemType.ITEM:
+                //Limpia antes de mostrar
+                FindObjectOfType<UIManager>().ChangeDescriptionText();
+                FindObjectOfType<UIManager>().ChangeDescriptionText("consumable item");
+
+                break;
+            case ItemType.ARMOR:
+                Debug.Log("En construccion...");
+                break;
+            case ItemType.ACCESORY:
+                Debug.Log("En construccion...");
+                break;
+            case ItemType.SPECIAL_ITEMS:
+                QuestItem item = FindObjectOfType<ItemsManager>().GetItemAt(itemIdx);
                 //Limpia la descripcion;
                 FindObjectOfType<UIManager>().ChangeDescriptionText();
                 FindObjectOfType<UIManager>().ChangeDescriptionText(item.itemName);
@@ -58,8 +84,9 @@ public class InventoryButton : MonoBehaviour
         }
     }
 
-    void ShowDescription()
+    public void ClearDescription()
     {
-
+        //Limpia la descripcion cuando no estas sobre el boton
+        FindObjectOfType<UIManager>().ChangeDescriptionText();
     }
 }
