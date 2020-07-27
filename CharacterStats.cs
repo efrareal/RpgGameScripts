@@ -50,9 +50,6 @@ public class CharacterStats : MonoBehaviour
             EnemyController controller = GetComponent<EnemyController>();
             controller.speed += (1.0f + (float)speedLevels[level] / MAX_STAT_VAL); 
         }
-
-        
-
     }
 
 
@@ -71,6 +68,8 @@ public class CharacterStats : MonoBehaviour
         {
             level++;
             healthManager.UpdateMaxHealth(hpLevels[level]);
+            
+            //Truco para refrescar Stats al subir de nivel
             weaponManager.ChangeWeapon(weaponManager.activeWeapon); 
 
             playerController.attackTime -= (float)speedLevels[level]/ MAX_STAT_VAL;

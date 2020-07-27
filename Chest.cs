@@ -5,10 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Chest : MonoBehaviour
 {
+    public string rewardType;
     public string rewardWeaponName;
-    private ItemsManager itemsManager;
     private WeaponManager weaponManager;
-    private List<GameObject> notInInventoryWeapons;
+    private ArmorManager armorManager;
+    private List<GameObject> notInInventory;
     public string chestID;
     public string chestText;
     public Sprite rewardSprite;
@@ -24,6 +25,7 @@ public class Chest : MonoBehaviour
         dialogueManager = FindObjectOfType<DialogueManager>();
         _animator = GetComponent<Animator>();
         weaponManager = FindObjectOfType<WeaponManager>();
+        armorManager = FindObjectOfType<ArmorManager>();
 
         if(PlayerPrefs.GetString(chestID)== "" || PlayerPrefs.GetString(chestID) == "closed")
         {
@@ -42,16 +44,33 @@ public class Chest : MonoBehaviour
             {
                 
                 _animator.SetBool("isOpened", true);
-                notInInventoryWeapons = weaponManager.GetAllNotInInvetoryWeapons();
-                foreach (GameObject nweapon in notInInventoryWeapons)
-                {
-                    if (nweapon.GetComponent<WeaponDamage>().weaponName == rewardWeaponName)
-                    {
-                        nweapon.GetComponent<WeaponDamage>().inInventory = true;
-                    }
-                }
                 PlayerPrefs.SetString(chestID, "opened");
-                dialogueManager.ShowDialogue(new string[] { "Chest: \n" +chestText }, rewardSprite);
+                dialogueManager.ShowDialogue(new string[] { "Chest: \n" + chestText }, rewardSprite);
+
+                if (rewardType == "Weapon")
+                {
+                    notInInventory = weaponManager.GetAllNotInInvetoryWeapons();
+                    foreach (GameObject nweapon in notInInventory)
+                    {
+                        if (nweapon.GetComponent<WeaponDamage>().weaponName == rewardWeaponName)
+                        {
+                            nweapon.GetComponent<WeaponDamage>().inInventory = true;
+                        }
+                    }
+                    
+                }
+                if(rewardType == "Armor")
+                {
+                    notInInventory = armorManager.GetAllNotInInvetoryArmors();
+                    foreach (GameObject narmor in notInInventory)
+                    {
+                        if (narmor.GetComponent<Armor>().armorName == rewardWeaponName)
+                        {
+                            narmor.GetComponent<Armor>().inInventory = true;
+                        }
+                    }
+
+                }
             }
 
         }

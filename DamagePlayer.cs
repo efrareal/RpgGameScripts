@@ -38,7 +38,7 @@ public class DamagePlayer : MonoBehaviour
             float strFac = 1.0f + (float)_stats.strengthLevels[_stats.level] / CharacterStats.MAX_STAT_VAL;
             //Debug.Log("Fuerza del Enemigo " +strFac);
             //Factor de Defensa del Player
-            float playerFac = 1.0f - (float)playerStats.defenseLevels[playerStats.level] / CharacterStats.MAX_STAT_VAL;
+            float playerFac = 1.0f - (float)playerStats.newdefenseLevels / CharacterStats.MAX_STAT_VAL;
             //Debug.Log("Defensa del Player " + playerFac);
 
             //Valor de ataque del enemigo vs. la defensa del Player
@@ -46,7 +46,7 @@ public class DamagePlayer : MonoBehaviour
             //Debug.Log(totalDamage);
 
             //Probabilidad de falla el golpe tomando los stats del player
-            if(Random.Range(0, CharacterStats.MAX_STAT_VAL) < playerStats.luckLevels[playerStats.level])
+            if(Random.Range(0, CharacterStats.MAX_STAT_VAL) < playerStats.newluckLevels)
             {
                 //Probabilidad de acertar golpe tomando los stats del enemy
                 if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < _stats.accuracyLevels[_stats.level])

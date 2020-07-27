@@ -17,11 +17,13 @@ public class UIManager : MonoBehaviour
     public CharacterStats playerStats;
     private WeaponManager weaponManager;
     private ItemsManager itemsManager;
+    private ArmorManager armorManager;
 
     private void Start()
     {
         weaponManager = FindObjectOfType<WeaponManager>();
         itemsManager = FindObjectOfType<ItemsManager>();
+        armorManager = FindObjectOfType<ArmorManager>();
         inventoryPanel.SetActive(false);
         menuPanel.SetActive(false);
         menuStats.SetActive(false);
@@ -110,6 +112,14 @@ public class UIManager : MonoBehaviour
             i++;
         }
 
+        List<GameObject> armors = armorManager.GetAllArmors();
+        i = 0;
+        foreach (GameObject a in armors)
+        {
+            AddItemToInventory(a, InventoryButton.ItemType.ARMOR, i, "");
+            i++;
+        }
+
         /*List<GameObject> potionsItems = itemsManager.GetRegularItems();
         i = 0;
         foreach (GameObject ritem in potionsItems)
@@ -120,6 +130,7 @@ public class UIManager : MonoBehaviour
 
         if (itemsManager.currentPotions > 0)
         {
+            //Obtiene del ItemManager el GameObject de la potion, para poder usar su sprite
             GameObject potionObject = itemsManager.potionObject;
             int potionsQuantity = itemsManager.currentPotions;
             i = 0;

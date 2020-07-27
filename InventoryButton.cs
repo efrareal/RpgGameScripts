@@ -27,7 +27,7 @@ public class InventoryButton : MonoBehaviour
                 itemText.text = "" + FindObjectOfType<ItemsManager>().currentPotions;
                 break;
             case ItemType.ARMOR:
-                Debug.Log("En construccion...");
+                FindObjectOfType<ArmorManager>().ChangeArmor(itemIdx);
                 break;
             case ItemType.ACCESORY:
                 Debug.Log("En construccion...");
@@ -69,7 +69,8 @@ public class InventoryButton : MonoBehaviour
 
                 break;
             case ItemType.ARMOR:
-                Debug.Log("En construccion...");
+                FindObjectOfType<UIManager>().ChangeDescriptionText();
+                FindObjectOfType<UIManager>().ChangeDescriptionText(FindObjectOfType<ArmorManager>().GetArmorAt(itemIdx).armorName);
                 break;
             case ItemType.ACCESORY:
                 Debug.Log("En construccion...");
