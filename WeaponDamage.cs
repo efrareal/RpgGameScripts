@@ -92,6 +92,7 @@ public class WeaponDamage : MonoBehaviour
             {
                 var clone1 = (GameObject)Instantiate(canvasDamage, hitPoint.transform.position, Quaternion.Euler(Vector3.zero));
                 clone1.GetComponent<DamageNumber>().damagePoints = "MISS";
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.MISS_ATTACK);
             }
             /*else
             {

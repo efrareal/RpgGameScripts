@@ -26,6 +26,7 @@ public class HealthManager : MonoBehaviour
     public int expWhenDefeated;
     private QuestEnemy quest;
     private QuestManager questManager;
+    private UIManager uiManager;
 
 
     // Start is called before the first frame update
@@ -39,6 +40,8 @@ public class HealthManager : MonoBehaviour
         quest = GetComponent<QuestEnemy>();
         questManager = FindObjectOfType<QuestManager>();
 
+        uiManager = FindObjectOfType<UIManager>();
+
     }
 
     /// <summary>
@@ -49,17 +52,26 @@ public class HealthManager : MonoBehaviour
     {
         //Quita vida al Player o enemigo
         currentHealth -= damage;
-
         //Validar vida del Player o Enemy
         if(currentHealth < 0)
         {
+            currentHealth = 0;
             //Asigna experiencia al "Player" cuando el enemigo muere
             if (gameObject.tag.Equals("Enemy"))
             {
                 GameObject.FindWithTag("Player").GetComponent<CharacterStats>().AddExperience(expWhenDefeated);
                 questManager.enemyKilled = quest;
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.ENEMY_DIE);
+                gameObject.SetActive(false);
             }
-            gameObject.SetActive(false);
+            if (gameObject.tag.Equals("Player"))
+            {
+                GetComponent<PlayerController>().isDead = true;
+                GetComponent<CircleCollider2D>().enabled = false;
+                //gameObject.SetActive(false);
+                uiManager.LaunchGameOver();
+
+            }
         }
         //Si la duracion del Flash es positiva, entonces aplica el flash
         if(flashLength > 0)

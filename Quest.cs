@@ -58,6 +58,7 @@ public class Quest : MonoBehaviour
 
     public void StartQuest()
     {
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.M_START);
         questManager = FindObjectOfType<QuestManager>();
         questManager.ShowQuestText(title + "\n" + startText);
         questStarted = true;
@@ -99,6 +100,7 @@ public class Quest : MonoBehaviour
 
     public void CompleteQuest()
     {
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.M_END);
         questManager = FindObjectOfType<QuestManager>();
         questManager.ShowQuestText(title + "\n" + completeText);
         questCompleted = true;

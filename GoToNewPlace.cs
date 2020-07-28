@@ -22,6 +22,7 @@ public class GoToNewPlace : MonoBehaviour
         {
             if (!needsClick || (needsClick && Input.GetAxis("Fire1") > 0.2))
             {
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.CHANGE_SCENE);
                 FindObjectOfType<PlayerController>().nextUuid = uuid;
                 //Debug.LogFormat("Se enviara al player al nextuuid = {0}", FindObjectOfType<PlayerController>().nextUuid);
                 SceneManager.LoadScene(newPlaceName);

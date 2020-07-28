@@ -88,6 +88,19 @@ public class WeaponManager : MonoBehaviour
         return weapons[pos].GetComponent<WARStats>();
     }
 
+    public void ResetAllWeapons()
+    {
+        foreach (Transform weapon in transform)
+        {
+            weapon.GetComponent<WeaponDamage>().inInventory = false;
+
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                weapons[i].SetActive(false);
+            }
+        }
+    }
+
 }
 
 

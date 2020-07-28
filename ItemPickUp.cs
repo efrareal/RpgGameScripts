@@ -44,6 +44,7 @@ public class ItemPickUp : MonoBehaviour
         {
             if(itemName == "Potion")
             {
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.GATHER_DROPS);
                 itemsManager.AddPotions(1);
                 //this.transform.parent = GameObject.Find("Inventory Player").transform;
                 gameObject.SetActive(false);
@@ -60,6 +61,7 @@ public class ItemPickUp : MonoBehaviour
                 var clone2 = (GameObject)Instantiate(displayInfo, this.transform.position, Quaternion.Euler(Vector3.zero));
                 clone2.GetComponent<DamageNumber>().damagePoints = "+" + hPvalue;
                 clone2.GetComponent<DamageNumber>().damageText.color = Color.green;
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.GATHER_DROPS);
             }
 
             if(itemName == "weapon")
@@ -67,6 +69,7 @@ public class ItemPickUp : MonoBehaviour
                 this.transform.parent = GameObject.Find("Weapon").transform;
                 gameObject.SetActive(false);
                 itemHasBeenCollected = true;
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.GATHER_DROPS);
             }
         }
     }

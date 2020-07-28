@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -18,12 +19,14 @@ public class UIManager : MonoBehaviour
     private WeaponManager weaponManager;
     private ItemsManager itemsManager;
     private ArmorManager armorManager;
+    private PlayerController thePlayer;
 
     private void Start()
     {
         weaponManager = FindObjectOfType<WeaponManager>();
         itemsManager = FindObjectOfType<ItemsManager>();
         armorManager = FindObjectOfType<ArmorManager>();
+        thePlayer = FindObjectOfType<PlayerController>();
         inventoryPanel.SetActive(false);
         menuPanel.SetActive(false);
         menuStats.SetActive(false);
@@ -74,6 +77,8 @@ public class UIManager : MonoBehaviour
 
     public void ToggleInventory()
     {
+        thePlayer.isTalking = !thePlayer.isTalking;
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
         ChangeDescriptionText();
         inventoryPanel.SetActive(!inventoryPanel.activeInHierarchy);
         menuPanel.SetActive(!menuPanel.activeInHierarchy);
@@ -151,7 +156,8 @@ public class UIManager : MonoBehaviour
 
     public void ShowOnly(int type)
     {
-        foreach(Transform t in inventoryPanel.transform)
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
+        foreach (Transform t in inventoryPanel.transform)
         {
             t.gameObject.SetActive((int)t.GetComponent<InventoryButton>().type == type);
 
@@ -160,7 +166,8 @@ public class UIManager : MonoBehaviour
 
     public void ShowAll()
     {
-        foreach(Transform t in inventoryPanel.transform)
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
+        foreach (Transform t in inventoryPanel.transform)
         {
             t.gameObject.SetActive(true);
         }
@@ -247,6 +254,47 @@ public class UIManager : MonoBehaviour
         lckTextDesc.text = "LCK: " +lckdesc;
         accTextDesc.text = "ACC: " +accdesc;
         baseDamageDesc.text = "Damage: " +damagedesc;
+    }
+
+    /// <summary>
+    /// GameOver
+    /// </summary>
+    public GameObject GameOverPanel;
+    public Button newStartButton;
+    public Button LoadGameButton;
+    public Button ExitGameButton;
+
+    public void LaunchGameOver()
+    {
+        GameOverPanel.SetActive(true);
+    }
+    public void NewStart()
+    {
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
+        SceneManager.LoadScene("MainScreen");
+        thePlayer.isDead = false;
+        thePlayer.DeactivateDeadAnimation();
+        thePlayer.isTalking = true;
+        thePlayer.canMove = false;
+        weaponManager.ResetAllWeapons();
+        thePlayer.GetComponent<CircleCollider2D>().enabled = true;
+        CharacterStats thePlayerStats = thePlayer.GetComponent<CharacterStats>();
+        thePlayerStats.level = 1;
+        thePlayer.GetComponent<HealthManager>().UpdateMaxHealth(thePlayerStats.hpLevels[thePlayerStats.level]);
+        GameOverPanel.SetActive(false);
+
+    }
+
+    public void LoadGame()
+    {
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
+        Debug.Log("En Desarrollo");
+    }
+    
+    public void ExitGame()
+    {
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
+        Application.Quit();
     }
 
 }

@@ -18,18 +18,22 @@ public class InventoryButton : MonoBehaviour
         switch (type)
         {
             case ItemType.WEAPON:
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_CHANGE_EQ);
                 FindObjectOfType<WeaponManager>().ChangeWeapon(itemIdx);
                 //FindObjectOfType<UIManager>().MenuStatsFill();
                 break;
             case ItemType.ITEM:
                 //Consumir item
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.USE_ITEM);
                 FindObjectOfType<ItemsManager>().UsePotion();
                 itemText.text = "" + FindObjectOfType<ItemsManager>().currentPotions;
                 break;
             case ItemType.ARMOR:
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_CHANGE_EQ);
                 FindObjectOfType<ArmorManager>().ChangeArmor(itemIdx);
                 break;
             case ItemType.ACCESORY:
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_CHANGE_EQ);
                 Debug.Log("En construccion...");
                 break;
             case ItemType.SPECIAL_ITEMS:
@@ -45,6 +49,7 @@ public class InventoryButton : MonoBehaviour
         switch (type)
         {
             case ItemType.WEAPON:
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
                 //Limpia antes de mostrar
                 FindObjectOfType<UIManager>().ChangeDescriptionText();
                 FindObjectOfType<UIManager>().ChangeDescriptionText
@@ -63,19 +68,23 @@ public class InventoryButton : MonoBehaviour
                 FindObjectOfType<UIManager>().MenuStatsFill();
                 break;
             case ItemType.ITEM:
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
                 //Limpia antes de mostrar
                 FindObjectOfType<UIManager>().ChangeDescriptionText();
                 FindObjectOfType<UIManager>().ChangeDescriptionText("consumable item");
 
                 break;
             case ItemType.ARMOR:
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
                 FindObjectOfType<UIManager>().ChangeDescriptionText();
                 FindObjectOfType<UIManager>().ChangeDescriptionText(FindObjectOfType<ArmorManager>().GetArmorAt(itemIdx).armorName);
                 break;
             case ItemType.ACCESORY:
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
                 Debug.Log("En construccion...");
                 break;
             case ItemType.SPECIAL_ITEMS:
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
                 QuestItem item = FindObjectOfType<ItemsManager>().GetItemAt(itemIdx);
                 //Limpia la descripcion;
                 FindObjectOfType<UIManager>().ChangeDescriptionText();

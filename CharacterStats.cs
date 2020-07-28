@@ -68,11 +68,12 @@ public class CharacterStats : MonoBehaviour
         {
             level++;
             healthManager.UpdateMaxHealth(hpLevels[level]);
-            
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.LEVEL_UP);
+
             //Truco para refrescar Stats al subir de nivel
             weaponManager.ChangeWeapon(weaponManager.activeWeapon); 
 
-            playerController.attackTime -= (float)speedLevels[level]/ MAX_STAT_VAL;
+            playerController.attackTime -= (float)newspeedLevels/ MAX_STAT_VAL;
         }
     }
 

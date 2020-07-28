@@ -45,6 +45,7 @@ public class Chest : MonoBehaviour
                 
                 _animator.SetBool("isOpened", true);
                 PlayerPrefs.SetString(chestID, "opened");
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.RECEIVE_ITEM);
                 dialogueManager.ShowDialogue(new string[] { "Chest: \n" + chestText }, rewardSprite);
 
                 if (rewardType == "Weapon")

@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour
                          ATT = "Attacking",
                          LAST_H = "LastH", 
                          LAST_V = "LastV",
-                         SECWEAPON = "SecWeapon";
+                         SECWEAPON = "SecWeapon",
+                         DEAD = "Dead";
 
 
     public Vector2 lastMovement = Vector2.zero;
@@ -36,8 +37,9 @@ public class PlayerController : MonoBehaviour
     //public float arrowSpeed;
     //private WeaponManager weapon;
 
-    public bool canMove = true;
-    public bool isTalking;
+    public bool canMove = false;
+    public bool isTalking = true;
+    public bool isDead;
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +62,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDead)
+        {
+            _animator.SetBool(DEAD, true);
+            return;
+        }
+
         if (isTalking)
         {
             _rigidbody.velocity = Vector2.zero;
@@ -72,7 +80,6 @@ public class PlayerController : MonoBehaviour
 
         if (!canMove)
         {
-            //_animator.SetBool(ATT, false);
             return;
         }
 
@@ -105,6 +112,7 @@ public class PlayerController : MonoBehaviour
             
         if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Fire3"))
         {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.ATTACK3);
             attacking = true;
             //weapon.DeactivateWeapon(true);
             attackTimeCounter = attackTime;
@@ -154,5 +162,10 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(WALK, walking);
         _animator.SetFloat(LAST_H, lastMovement.x);
         _animator.SetFloat(LAST_V, lastMovement.y);
+    }
+
+    public void DeactivateDeadAnimation()
+    {
+        _animator.SetBool(DEAD, false);
     }
 }

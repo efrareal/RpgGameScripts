@@ -60,6 +60,7 @@ public class DamagePlayer : MonoBehaviour
             {
                 var clone1 = (GameObject)Instantiate(canvasDamage, collision.transform.position, Quaternion.Euler(Vector3.zero));
                 clone1.GetComponent<DamageNumber>().damagePoints = "MISS";
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.MISS_ATTACK);
                 return; //Si falló el enemigo, pues no tiene porque parpadear el Player!!!
             }
             else
@@ -67,6 +68,7 @@ public class DamagePlayer : MonoBehaviour
                 //Muestra el valor con animacion
                 var clone = (GameObject)Instantiate(canvasDamage, collision.transform.position, Quaternion.Euler(Vector3.zero));
                 clone.GetComponent<DamageNumber>().damagePoints = "" + totalDamage;
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.ATTACK1);
             }
 
 
