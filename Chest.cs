@@ -7,8 +7,11 @@ public class Chest : MonoBehaviour
 {
     public string rewardType;
     public string rewardWeaponName;
+    public int goldValue;
+    
     private WeaponManager weaponManager;
     private ArmorManager armorManager;
+    private ItemsManager itemsManager;
     private List<GameObject> notInInventory;
     public string chestID;
     public string chestText;
@@ -26,6 +29,7 @@ public class Chest : MonoBehaviour
         _animator = GetComponent<Animator>();
         weaponManager = FindObjectOfType<WeaponManager>();
         armorManager = FindObjectOfType<ArmorManager>();
+        itemsManager = FindObjectOfType<ItemsManager>();
 
         if(PlayerPrefs.GetString(chestID)== "" || PlayerPrefs.GetString(chestID) == "closed")
         {
@@ -47,6 +51,16 @@ public class Chest : MonoBehaviour
                 PlayerPrefs.SetString(chestID, "opened");
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.RECEIVE_ITEM);
                 dialogueManager.ShowDialogue(new string[] { "Chest: \n" + chestText }, rewardSprite);
+
+                if(rewardType == "Gold")
+                {
+                    Debug.Log("Adds " + goldValue + " to your wallet!");
+                }
+
+                if(rewardType == "Potion")
+                {
+                    itemsManager.AddPotions(1);
+                }
 
                 if (rewardType == "Weapon")
                 {
