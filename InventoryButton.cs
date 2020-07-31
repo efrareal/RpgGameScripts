@@ -20,7 +20,8 @@ public class InventoryButton : MonoBehaviour
             case ItemType.WEAPON:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_CHANGE_EQ);
                 FindObjectOfType<WeaponManager>().ChangeWeapon(itemIdx);
-                //FindObjectOfType<UIManager>().MenuStatsFill();
+                FindObjectOfType<UIManager>().WeaponEq();
+                FindObjectOfType<UIManager>().MenuStatsFill();
                 break;
             case ItemType.ITEM:
                 //Consumir item
@@ -31,9 +32,11 @@ public class InventoryButton : MonoBehaviour
             case ItemType.ARMOR:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_CHANGE_EQ);
                 FindObjectOfType<ArmorManager>().ChangeArmor(itemIdx);
+                FindObjectOfType<UIManager>().ArmorEq();
                 break;
             case ItemType.ACCESORY:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_CHANGE_EQ);
+                FindObjectOfType<UIManager>().ArmorEq();
                 Debug.Log("En construccion...");
                 break;
             case ItemType.SPECIAL_ITEMS:
@@ -77,7 +80,21 @@ public class InventoryButton : MonoBehaviour
             case ItemType.ARMOR:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
                 FindObjectOfType<UIManager>().ChangeDescriptionText();
-                FindObjectOfType<UIManager>().ChangeDescriptionText(FindObjectOfType<ArmorManager>().GetArmorAt(itemIdx).armorName);
+                //FindObjectOfType<UIManager>().ChangeDescriptionText(FindObjectOfType<ArmorManager>().GetArmorAt(itemIdx).armorName);
+                FindObjectOfType<UIManager>().ChangeDescriptionText
+                    (
+                        FindObjectOfType<ArmorManager>().GetArmorAt(itemIdx).armorName,
+                        "" + FindObjectOfType<ArmorManager>().GetArmorStatsAt(itemIdx).strength,
+                        "" + FindObjectOfType<ArmorManager>().GetArmorStatsAt(itemIdx).defense,
+                        "" + FindObjectOfType<ArmorManager>().GetArmorStatsAt(itemIdx).magicAtt,
+                        "" + FindObjectOfType<ArmorManager>().GetArmorStatsAt(itemIdx).magicDef,
+                        "" + FindObjectOfType<ArmorManager>().GetArmorStatsAt(itemIdx).speed,
+                        "" + FindObjectOfType<ArmorManager>().GetArmorStatsAt(itemIdx).luck,
+                        "" + FindObjectOfType<ArmorManager>().GetArmorStatsAt(itemIdx).accuracy,
+                        "" + 0
+                    );
+                FindObjectOfType<UIManager>().MenuStatsFill();
+
                 break;
             case ItemType.ACCESORY:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);

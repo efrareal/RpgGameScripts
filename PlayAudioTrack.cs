@@ -24,7 +24,7 @@ public class PlayAudioTrack : MonoBehaviour
         if (collision.gameObject.tag.Equals("Player"))
         {
             audioManager.PlayNewTrack(newTrackID);
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 

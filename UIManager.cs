@@ -46,18 +46,6 @@ public class UIManager : MonoBehaviour
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.Append("HP: ").Append(playerHealthManager.Health).Append("/").Append(playerHealthManager.maxHealth);
         playerHealthText.text = stringBuilder.ToString();
-
-        playerLevelText.text = "Level: " + playerStats.level; //UI LEvel text
-
-        if(playerStats.level >= playerStats.expToLevelUp.Length)
-        {
-            playerExpBar.enabled = false;
-            return;
-        }
-        playerExpBar.maxValue = playerStats.expToLevelUp[playerStats.level];
-        playerExpBar.minValue = playerStats.expToLevelUp[playerStats.level -1];
-        playerExpBar.value = playerStats.exp;
-
         
     }
 
@@ -125,13 +113,6 @@ public class UIManager : MonoBehaviour
             i++;
         }
 
-        /*List<GameObject> potionsItems = itemsManager.GetRegularItems();
-        i = 0;
-        foreach (GameObject ritem in potionsItems)
-        {
-            AddItemToInventory(ritem, InventoryButton.ItemType.ITEM, i);
-            i++;
-        }*/
 
         if (itemsManager.currentPotions > 0)
         {
@@ -188,21 +169,33 @@ public class UIManager : MonoBehaviour
     public Text spdText;
     public Text lckText;
     public Text accText;
+    public Text weaponEq;
+    public Text armorEq;
+    public Text accesoryEq;
+
+    public void WeaponEq()
+    {
+        weaponEq.text = "Weapon: " + weaponManager.GetWeaponAt(weaponManager.activeWeapon).weaponName;
+    }
+
+    public void ArmorEq()
+    {
+        armorEq.text = "Armor: " + armorManager.GetArmorAt(armorManager.activeArmor).armorName;
+    }
+
+    public void AccesoryEq()
+    {
+        accesoryEq.text = "Accesory: " + "pending";
+    }
     public void MenuStatsFill()
     {
         levelStatText.text = "Level: " + playerStats.level;
         expStatText.text = "Exp: " + playerStats.exp;
         exptoNextLevelText.text = "Exp to next level: " + playerStats.expToLevelUp[playerStats.level];
 
-        /*
-        strText.text = "STR: " + playerStats.strengthLevels[playerStats.level];
-        defText.text = "DEF: " + playerStats.defenseLevels[playerStats.level];
-        matText.text = "MAT: " + playerStats.magicAttLevels[playerStats.level];
-        mdfText.text = "MDF: " + playerStats.magicDefLevels[playerStats.level];
-        spdText.text = "SPD: " + playerStats.speedLevels[playerStats.level];
-        lckText.text = "LCK: " + playerStats.luckLevels[playerStats.level];
-        accText.text = "ACC: " + playerStats.accuracyLevels[playerStats.level];
-        */
+
+
+
         strText.text = "STR: " + playerStats.newstrengthLevels;
         defText.text = "DEF: " + playerStats.newdefenseLevels;
         matText.text = "MAT: " + playerStats.newmagicAttLevels;
@@ -215,13 +208,22 @@ public class UIManager : MonoBehaviour
     {
 
     }
-    public void LevelChanged()
+    public void LevelChanged(int newlevel, int expToLevelUpLength, int maxValue, int minValue )
     {
+        playerLevelText.text = "Level: " + newlevel; //UI LEvel text
+
+        if (newlevel >= expToLevelUpLength)
+        {
+            playerExpBar.enabled = false;
+            return;
+        }
+        playerExpBar.maxValue = playerStats.expToLevelUp[playerStats.level];
+        playerExpBar.minValue = playerStats.expToLevelUp[playerStats.level - 1];
 
     }
-    public void ExpChanged()
+    public void ExpChanged(int exp)
     {
-
+        playerExpBar.value = playerStats.exp;
     }
 
     public void ChangeDescriptionText()

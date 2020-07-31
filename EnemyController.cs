@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(HealthManager))]
+[RequireComponent(typeof(CharacterStats))]
+[RequireComponent(typeof(DamagePlayer))]
+[RequireComponent(typeof(QuestEnemy))]
 public class EnemyController : MonoBehaviour
 {
     [Tooltip("Velodcidad de movimiento")]
@@ -48,8 +54,8 @@ public class EnemyController : MonoBehaviour
             if (wasHit)
             {
                 isMoving = true;
-                this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, -2* speed * Time.deltaTime);
-                directionToMove = this.transform.position - thePlayer.position;
+                this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, -4* speed * Time.deltaTime);
+                //directionToMove = this.transform.position - thePlayer.position;
                 _animator.SetFloat("Horizontal", directionToMove.x);
                 _animator.SetFloat("Vertical", directionToMove.y);
                 return;

@@ -6,6 +6,7 @@ public class ArmorManager : MonoBehaviour
 {
     private List<GameObject> armors;
     public int activeArmor;
+    private CharacterStats thePlayerStats;
 
     public List<GameObject> GetAllArmors()
     {
@@ -23,7 +24,7 @@ public class ArmorManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        thePlayerStats = FindObjectOfType<PlayerController>().GetComponent<CharacterStats>();
         GetAllArmors();
         for (int i = 0; i < armors.Count; i++)
         {
@@ -33,9 +34,25 @@ public class ArmorManager : MonoBehaviour
 
     public void ChangeArmor(int newArmor)
     {
+        
+        thePlayerStats.RemoveStatsToCharacter(armors[activeArmor].GetComponent<WARStats>().strength,
+                                          armors[activeArmor].GetComponent<WARStats>().defense,
+                                          armors[activeArmor].GetComponent<WARStats>().magicAtt,
+                                          armors[activeArmor].GetComponent<WARStats>().magicDef,
+                                          armors[activeArmor].GetComponent<WARStats>().speed,
+                                          armors[activeArmor].GetComponent<WARStats>().luck,
+                                          armors[activeArmor].GetComponent<WARStats>().accuracy);
         armors[activeArmor].SetActive(false);
         armors[newArmor].SetActive(true);
         activeArmor = newArmor;
+
+        thePlayerStats.AddStatsToCharacter(armors[newArmor].GetComponent<WARStats>().strength,
+                                          armors[newArmor].GetComponent<WARStats>().defense,
+                                          armors[newArmor].GetComponent<WARStats>().magicAtt,
+                                          armors[newArmor].GetComponent<WARStats>().magicDef,
+                                          armors[newArmor].GetComponent<WARStats>().speed,
+                                          armors[newArmor].GetComponent<WARStats>().luck,
+                                          armors[newArmor].GetComponent<WARStats>().accuracy);
     }
 
     public Armor GetArmorAt(int pos)
@@ -59,5 +76,18 @@ public class ArmorManager : MonoBehaviour
             }
         }
         return armors;
+    }
+
+    public void ResetAllArmors()
+    {
+        foreach (Transform armor in transform)
+        {
+            armor.GetComponent<Armor>().inInventory = false;
+
+            for (int i = 0; i < armors.Count; i++)
+            {
+                armors[i].SetActive(false);
+            }
+        }
     }
 }

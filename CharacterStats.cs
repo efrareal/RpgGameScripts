@@ -33,22 +33,34 @@ public class CharacterStats : MonoBehaviour
     private HealthManager healthManager;
     private PlayerController playerController;
     private WeaponManager weaponManager;
+    private ArmorManager armorManager;
+    private UIManager uIManager;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        uIManager = FindObjectOfType<UIManager>();
         weaponManager = FindObjectOfType<WeaponManager>();
+        armorManager = FindObjectOfType<ArmorManager>();
         healthManager = GetComponent<HealthManager>();
         playerController = GetComponent<PlayerController>();
-        AddStatsToCharacter(0,0,0,0,0,0,0);
+        AddStatsToCharacter(strengthLevels[level],defenseLevels[level],magicAttLevels[level],magicDefLevels[level],speedLevels[level],luckLevels[level],accuracyLevels[level]);
 
-        //Vida del Enemigo
+        //Vida del Enemigo y Player
         healthManager.UpdateMaxHealth(hpLevels[level]);
+
+        //Actualizar en el arranque el Level en el UI HUD. Solamente al Player!
+        if (gameObject.tag.Equals("Player"))
+        {
+            uIManager.LevelChanged(level, expToLevelUp.Length, expToLevelUp[level], expToLevelUp[level - 1]);
+        }
+        
+
         if (gameObject.tag.Equals("Enemy"))
         {
             EnemyController controller = GetComponent<EnemyController>();
-            controller.speed += (1.0f + (float)speedLevels[level] / MAX_STAT_VAL); 
+            controller.speed += (1.0f + (float)newspeedLevels / MAX_STAT_VAL); 
         }
     }
 
@@ -57,6 +69,7 @@ public class CharacterStats : MonoBehaviour
     {
         //Añade experiencia!
         this.exp += exp;
+        uIManager.ExpChanged(this.exp);
 
         // Cuando llegue al ultimo Nivel no se rompa el juego
         if (level >= (expToLevelUp.Length -1))
@@ -70,13 +83,16 @@ public class CharacterStats : MonoBehaviour
             healthManager.UpdateMaxHealth(hpLevels[level]);
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.LEVEL_UP);
 
-            //Truco para refrescar Stats al subir de nivel
-            weaponManager.ChangeWeapon(weaponManager.activeWeapon); 
+            //Actualiza el HUD
+            uIManager.LevelChanged(level, expToLevelUp.Length, expToLevelUp[level], expToLevelUp[level - 1]);
 
-            playerController.attackTime -= (float)newspeedLevels/ MAX_STAT_VAL;
+            AddStatsAtLevelUP();
+
+            //Suma velocidad al Player
+            playerController.speed += (float)newspeedLevels/ MAX_STAT_VAL;
         }
     }
-
+    
 
     public int newhpLevels;
     public int newmpLevels;
@@ -88,14 +104,37 @@ public class CharacterStats : MonoBehaviour
     public int newluckLevels;
     public int newaccuracyLevels;
 
+    private void AddStatsAtLevelUP()
+    {
+        newstrengthLevels = newstrengthLevels + (strengthLevels[level] - strengthLevels[level-1]);
+        newdefenseLevels = newdefenseLevels + (defenseLevels[level] - defenseLevels[level-1]);
+        newmagicAttLevels = newmagicAttLevels + (magicAttLevels[level] - magicAttLevels[level-1]);
+        newmagicDefLevels = newmagicDefLevels + (magicDefLevels[level] - magicDefLevels[level-1]);
+        newspeedLevels = newspeedLevels + (speedLevels[level] - speedLevels[level-1]);
+        newluckLevels = newluckLevels + (luckLevels[level] - luckLevels[level-1]);
+        newaccuracyLevels = newaccuracyLevels + (accuracyLevels[level] - accuracyLevels[level-1]);
+    }
+
     public void AddStatsToCharacter(int str, int def, int mat, int mdf, int spd, int lck, int acc)
     {
-        newstrengthLevels = strengthLevels[level] + str;
-        newdefenseLevels = defenseLevels[level] + def;
-        newmagicAttLevels = magicAttLevels[level] + mat;
-        newmagicDefLevels = magicDefLevels[level] + mdf;
-        newspeedLevels = speedLevels[level] + spd;
-        newluckLevels = luckLevels[level] + lck;
-        newaccuracyLevels = accuracyLevels[level] + acc;
+        newstrengthLevels = newstrengthLevels + str;
+        newdefenseLevels = newdefenseLevels + def;
+        newmagicAttLevels = newmagicAttLevels + mat;
+        newmagicDefLevels = newmagicDefLevels + mdf;
+        newspeedLevels = newspeedLevels + spd;
+        newluckLevels = newluckLevels + lck;
+        newaccuracyLevels = newaccuracyLevels + acc;
     }
+
+    public void RemoveStatsToCharacter(int str, int def, int mat, int mdf, int spd, int lck, int acc)
+    {
+        newstrengthLevels = newstrengthLevels - str;
+        newdefenseLevels = newdefenseLevels - def;
+        newmagicAttLevels = newmagicAttLevels - mat;
+        newmagicDefLevels = newmagicDefLevels - mdf;
+        newspeedLevels = newspeedLevels - spd;
+        newluckLevels = newluckLevels - lck;
+        newaccuracyLevels = newaccuracyLevels - acc;
+    }
+
 }

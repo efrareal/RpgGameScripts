@@ -46,7 +46,16 @@ public class WeaponManager : MonoBehaviour
 
     public void ChangeWeapon(int newWeapon)
     {
+        
+        thePlayerStats.RemoveStatsToCharacter(weapons[activeWeapon].GetComponent<WARStats>().strength,
+                                           weapons[activeWeapon].GetComponent<WARStats>().defense,
+                                           weapons[activeWeapon].GetComponent<WARStats>().magicAtt,
+                                           weapons[activeWeapon].GetComponent<WARStats>().magicDef,
+                                           weapons[activeWeapon].GetComponent<WARStats>().speed,
+                                           weapons[activeWeapon].GetComponent<WARStats>().luck,
+                                           weapons[activeWeapon].GetComponent<WARStats>().accuracy);
         weapons[activeWeapon].SetActive(false);
+
         weapons[newWeapon].SetActive(true);
         activeWeapon = newWeapon;
 
@@ -57,6 +66,7 @@ public class WeaponManager : MonoBehaviour
                                            weapons[newWeapon].GetComponent<WARStats>().speed,
                                            weapons[newWeapon].GetComponent<WARStats>().luck,
                                            weapons[newWeapon].GetComponent<WARStats>().accuracy);
+        
 
         FindObjectOfType<UIManager>().ChangeAvatarImage(weapons[activeWeapon].GetComponent<SpriteRenderer>().sprite);
     }
