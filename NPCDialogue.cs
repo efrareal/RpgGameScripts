@@ -8,9 +8,15 @@ public class NPCDialogue : MonoBehaviour
     public string npcName;
     public string[] npcDialogueLines;
     public Sprite npcSprite;
+    public int[] questID;
+    public bool isQuestNPC;
+    public int currentQuestId;
+
+    public Dialogues[] npcQuestDialogues;
 
     private DialogueManager dialogueManager;
     private bool playerInTheZone;
+
 
     // Start is called before the first frame update
     void Start()
@@ -38,30 +44,90 @@ public class NPCDialogue : MonoBehaviour
     {
         if (playerInTheZone && Input.GetMouseButtonDown(1))
         {
-
-            string[] finalDialogue = new string[npcDialogueLines.Length];
-
-            int i = 0;
-            foreach(string line in npcDialogueLines)
+            if(currentQuestId >= questID.Length)
             {
-                finalDialogue[i++] = (npcName != null ? npcName + "\n" : "") + line;
+                DialoguePrint(npcDialogueLines);
+                return;
             }
-            
-
-            if (npcSprite != null)
+            if (isQuestNPC && !dialogueManager.IsQuestCompleted(this.questID[currentQuestId]))
             {
-                dialogueManager.ShowDialogue(finalDialogue, npcSprite);
+                //Aqui la quest no ha sido Completada
+                if (!dialogueManager.IsQuestStarted(this.questID[currentQuestId]))
+                {
+                    //Aqui la quest no ha sido disparada por dialogo
+                    dialogueManager.isQuestDialogue = true;
+                    dialogueManager.questId = this.questID[currentQuestId];
+                    DialoguePrint(npcQuestDialogues[currentQuestId].questDialogues);
+                    return;
+                    //currentQuestId++;
+                }
 
+                //Aqui la quest si ha sido disparada por dialogo pero no ha sido completada
+                DialoguePrint(npcQuestDialogues[currentQuestId].questDialogues);
+                return;
+
+
+            }
+            if (isQuestNPC && dialogueManager.IsQuestCompleted(this.questID[currentQuestId]))
+            {
+                currentQuestId++;
             }
             else
             {
-                dialogueManager.ShowDialogue(finalDialogue);
-            }
 
-            if(gameObject.GetComponentInParent<NPCMovement>() != null)
-            {
-                gameObject.GetComponentInParent<NPCMovement>().isTalking = true;
+                string[] finalDialogue = new string[npcDialogueLines.Length];
+
+                int i = 0;
+                foreach (string line in npcDialogueLines)
+                {
+                    finalDialogue[i++] = (npcName != null ? npcName + "\n" : "") + line;
+                }
+
+
+                if (npcSprite != null)
+                {
+                    dialogueManager.ShowDialogue(finalDialogue, npcSprite);
+
+                }
+                else
+                {
+                    dialogueManager.ShowDialogue(finalDialogue);
+                }
+
+                if (gameObject.GetComponentInParent<NPCMovement>() != null)
+                {
+                    gameObject.GetComponentInParent<NPCMovement>().isTalking = true;
+                }
             }
+            
         }
+    }
+
+    void DialoguePrint(string[] npcDialogueLines)
+    {
+        string[] finalDialogue = new string[npcDialogueLines.Length];
+
+        int i = 0;
+        foreach (string line in npcDialogueLines)
+        {
+            finalDialogue[i++] = (npcName != null ? npcName + "\n" : "") + line;
+        }
+
+
+        if (npcSprite != null)
+        {
+            dialogueManager.ShowDialogue(finalDialogue, npcSprite);
+
+        }
+        else
+        {
+            dialogueManager.ShowDialogue(finalDialogue);
+        }
+
+        if (gameObject.GetComponentInParent<NPCMovement>() != null)
+        {
+            gameObject.GetComponentInParent<NPCMovement>().isTalking = true;
+        }
+
     }
 }
