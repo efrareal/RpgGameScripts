@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     private WeaponManager weaponManager;
     private ItemsManager itemsManager;
     private ArmorManager armorManager;
+    private AccesoryManager accesoryManager;
     private PlayerController thePlayer;
 
     private void Start()
@@ -26,6 +27,7 @@ public class UIManager : MonoBehaviour
         weaponManager = FindObjectOfType<WeaponManager>();
         itemsManager = FindObjectOfType<ItemsManager>();
         armorManager = FindObjectOfType<ArmorManager>();
+        accesoryManager = FindObjectOfType<AccesoryManager>();
         thePlayer = FindObjectOfType<PlayerController>();
         inventoryPanel.SetActive(false);
         menuPanel.SetActive(false);
@@ -113,6 +115,14 @@ public class UIManager : MonoBehaviour
             i++;
         }
 
+        List<GameObject> accesories = accesoryManager.GetAllAccesories();
+        i = 0;
+        foreach (GameObject ac in accesories)
+        {
+            AddItemToInventory(ac, InventoryButton.ItemType.ACCESORY, i, "");
+            i++;
+        }
+
 
         if (itemsManager.currentPotions > 0)
         {
@@ -185,7 +195,7 @@ public class UIManager : MonoBehaviour
 
     public void AccesoryEq()
     {
-        accesoryEq.text = "Accesory: " + "pending";
+        accesoryEq.text = "Accesory: " + accesoryManager.GetAccesoryAt(accesoryManager.activeAccesory).accesoryName;
     }
     public void MenuStatsFill()
     {

@@ -21,7 +21,7 @@ public class InventoryButton : MonoBehaviour
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_CHANGE_EQ);
                 FindObjectOfType<WeaponManager>().ChangeWeapon(itemIdx);
                 FindObjectOfType<UIManager>().WeaponEq();
-                FindObjectOfType<UIManager>().MenuStatsFill();
+                //FindObjectOfType<UIManager>().MenuStatsFill();
                 break;
             case ItemType.ITEM:
                 //Consumir item
@@ -36,8 +36,8 @@ public class InventoryButton : MonoBehaviour
                 break;
             case ItemType.ACCESORY:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_CHANGE_EQ);
-                FindObjectOfType<UIManager>().ArmorEq();
-                Debug.Log("En construccion...");
+                FindObjectOfType<AccesoryManager>().ChangeAccesory(itemIdx);
+                FindObjectOfType<UIManager>().AccesoryEq();
                 break;
             case ItemType.SPECIAL_ITEMS:
                 Debug.Log("Equipar anillo, pendiente");
@@ -80,7 +80,6 @@ public class InventoryButton : MonoBehaviour
             case ItemType.ARMOR:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
                 FindObjectOfType<UIManager>().ChangeDescriptionText();
-                //FindObjectOfType<UIManager>().ChangeDescriptionText(FindObjectOfType<ArmorManager>().GetArmorAt(itemIdx).armorName);
                 FindObjectOfType<UIManager>().ChangeDescriptionText
                     (
                         FindObjectOfType<ArmorManager>().GetArmorAt(itemIdx).armorName,
@@ -98,7 +97,20 @@ public class InventoryButton : MonoBehaviour
                 break;
             case ItemType.ACCESORY:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
-                Debug.Log("En construccion...");
+                FindObjectOfType<UIManager>().ChangeDescriptionText();
+                FindObjectOfType<UIManager>().ChangeDescriptionText
+                    (
+                        FindObjectOfType<AccesoryManager>().GetAccesoryAt(itemIdx).accesoryName,
+                        "" + FindObjectOfType<AccesoryManager>().GetAccesoryStatsAt(itemIdx).strength,
+                        "" + FindObjectOfType<AccesoryManager>().GetAccesoryStatsAt(itemIdx).defense,
+                        "" + FindObjectOfType<AccesoryManager>().GetAccesoryStatsAt(itemIdx).magicAtt,
+                        "" + FindObjectOfType<AccesoryManager>().GetAccesoryStatsAt(itemIdx).magicDef,
+                        "" + FindObjectOfType<AccesoryManager>().GetAccesoryStatsAt(itemIdx).speed,
+                        "" + FindObjectOfType<AccesoryManager>().GetAccesoryStatsAt(itemIdx).luck,
+                        "" + FindObjectOfType<AccesoryManager>().GetAccesoryStatsAt(itemIdx).accuracy,
+                        "" + 0
+                    );
+                FindObjectOfType<UIManager>().MenuStatsFill();
                 break;
             case ItemType.SPECIAL_ITEMS:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
