@@ -42,11 +42,12 @@ public class WeaponManager : MonoBehaviour
         {
             weapons[i].SetActive(false);
         }
+
+        weapons[0].SetActive(true);
     }
 
     public void ChangeWeapon(int newWeapon)
     {
-        
         thePlayerStats.RemoveStatsToCharacter(weapons[activeWeapon].GetComponent<WARStats>().strength,
                                            weapons[activeWeapon].GetComponent<WARStats>().defense,
                                            weapons[activeWeapon].GetComponent<WARStats>().magicAtt,

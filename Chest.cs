@@ -12,6 +12,7 @@ public class Chest : MonoBehaviour
     private WeaponManager weaponManager;
     private ArmorManager armorManager;
     private ItemsManager itemsManager;
+    private MoneyManager moneyManager;
     private List<GameObject> notInInventory;
     public string chestID;
     public string chestText;
@@ -30,6 +31,7 @@ public class Chest : MonoBehaviour
         weaponManager = FindObjectOfType<WeaponManager>();
         armorManager = FindObjectOfType<ArmorManager>();
         itemsManager = FindObjectOfType<ItemsManager>();
+        moneyManager = FindObjectOfType<MoneyManager>();
 
         if(PlayerPrefs.GetString(chestID)== "" || PlayerPrefs.GetString(chestID) == "closed")
         {
@@ -54,7 +56,7 @@ public class Chest : MonoBehaviour
 
                 if(rewardType == "Gold")
                 {
-                    Debug.Log("Adds " + goldValue + " to your wallet!");
+                    moneyManager.AddMoney(goldValue);
                 }
 
                 if(rewardType == "Potion")

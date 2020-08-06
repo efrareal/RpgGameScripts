@@ -12,6 +12,7 @@ public class WeaponDamage : MonoBehaviour
     public GameObject canvasDamage;
 
     public GameObject hpPoints;
+    public GameObject moneyDrop;
 
     private CharacterStats stats;
     public string weaponName;
@@ -107,6 +108,12 @@ public class WeaponDamage : MonoBehaviour
                 clone.GetComponent<DamageNumber>().damagePoints = "" + totalDamage;
             }
             */
+
+            //Suelta Money si hay tienes suerte
+            if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.newluckLevels)
+            {
+                Destroy(Instantiate(moneyDrop, hitPoint.transform.position, hpPoints.transform.rotation), 7.0f);
+            }
 
             //Reduce daño a vida
             collision.gameObject.GetComponent<HealthManager>().DamageCharacter(totalDamage);

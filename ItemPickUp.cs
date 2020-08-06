@@ -13,6 +13,7 @@ public class ItemPickUp : MonoBehaviour
     //public int etherMagicPoints = 10;
 
     private ItemsManager itemsManager;
+    private MoneyManager moneyManager;
 
 
     private void OnEnable()
@@ -36,6 +37,7 @@ public class ItemPickUp : MonoBehaviour
     void Start()
     {
         itemsManager = FindObjectOfType<ItemsManager>();
+        moneyManager = FindObjectOfType<MoneyManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -64,12 +66,28 @@ public class ItemPickUp : MonoBehaviour
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.GATHER_DROPS);
             }
 
+            /*
             if(itemName == "weapon")
             {
                 this.transform.parent = GameObject.Find("Weapon").transform;
                 gameObject.SetActive(false);
                 itemHasBeenCollected = true;
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.GATHER_DROPS);
+            }
+            */
+
+            if(itemName == "Money")
+            {
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.GATHER_DROPS);
+                int moneyValue;
+                moneyValue = Random.Range(10, 50);
+                moneyManager.AddMoney(moneyValue);
+                gameObject.SetActive(false);
+                var clone3 = (GameObject)Instantiate(displayInfo, this.transform.position, Quaternion.Euler(Vector3.zero));
+                clone3.GetComponent<DamageNumber>().damagePoints = "+" + moneyValue;
+                clone3.GetComponent<DamageNumber>().damageText.color = Color.yellow;
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.GATHER_DROPS);
+
             }
         }
     }
