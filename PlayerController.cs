@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
                          ATT = "Attacking",
                          LAST_H = "LastH", 
                          LAST_V = "LastV",
-                         SECWEAPON = "SecWeapon",
+                         SPELLCAST = "SpellCast",
                          DEAD = "Dead";
 
 
@@ -40,11 +40,20 @@ public class PlayerController : MonoBehaviour
     public bool canMove = false;
     public bool isTalking = true;
     public bool isDead;
+    
+    public bool castSpell;
+    public float spellTime;
+    private float spellTimeCounter;
+    public GameObject fireSpell;
+    public Transform shootPosition;
+    public float shootSpeed;
+    private SkillManager skillManager;
+    private WeaponManager weapon;
 
     // Start is called before the first frame update
     void Start()
     {
-        //weapon = FindObjectOfType<WeaponManager>();
+        weapon = FindObjectOfType<WeaponManager>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         isTalking = false;
@@ -85,10 +94,6 @@ public class PlayerController : MonoBehaviour
 
         if (attacking)
         {
-            /*if (!canMove)
-            {
-                return;
-            }*/
             attackTimeCounter -= Time.deltaTime;
             if(attackTimeCounter < 0)
             {
@@ -96,43 +101,46 @@ public class PlayerController : MonoBehaviour
                 _animator.SetBool(ATT, false);
             }
         }
-        /*if (bowing)
+
+        if (castSpell)
         {
             weapon.DeactivateWeapon(false);
-            bowTimeCounter -= Time.deltaTime;
-            if (bowTimeCounter < 0)
+            spellTimeCounter -= Time.deltaTime;
+            if (spellTimeCounter < 0)
             {
-                bowing = false;
-                _animator.SetBool(SECWEAPON, false);
-                GameObject newArrow = Instantiate(arrow, shootPosition.transform.position,shootPosition.transform.rotation) as GameObject;
-                Rigidbody2D arrowRB = newArrow.GetComponent<Rigidbody2D>();
-                arrowRB.velocity = lastMovement * arrowSpeed;
+                castSpell = false;
+                _animator.SetBool(SPELLCAST, false);
+                GameObject newSpell = Instantiate(fireSpell, shootPosition.transform.position,shootPosition.transform.rotation) as GameObject;
+                Rigidbody2D spellRB = newSpell.GetComponent<Rigidbody2D>();
+                spellRB.velocity = lastMovement * shootSpeed;
+                weapon.DeactivateWeapon(true);
             }
-        }*/
-            
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Fire3"))
         {
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.ATTACK3);
             attacking = true;
-            //weapon.DeactivateWeapon(true);
+            weapon.DeactivateWeapon(true);
             attackTimeCounter = attackTime;
             _rigidbody.velocity = Vector2.zero;
             _animator.SetBool(ATT, true);
         }
-            /*
-            if (Input.GetButtonDown("Jump"))
-            {
-                bowing = true;
-                bowTimeCounter = bowTime;
-                _rigidbody.velocity = Vector2.zero;
-                _animator.SetBool(SECWEAPON, true);
-                
-            }
-            */
-
+        
+        /*
+        if (Input.GetButtonDown("Jump") && !castSpell)
+        {
+            castSpell = true;
+            spellTimeCounter = spellTime;
+            _rigidbody.velocity = Vector2.zero;
+            _animator.SetBool(SPELLCAST, true);
+            
+        }
+        */
 
         // S = V*T
-        if((Mathf.Abs(Input.GetAxisRaw(AXIS_H)) > 0.2f) && !attacking) //&& !bowing)
+        if((Mathf.Abs(Input.GetAxisRaw(AXIS_H)) > 0.2f) && !attacking && !castSpell)
         {
             //Vector3 translation = new Vector3(Input.GetAxisRaw(AXIS_H) * speed * Time.deltaTime, 0, 0);
             //this.transform.Translate(translation);
@@ -141,7 +149,7 @@ public class PlayerController : MonoBehaviour
             lastMovement = new Vector2(Input.GetAxisRaw(AXIS_H), 0);
         }
 
-        if ((Mathf.Abs(Input.GetAxisRaw(AXIS_V)) > 0.2f) && !attacking) //&& !bowing)
+        if ((Mathf.Abs(Input.GetAxisRaw(AXIS_V)) > 0.2f) && !attacking && !castSpell)
         {
             //Vector3 translation = new Vector3(0, Input.GetAxisRaw(AXIS_V) * speed * Time.deltaTime, 0);
             //this.transform.Translate(translation);
@@ -167,5 +175,13 @@ public class PlayerController : MonoBehaviour
     public void DeactivateDeadAnimation()
     {
         _animator.SetBool(DEAD, false);
+    }
+
+    public void CastSpell()
+    {
+        castSpell = true;
+        spellTimeCounter = spellTime;
+        _rigidbody.velocity = Vector2.zero;
+        _animator.SetBool(SPELLCAST, true);
     }
 }

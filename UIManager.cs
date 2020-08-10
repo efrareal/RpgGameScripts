@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     private ArmorManager armorManager;
     private AccesoryManager accesoryManager;
     private PlayerController thePlayer;
+    private SkillManager skillManager;
 
     private void Start()
     {
@@ -29,6 +30,7 @@ public class UIManager : MonoBehaviour
         armorManager = FindObjectOfType<ArmorManager>();
         accesoryManager = FindObjectOfType<AccesoryManager>();
         thePlayer = FindObjectOfType<PlayerController>();
+        skillManager = FindObjectOfType<SkillManager>();
         inventoryPanel.SetActive(false);
         menuPanel.SetActive(false);
         menuStats.SetActive(false);
@@ -267,6 +269,7 @@ public class UIManager : MonoBehaviour
         accTextDesc.text = "ACC: " +accdesc;
         baseDamageDesc.text = "Damage: " +damagedesc;
     }
+
 
     /// <summary>
     /// GameOver
