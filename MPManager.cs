@@ -4,15 +4,39 @@ using UnityEngine;
 
 public class MPManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int maxMP;
+    private int currentMP;
+
+
+    private void Start()
     {
-        
+        UpdateMaxMP(maxMP);
     }
 
-    // Update is called once per frame
-    void Update()
+    public int MagicPoints
     {
-        
+        get
+        {
+            return currentMP;
+        }
     }
+
+    public void UseMP(int value)
+    {
+
+        currentMP -= value;
+        
+        if(currentMP < 0)
+        {
+            currentMP = 0;
+        }
+    }
+
+    public void UpdateMaxMP(int newMaxMP)
+    {
+        maxMP = newMaxMP;
+        currentMP = maxMP;
+    }
+
+
 }

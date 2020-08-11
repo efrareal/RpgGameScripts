@@ -10,10 +10,12 @@ public class SkillButton : MonoBehaviour
     public SkillType type;
 
     private PlayerController thePlayer;
+    public MPManager mpManager;
 
     private void Start()
     {
         thePlayer =FindObjectOfType<PlayerController>();
+
     }
 
     public void ActivateSkillButton()
@@ -21,6 +23,10 @@ public class SkillButton : MonoBehaviour
         switch (type)
         {
             case SkillType.FIRE:
+                if (mpManager.MagicPoints <= 0)
+                {
+                    return;
+                }
                 if (!thePlayer.castSpell) { thePlayer.CastSpell(); }
                 break;
             case SkillType.BOW:

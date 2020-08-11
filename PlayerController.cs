@@ -112,8 +112,10 @@ public class PlayerController : MonoBehaviour
                 _animator.SetBool(SPELLCAST, false);
                 GameObject newSpell = Instantiate(fireSpell, shootPosition.transform.position,shootPosition.transform.rotation) as GameObject;
                 Rigidbody2D spellRB = newSpell.GetComponent<Rigidbody2D>();
+                Skill spellSkill = newSpell.GetComponent<Skill>();
                 spellRB.velocity = lastMovement * shootSpeed;
                 weapon.DeactivateWeapon(true);
+                GetComponent<MPManager>().UseMP(spellSkill.skillMP);
             }
             return;
         }

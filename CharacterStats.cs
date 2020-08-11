@@ -35,6 +35,7 @@ public class CharacterStats : MonoBehaviour
     private WeaponManager weaponManager;
     private ArmorManager armorManager;
     private UIManager uIManager;
+    private MPManager mpManager;
 
 
     // Start is called before the first frame update
@@ -45,6 +46,7 @@ public class CharacterStats : MonoBehaviour
         armorManager = FindObjectOfType<ArmorManager>();
         healthManager = GetComponent<HealthManager>();
         playerController = GetComponent<PlayerController>();
+        mpManager = GetComponent<MPManager>();
         AddStatsToCharacter(strengthLevels[level],defenseLevels[level],magicAttLevels[level],magicDefLevels[level],speedLevels[level],luckLevels[level],accuracyLevels[level]);
 
         //Vida del Enemigo y Player
@@ -54,6 +56,7 @@ public class CharacterStats : MonoBehaviour
         if (gameObject.tag.Equals("Player"))
         {
             uIManager.LevelChanged(level, expToLevelUp.Length, expToLevelUp[level], expToLevelUp[level - 1]);
+            mpManager.UpdateMaxMP(mpLevels[level]);
         }
         
 
@@ -81,6 +84,7 @@ public class CharacterStats : MonoBehaviour
         {
             level++;
             healthManager.UpdateMaxHealth(hpLevels[level]);
+            mpManager.UpdateMaxMP(mpLevels[level]);
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.LEVEL_UP);
 
             //Actualiza el HUD

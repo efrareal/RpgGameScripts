@@ -7,6 +7,7 @@ public class Skill : MonoBehaviour
     public string skillName;
     public string skillType;
     private CharacterStats stats;
+    public int skillMP;
 
     public bool inInventory;
     public bool skillActive;

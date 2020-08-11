@@ -13,8 +13,11 @@ public class UIManager : MonoBehaviour
     public Text playerLevelText;
     public Slider playerExpBar;
     public Image playerAvatar;
+    public Slider playerMPBar;
+    public Text playerMPText;
 
     public HealthManager playerHealthManager;
+    public MPManager playerMPManager;
     public CharacterStats playerStats;
     private WeaponManager weaponManager;
     private ItemsManager itemsManager;
@@ -50,7 +53,15 @@ public class UIManager : MonoBehaviour
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.Append("HP: ").Append(playerHealthManager.Health).Append("/").Append(playerHealthManager.maxHealth);
         playerHealthText.text = stringBuilder.ToString();
-        
+
+        playerMPBar.maxValue = playerMPManager.maxMP;
+        playerMPBar.value = playerMPManager.MagicPoints;
+        StringBuilder stringBuilder2 = new StringBuilder();
+        stringBuilder2.Append("MP: ").Append(playerMPManager.MagicPoints).Append("/").Append(playerMPManager.maxMP);
+        playerMPText.text = stringBuilder2.ToString();
+
+
+
     }
 
     public GameObject inventoryPanel, menuPanel, menuStats, descriptionMenu;
@@ -216,10 +227,19 @@ public class UIManager : MonoBehaviour
         lckText.text = "LCK: " + playerStats.newluckLevels;
         accText.text = "ACC: " + playerStats.newaccuracyLevels;
     }
+
+    /// <summary>
+    /// HUD
+    /// </summary>
     public void HealthChanged()
     {
 
     }
+    public void MPChanged()
+    {
+
+    }
+
     public void LevelChanged(int newlevel, int expToLevelUpLength, int maxValue, int minValue )
     {
         playerLevelText.text = "Level: " + newlevel; //UI LEvel text
@@ -238,6 +258,9 @@ public class UIManager : MonoBehaviour
         playerExpBar.value = playerStats.exp;
     }
 
+    /// <summary>
+    /// Inventory Description
+    /// </summary>
     public void ChangeDescriptionText()
     {
         descriptionText.text = "";
