@@ -38,5 +38,15 @@ public class MPManager : MonoBehaviour
         currentMP = maxMP;
     }
 
+    public void AddMPPoints(int value)
+    {
+        if ((currentMP + value) >= maxMP)
+        {
+            currentMP = maxMP;
+            return;
+        }
+        currentMP += value;
+    }
+
 
 }

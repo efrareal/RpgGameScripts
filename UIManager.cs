@@ -60,8 +60,6 @@ public class UIManager : MonoBehaviour
         stringBuilder2.Append("MP: ").Append(playerMPManager.MagicPoints).Append("/").Append(playerMPManager.maxMP);
         playerMPText.text = stringBuilder2.ToString();
 
-
-
     }
 
     public GameObject inventoryPanel, menuPanel, menuStats, descriptionMenu;
@@ -136,7 +134,7 @@ public class UIManager : MonoBehaviour
             i++;
         }
 
-
+        //Potions
         if (itemsManager.currentPotions > 0)
         {
             //Obtiene del ItemManager el GameObject de la potion, para poder usar su sprite
@@ -144,6 +142,16 @@ public class UIManager : MonoBehaviour
             int potionsQuantity = itemsManager.currentPotions;
             i = 0;
             AddItemToInventory(potionObject, InventoryButton.ItemType.ITEM, i, "" + potionsQuantity);
+        }
+
+        //Ethers
+        if (itemsManager.currentEthers > 0)
+        {
+            //Obtiene del ItemManager el GameObject de la potion, para poder usar su sprite
+            GameObject etherObject = itemsManager.etherObject;
+            int ethersQuantity = itemsManager.currentEthers;
+            i = 1;
+            AddItemToInventory(etherObject, InventoryButton.ItemType.ITEM, i, "" + ethersQuantity);
         }
     }
 

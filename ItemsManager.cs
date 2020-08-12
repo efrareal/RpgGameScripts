@@ -9,11 +9,16 @@ public class ItemsManager : MonoBehaviour
     public int hpPointsValue= 5;
     public int potionvalue = 50;
     public GameObject potionObject;
-    //private int potionValue = 100;
+
+    public int currentEthers;
+    private MPManager playerMPManager;
+    public int etherValue = 20;
+    public GameObject etherObject;
 
     private void Start()
     {
         playerHealthManager = GetComponentInParent<HealthManager>();
+        playerMPManager = GetComponentInParent<MPManager>();
     }
 
 
@@ -38,6 +43,26 @@ public class ItemsManager : MonoBehaviour
         if(currentPotions < 0)
         {
             currentPotions = 0;
+        }
+    }
+
+    public void AddEthers(int etherCollected)
+    {
+        currentEthers += etherCollected;
+    }
+
+    public void UseEther()
+    {
+        if(currentEthers <= 0)
+        {
+            currentEthers = 0;
+            return;
+        }
+        currentEthers--;
+        playerMPManager.AddMPPoints(etherValue);
+        if(currentEthers < 0)
+        {
+            currentEthers = 0;
         }
     }
 

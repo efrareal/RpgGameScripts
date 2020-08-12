@@ -64,6 +64,11 @@ public class Chest : MonoBehaviour
                     itemsManager.AddPotions(1);
                 }
 
+                if (rewardType == "Ether")
+                {
+                    itemsManager.AddEthers(1);
+                }
+
                 if (rewardType == "Weapon")
                 {
                     notInInventory = weaponManager.GetAllNotInInvetoryWeapons();

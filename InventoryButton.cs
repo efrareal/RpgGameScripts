@@ -26,8 +26,16 @@ public class InventoryButton : MonoBehaviour
             case ItemType.ITEM:
                 //Consumir item
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.USE_ITEM);
-                FindObjectOfType<ItemsManager>().UsePotion();
-                itemText.text = "" + FindObjectOfType<ItemsManager>().currentPotions;
+                if (itemIdx == 0)
+                {
+                    FindObjectOfType<ItemsManager>().UsePotion();
+                    itemText.text = "" + FindObjectOfType<ItemsManager>().currentPotions;
+                }
+                if(itemIdx == 1)
+                {
+                    FindObjectOfType<ItemsManager>().UseEther();
+                    itemText.text = "" + FindObjectOfType<ItemsManager>().currentEthers;
+                }
                 break;
             case ItemType.ARMOR:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_CHANGE_EQ);
