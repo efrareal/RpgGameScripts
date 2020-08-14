@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
 
     private bool isMoving;
     private bool wasHit;
+    private bool playerWasHit;
 
     [Tooltip("Tiempo que tarda el enemigo entre pasos sucesivos")]
     public float timeBetweenSteps;
@@ -54,15 +55,26 @@ public class EnemyController : MonoBehaviour
             if (wasHit)
             {
                 isMoving = true;
-                this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, -4* speed * Time.deltaTime);
+                this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, -4* speed * Time.fixedDeltaTime);
                 //directionToMove = this.transform.position - thePlayer.position;
                 _animator.SetFloat("Horizontal", directionToMove.x);
                 _animator.SetFloat("Vertical", directionToMove.y);
                 return;
             }
+
+            if (playerWasHit)
+            {
+                isMoving = true;
+                this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, -2 * speed * Time.fixedDeltaTime);
+                directionToMove = this.transform.position - thePlayer.position;
+                _animator.SetFloat("Horizontal", directionToMove.x);
+                _animator.SetFloat("Vertical", directionToMove.y);
+                return;
+            }
+
             //Debug.Log("Player entró en la zona de vision");
             isMoving = true;
-            this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, speed * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, thePlayer.position, speed * Time.fixedDeltaTime);
             directionToMove = thePlayer.position - this.transform.position;
             _animator.SetFloat("Horizontal", directionToMove.x);
             _animator.SetFloat("Vertical", directionToMove.y);
@@ -72,11 +84,9 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-
-            //Debug.Log("Player salio de la zona de vision");
             isMoving = false;
             wasHit = false;
-
+            playerWasHit = false;
         }
     }
     // Update is called once per frame
@@ -114,5 +124,9 @@ public class EnemyController : MonoBehaviour
     public void EnemyWasHit()
     {
         wasHit = true;
+    }
+    public void HitThePlayer()
+    {
+        playerWasHit = true;
     }
 }

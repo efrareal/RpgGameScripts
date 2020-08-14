@@ -25,7 +25,7 @@ public class InventoryButton : MonoBehaviour
                 break;
             case ItemType.ITEM:
                 //Consumir item
-                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.USE_ITEM);
+                
                 if (itemIdx == 0)
                 {
                     FindObjectOfType<ItemsManager>().UsePotion();

@@ -8,11 +8,29 @@ public class GoToNewPlace : MonoBehaviour
     public string newPlaceName = "New place here!!!";
     public bool needsClick = false;
     public string uuid;
+    private QuestManager questManager;
+    public int questID;
+    public bool needsQuest;
 
+    private void Start()
+    {
+        questManager = FindObjectOfType<QuestManager>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Teleport(collision.gameObject.name);
+        if (needsQuest)
+        {
+            Quest quest = questManager.QuestWithID(questID);
+            if (quest.questStarted || quest.questCompleted)
+            {
+                Teleport(collision.gameObject.name);
+            }
+        }
+        else
+        {
+            Teleport(collision.gameObject.name);
+        }
     }
 
 
@@ -24,7 +42,6 @@ public class GoToNewPlace : MonoBehaviour
             {
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.CHANGE_SCENE);
                 FindObjectOfType<PlayerController>().nextUuid = uuid;
-                //Debug.LogFormat("Se enviara al player al nextuuid = {0}", FindObjectOfType<PlayerController>().nextUuid);
                 SceneManager.LoadScene(newPlaceName);
             }
         }

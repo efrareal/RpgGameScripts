@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Skill : MonoBehaviour
 {
     public string skillName;
@@ -48,7 +49,7 @@ public class Skill : MonoBehaviour
             {
                 if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.newluckLevels)
                 {
-                    totalDamage = 0;
+                    totalDamage = (int)skillDamage /2;
                 }
                 else
                 {
@@ -57,15 +58,15 @@ public class Skill : MonoBehaviour
                     //Animacion del System Particle
                     if (bloodAnim != null && hitPoint != null)
                     {
-                        Destroy(Instantiate(bloodAnim, hitPoint.transform.position, hitPoint.transform.rotation), 1.0f);
+                        Destroy(Instantiate(bloodAnim, collision.transform.position, collision.transform.rotation), 1.0f);
                     }
 
                     //Animacion del letrero de puntos
-                    var clone2 = (GameObject)Instantiate(canvasDamage, hitPoint.transform.position, Quaternion.Euler(Vector3.zero));
+                    var clone2 = (GameObject)Instantiate(canvasDamage, collision.transform.position, Quaternion.Euler(Vector3.zero));
                     clone2.GetComponent<DamageNumber>().damagePoints = "CRIT " + totalDamage;
 
                     //Suelta HP Points si hay daño critico
-                    Destroy(Instantiate(hpPoints, hitPoint.transform.position, hpPoints.transform.rotation), 7.0f);
+                    Destroy(Instantiate(hpPoints, collision.transform.position, collision.transform.rotation), 7.0f);
                 }
             }
             else
@@ -73,7 +74,7 @@ public class Skill : MonoBehaviour
                 //Ataque normal probabilidad de que dañe al enemigo
                 if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.newluckLevels)
                 {
-                    totalDamage = 0;
+                    totalDamage = (int)skillDamage / 2;
                 }
                 else
                 {
@@ -82,18 +83,18 @@ public class Skill : MonoBehaviour
                     //Animacion del System Particle
                     if (bloodAnim != null && hitPoint != null)
                     {
-                        Destroy(Instantiate(bloodAnim, hitPoint.transform.position, hitPoint.transform.rotation), 1.0f);
+                        Destroy(Instantiate(bloodAnim, collision.transform.position, collision.transform.rotation), 1.0f);
                     }
 
                     //Animacion del letrero de puntos
-                    var clone3 = (GameObject)Instantiate(canvasDamage, hitPoint.transform.position, Quaternion.Euler(Vector3.zero));
+                    var clone3 = (GameObject)Instantiate(canvasDamage, collision.transform.position, Quaternion.Euler(Vector3.zero));
                     clone3.GetComponent<DamageNumber>().damagePoints = "" + totalDamage;
                 }
             }
 
             if (totalDamage == 0)
             {
-                var clone1 = (GameObject)Instantiate(canvasDamage, hitPoint.transform.position, Quaternion.Euler(Vector3.zero));
+                var clone1 = (GameObject)Instantiate(canvasDamage, collision.transform.position, Quaternion.Euler(Vector3.zero));
                 clone1.GetComponent<DamageNumber>().damagePoints = "MISS";
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.MISS_ATTACK);
             }
@@ -101,7 +102,7 @@ public class Skill : MonoBehaviour
             //Suelta Money si hay tienes suerte
             if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.newluckLevels)
             {
-                Destroy(Instantiate(moneyDrop, hitPoint.transform.position, hpPoints.transform.rotation), 7.0f);
+                Destroy(Instantiate(moneyDrop, collision.transform.position, collision.transform.rotation), 7.0f);
             }
 
             //Reduce daño a vida

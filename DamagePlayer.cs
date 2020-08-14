@@ -21,11 +21,13 @@ public class DamagePlayer : MonoBehaviour
     private CharacterStats playerStats;
     //Stats del Enemigo
     private CharacterStats _stats;
+    private EnemyController enemyController;
 
     private void Start()
     {
         playerStats = GameObject.FindWithTag("Player").GetComponent<CharacterStats>();
         _stats = GetComponent<CharacterStats>();
+        enemyController = GetComponent<EnemyController>();
     }
 
 
@@ -74,27 +76,8 @@ public class DamagePlayer : MonoBehaviour
 
             //Resta vida al Player
             collision.gameObject.GetComponent<HealthManager>().DamageCharacter(totalDamage);
-            /*
-            collision.gameObject.SetActive(false);
-            playerReviving = true;
-            timeRevivalCounter = timeToRevivePlayer;
-            thePlayer = collision.gameObject;
-            */
-        }
-    }
+            enemyController.HitThePlayer();
 
-    // Update is called once per frame
-    /*void Update()
-    {
-        if (playerReviving)
-        {
-            timeRevivalCounter -= Time.deltaTime;
-            if(timeRevivalCounter < 0)
-            {
-                playerReviving = false;
-                thePlayer.SetActive(true);
-            }
         }
     }
-    */
 }

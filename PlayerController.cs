@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     public float spellTime;
     private float spellTimeCounter;
     public GameObject fireSpell;
+    public GameObject iceSpell;
+    public GameObject thunderSpell;
     public Transform shootPosition;
     public float shootSpeed;
     private SkillManager skillManager;
@@ -91,6 +93,59 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
+        
+        if (castSpell)
+        {
+            weapon.DeactivateWeapon(false);
+            spellTimeCounter -= Time.deltaTime;
+            if (spellTimeCounter < 0)
+            {
+                castSpell = false;
+                _animator.SetBool(SPELLCAST, false);
+                GameObject newSpell = Instantiate(selectedSpell, shootPosition.transform.position, shootPosition.transform.rotation) as GameObject;
+                Rigidbody2D spellRB = newSpell.GetComponent<Rigidbody2D>();
+                Skill spellSkill = newSpell.GetComponent<Skill>();
+                
+                
+
+                if (spellSkill.skillName == "FIRE")
+                {
+                    spellRB.velocity = lastMovement * shootSpeed;
+                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.FIRE_SKILL);
+                }
+                if (spellSkill.skillName == "THUNDER")
+                {
+                    spellRB.velocity = lastMovement * shootSpeed/2;
+                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.LOCK_DOOR);
+                }
+                if (spellSkill.skillName == "ICE")
+                {
+                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.BOSS_ATTACK);
+                    /*
+                    if (lastMovement.x > 0) //Mirando hacia la derecha
+                    {
+                        newSpell.transform.rotation = Quaternion.Euler(0, 90, 0);
+                    }
+                    if (lastMovement.x < 0) //Mirando hacia la Izquierda
+                    {
+                        newSpell.transform.rotation = Quaternion.Euler(180, 90, 0);
+                    }
+                    if (lastMovement.y > 0) //Mirando hacia arriba
+                    {
+                        newSpell.transform.rotation = Quaternion.Euler(270, 90, 0);
+                    }
+                    if (lastMovement.y < 0) //Mirando hacia la abajo
+                    {
+                        newSpell.transform.rotation = Quaternion.Euler(90, 90, 0);
+                    }
+                    */
+
+                }
+                weapon.DeactivateWeapon(true);
+                GetComponent<MPManager>().UseMP(spellSkill.skillMP);
+            }
+            return;
+        }
 
         if (attacking)
         {
@@ -102,24 +157,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (castSpell)
-        {
-            weapon.DeactivateWeapon(false);
-            spellTimeCounter -= Time.deltaTime;
-            if (spellTimeCounter < 0)
-            {
-                castSpell = false;
-                _animator.SetBool(SPELLCAST, false);
-                GameObject newSpell = Instantiate(fireSpell, shootPosition.transform.position,shootPosition.transform.rotation) as GameObject;
-                Rigidbody2D spellRB = newSpell.GetComponent<Rigidbody2D>();
-                Skill spellSkill = newSpell.GetComponent<Skill>();
-                spellRB.velocity = lastMovement * shootSpeed;
-                weapon.DeactivateWeapon(true);
-                GetComponent<MPManager>().UseMP(spellSkill.skillMP);
-            }
-            return;
-        }
-
         if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Fire3"))
         {
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.ATTACK3);
@@ -129,17 +166,6 @@ public class PlayerController : MonoBehaviour
             _rigidbody.velocity = Vector2.zero;
             _animator.SetBool(ATT, true);
         }
-        
-        /*
-        if (Input.GetButtonDown("Jump") && !castSpell)
-        {
-            castSpell = true;
-            spellTimeCounter = spellTime;
-            _rigidbody.velocity = Vector2.zero;
-            _animator.SetBool(SPELLCAST, true);
-            
-        }
-        */
 
         // S = V*T
         if((Mathf.Abs(Input.GetAxisRaw(AXIS_H)) > 0.2f) && !attacking && !castSpell)
@@ -179,11 +205,37 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(DEAD, false);
     }
 
-    public void CastSpell()
+    public void CastSpell(float stime)
     {
         castSpell = true;
-        spellTimeCounter = spellTime;
+        attacking = false;
+        _animator.SetBool(ATT, false);
+
+        spellTimeCounter = stime;
         _rigidbody.velocity = Vector2.zero;
         _animator.SetBool(SPELLCAST, true);
+
+
+    }
+
+    public GameObject selectedSpell;
+    private void SelectSpell(GameObject spell)
+    {
+        castSpell = false;
+        _animator.SetBool(SPELLCAST, false);
+        GameObject newSpell = Instantiate(spell, shootPosition.transform.position, shootPosition.transform.rotation) as GameObject;
+        Rigidbody2D spellRB = newSpell.GetComponent<Rigidbody2D>();
+        Skill spellSkill = newSpell.GetComponent<Skill>();
+        spellRB.velocity = lastMovement * shootSpeed;
+        weapon.DeactivateWeapon(true);
+        GetComponent<MPManager>().UseMP(spellSkill.skillMP);
+        if (spellSkill.skillName == "FIRE")
+        {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.FIRE_SKILL);
+        }
+        if (spellSkill.skillName == "ICE")
+        {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.BOSS_ATTACK);
+        }
     }
 }

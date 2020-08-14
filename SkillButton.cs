@@ -27,13 +27,35 @@ public class SkillButton : MonoBehaviour
                 {
                     return;
                 }
-                if (!thePlayer.castSpell) { thePlayer.CastSpell(); }
+                if (!thePlayer.castSpell)
+                { 
+                    thePlayer.CastSpell(1.0f);
+                    thePlayer.selectedSpell = thePlayer.fireSpell;
+                }
                 break;
             case SkillType.BOW:
                 break;
             case SkillType.THUNDER:
+                if (mpManager.MagicPoints <= 0)
+                {
+                    return;
+                }
+                if (!thePlayer.castSpell)
+                {
+                    thePlayer.CastSpell(1.0f);
+                    thePlayer.selectedSpell = thePlayer.thunderSpell;
+                }
                 break;
             case SkillType.ICE:
+                if (mpManager.MagicPoints <= 0)
+                {
+                    return;
+                }
+                if (!thePlayer.castSpell)
+                {
+                    thePlayer.CastSpell(1.0f);
+                    thePlayer.selectedSpell = thePlayer.iceSpell;
+                }
                 break;
         }
     }

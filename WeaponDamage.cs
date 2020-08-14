@@ -61,6 +61,7 @@ public class WeaponDamage : MonoBehaviour
                     //Animacion del letrero de puntos
                     var clone2 = (GameObject)Instantiate(canvasDamage, hitPoint.transform.position, Quaternion.Euler(Vector3.zero));
                     clone2.GetComponent<DamageNumber>().damagePoints = "CRIT " + totalDamage;
+                    clone2.GetComponent<DamageNumber>().damageText.color = Color.red;
 
                     //Suelta HP Points si hay daño critico
                     Destroy(Instantiate(hpPoints, hitPoint.transform.position, hpPoints.transform.rotation), 7.0f);
@@ -76,6 +77,12 @@ public class WeaponDamage : MonoBehaviour
                 else
                 {
 
+                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.ENEMY_HIT);
+                    //Suelta Money si hay tienes suerte
+                    if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.newluckLevels)
+                    {
+                        Destroy(Instantiate(moneyDrop, hitPoint.transform.position, hpPoints.transform.rotation), 7.0f);
+                    }
 
                     //Animacion del System Particle
                     if (bloodAnim != null && hitPoint != null)
@@ -108,12 +115,6 @@ public class WeaponDamage : MonoBehaviour
                 clone.GetComponent<DamageNumber>().damagePoints = "" + totalDamage;
             }
             */
-
-            //Suelta Money si hay tienes suerte
-            if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.newluckLevels)
-            {
-                Destroy(Instantiate(moneyDrop, hitPoint.transform.position, hpPoints.transform.rotation), 7.0f);
-            }
 
             //Reduce daño a vida
             collision.gameObject.GetComponent<HealthManager>().DamageCharacter(totalDamage);

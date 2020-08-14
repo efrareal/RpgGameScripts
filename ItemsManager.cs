@@ -36,11 +36,13 @@ public class ItemsManager : MonoBehaviour
         if (currentPotions <= 0)
         {
             currentPotions = 0;
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
             return;
         }
         currentPotions--;
         playerHealthManager.AddHealthPoints(potionvalue);
-        if(currentPotions < 0)
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.USE_ITEM);
+        if (currentPotions < 0)
         {
             currentPotions = 0;
         }
@@ -56,11 +58,13 @@ public class ItemsManager : MonoBehaviour
         if(currentEthers <= 0)
         {
             currentEthers = 0;
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
             return;
         }
         currentEthers--;
         playerMPManager.AddMPPoints(etherValue);
-        if(currentEthers < 0)
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.USE_ITEM);
+        if (currentEthers < 0)
         {
             currentEthers = 0;
         }
