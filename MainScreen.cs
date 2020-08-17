@@ -9,11 +9,15 @@ public class MainScreen : MonoBehaviour
     public Button startGameButton;
     public Button exitGameButton;
     private PlayerController thePlayer;
+
+    private UIManager uiManager;
     // Start is called before the first frame update
     void Start()
     {
         PlayerPrefs.DeleteAll();
         thePlayer = FindObjectOfType<PlayerController>();
+        uiManager = FindObjectOfType<UIManager>();
+        uiManager.ToggleHUD();
 
     }
 
@@ -23,6 +27,8 @@ public class MainScreen : MonoBehaviour
         thePlayer.isTalking = false;
         thePlayer.canMove = true;
         SceneManager.LoadScene("Kings Room");
+        uiManager.ToggleHUD();
+
     }
 
     public void ExitGame()

@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public Image playerAvatar;
     public Slider playerMPBar;
     public Text playerMPText;
+    public GameObject hudObject;
 
     public HealthManager playerHealthManager;
     public MPManager playerMPManager;
@@ -341,6 +342,11 @@ public class UIManager : MonoBehaviour
     {
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
         Application.Quit();
+    }
+
+    public void ToggleHUD()
+    {
+        hudObject.SetActive(!hudObject.activeInHierarchy);
     }
 
 }

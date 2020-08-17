@@ -29,8 +29,8 @@ public class SkillButton : MonoBehaviour
                 }
                 if (!thePlayer.castSpell)
                 { 
-                    thePlayer.CastSpell(1.0f);
-                    thePlayer.selectedSpell = thePlayer.fireSpell;
+                    thePlayer.CastSpell(1.0f, thePlayer.fireSpell);
+                    //thePlayer.selectedSpell = thePlayer.fireSpell;
                 }
                 break;
             case SkillType.BOW:
@@ -42,8 +42,8 @@ public class SkillButton : MonoBehaviour
                 }
                 if (!thePlayer.castSpell)
                 {
-                    thePlayer.CastSpell(1.0f);
-                    thePlayer.selectedSpell = thePlayer.thunderSpell;
+                    thePlayer.CastSpell(1.0f, thePlayer.thunderSpell);
+                    //thePlayer.selectedSpell = thePlayer.thunderSpell;
                 }
                 break;
             case SkillType.ICE:
@@ -53,8 +53,8 @@ public class SkillButton : MonoBehaviour
                 }
                 if (!thePlayer.castSpell)
                 {
-                    thePlayer.CastSpell(1.0f);
-                    thePlayer.selectedSpell = thePlayer.iceSpell;
+                    thePlayer.CastSpell(1.0f, thePlayer.iceSpell);
+                    //thePlayer.selectedSpell = thePlayer.iceSpell;
                 }
                 break;
         }

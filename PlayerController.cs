@@ -102,47 +102,9 @@ public class PlayerController : MonoBehaviour
             {
                 castSpell = false;
                 _animator.SetBool(SPELLCAST, false);
-                GameObject newSpell = Instantiate(selectedSpell, shootPosition.transform.position, shootPosition.transform.rotation) as GameObject;
-                Rigidbody2D spellRB = newSpell.GetComponent<Rigidbody2D>();
-                Skill spellSkill = newSpell.GetComponent<Skill>();
                 
-                
-
-                if (spellSkill.skillName == "FIRE")
-                {
-                    spellRB.velocity = lastMovement * shootSpeed;
-                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.FIRE_SKILL);
-                }
-                if (spellSkill.skillName == "THUNDER")
-                {
-                    spellRB.velocity = lastMovement * shootSpeed/2;
-                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.LOCK_DOOR);
-                }
-                if (spellSkill.skillName == "ICE")
-                {
-                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.BOSS_ATTACK);
-                    /*
-                    if (lastMovement.x > 0) //Mirando hacia la derecha
-                    {
-                        newSpell.transform.rotation = Quaternion.Euler(0, 90, 0);
-                    }
-                    if (lastMovement.x < 0) //Mirando hacia la Izquierda
-                    {
-                        newSpell.transform.rotation = Quaternion.Euler(180, 90, 0);
-                    }
-                    if (lastMovement.y > 0) //Mirando hacia arriba
-                    {
-                        newSpell.transform.rotation = Quaternion.Euler(270, 90, 0);
-                    }
-                    if (lastMovement.y < 0) //Mirando hacia la abajo
-                    {
-                        newSpell.transform.rotation = Quaternion.Euler(90, 90, 0);
-                    }
-                    */
-
-                }
                 weapon.DeactivateWeapon(true);
-                GetComponent<MPManager>().UseMP(spellSkill.skillMP);
+                
             }
             return;
         }
@@ -205,7 +167,9 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(DEAD, false);
     }
 
-    public void CastSpell(float stime)
+    //public GameObject selectedSpell;
+
+    public void CastSpell(float stime, GameObject selectedSpell)
     {
         castSpell = true;
         attacking = false;
@@ -215,27 +179,43 @@ public class PlayerController : MonoBehaviour
         _rigidbody.velocity = Vector2.zero;
         _animator.SetBool(SPELLCAST, true);
 
-
-    }
-
-    public GameObject selectedSpell;
-    private void SelectSpell(GameObject spell)
-    {
-        castSpell = false;
-        _animator.SetBool(SPELLCAST, false);
-        GameObject newSpell = Instantiate(spell, shootPosition.transform.position, shootPosition.transform.rotation) as GameObject;
+        GameObject newSpell = Instantiate(selectedSpell, shootPosition.transform.position, shootPosition.transform.rotation) as GameObject;
         Rigidbody2D spellRB = newSpell.GetComponent<Rigidbody2D>();
         Skill spellSkill = newSpell.GetComponent<Skill>();
-        spellRB.velocity = lastMovement * shootSpeed;
-        weapon.DeactivateWeapon(true);
-        GetComponent<MPManager>().UseMP(spellSkill.skillMP);
+
         if (spellSkill.skillName == "FIRE")
         {
+            spellRB.velocity = lastMovement * shootSpeed;
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.FIRE_SKILL);
+            if (lastMovement.x > 0) //Mirando hacia la derecha
+            {
+                newSpell.transform.rotation = Quaternion.Euler(0, 0, 90);
+            }
+            if (lastMovement.x < 0) //Mirando hacia la Izquierda
+            {
+                newSpell.transform.rotation = Quaternion.Euler(0, 0, 270);
+            }
+            if (lastMovement.y > 0) //Mirando hacia arriba
+            {
+                newSpell.transform.rotation = Quaternion.Euler(0, 0, 180);
+            }
+            if (lastMovement.y < 0) //Mirando hacia la abajo
+            {
+                newSpell.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+
+        }
+        if (spellSkill.skillName == "THUNDER")
+        {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.LOCK_DOOR);
         }
         if (spellSkill.skillName == "ICE")
         {
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.BOSS_ATTACK);
         }
+        GetComponent<MPManager>().UseMP(spellSkill.skillMP);
     }
+
+    
+
 }
