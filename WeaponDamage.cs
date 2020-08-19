@@ -102,19 +102,6 @@ public class WeaponDamage : MonoBehaviour
                 clone1.GetComponent<DamageNumber>().damagePoints = "MISS";
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.MISS_ATTACK);
             }
-            /*else
-            {
-                //Animacion del System Particle
-                if (bloodAnim != null && hitPoint != null)
-                {
-                    Destroy(Instantiate(bloodAnim, hitPoint.transform.position, hitPoint.transform.rotation), 1.0f);
-                }
-
-                //Animacion del letrero de puntos
-                var clone = (GameObject)Instantiate(canvasDamage, hitPoint.transform.position, Quaternion.Euler(Vector3.zero));
-                clone.GetComponent<DamageNumber>().damagePoints = "" + totalDamage;
-            }
-            */
 
             //Reduce daño a vida
             collision.gameObject.GetComponent<HealthManager>().DamageCharacter(totalDamage);

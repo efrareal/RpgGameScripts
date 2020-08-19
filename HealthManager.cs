@@ -110,6 +110,11 @@ public class HealthManager : MonoBehaviour
         currentHealth += value;
     }
 
+    public void ChangeHealth(int value)
+    {
+        currentHealth = value;
+    }
+
     // Update is called once per frame
     void Update()
     {

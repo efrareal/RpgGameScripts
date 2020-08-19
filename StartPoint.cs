@@ -18,16 +18,10 @@ public class StartPoint : MonoBehaviour
         {
             return;
         }
-        Debug.LogFormat("SI hizo match a este uuid= {0}", uuid);
         player.transform.position = this.transform.position;
         theCamera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, theCamera.transform.position.z);
 
         player.lastMovement = facingDirection;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

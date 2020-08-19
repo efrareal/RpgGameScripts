@@ -90,4 +90,30 @@ public class ArmorManager : MonoBehaviour
             }
         }
     }
+
+    public List<string> GetAllArmorsName()
+    {
+        List<string> armorsName = new List<string>();
+        foreach (Transform armor in transform)
+        {
+            if (armor.GetComponent<Armor>().inInventory)
+            {
+                armorsName.Add(armor.GetComponent<Armor>().armorName);
+            }
+        }
+        return armorsName;
+    }
+
+    public void SearchArmorByName(string name)
+    {
+        foreach (Transform armor in transform)
+        {
+            if (armor.GetComponent<Armor>().armorName == name)
+            {
+                armor.GetComponent<Armor>().inInventory = true;
+            }
+        }
+        GetAllArmors();
+    }
+
 }

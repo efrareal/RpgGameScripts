@@ -40,4 +40,52 @@ public class QuestManager : MonoBehaviour
         return q;
     }
 
+    public List<int> QuestsStarted()
+    {
+        List<int> questsStarted = new List<int>();
+
+        foreach (Quest q in quests)
+        {
+            if (q.questStarted)
+            {
+                questsStarted.Add(q.questID);
+            }
+        }
+        return questsStarted;
+    }
+
+    public List<int> QuestsCompleted()
+    {
+        List<int> questsCompleted = new List<int>();
+        foreach (Quest q in quests)
+        {
+            if (q.questCompleted)
+            {
+                questsCompleted.Add(q.questID);
+            }
+        }
+        return questsCompleted;
+    }
+
+    public void SearchQuestByIDSetStarted(int id)
+    {
+        foreach (Quest q in quests)
+        {
+            if (q.questID == id)
+            {
+                q.questStarted = true;
+            }
+        }
+    }
+
+    public void SearchQuestByIDSetCompleted(int id)
+    {
+        foreach (Quest q in quests)
+        {
+            if (q.questID == id)
+            {
+                q.questCompleted = true;
+            }
+        }
+    }
 }

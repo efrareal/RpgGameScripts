@@ -90,4 +90,29 @@ public class AccesoryManager : MonoBehaviour
             }
         }
     }
+
+    public List<string> GetAllAccsName()
+    {
+        List<string> accsName = new List<string>();
+        foreach (Transform acc in transform)
+        {
+            if (acc.GetComponent<Accesory>().inInventory)
+            {
+                accsName.Add(acc.GetComponent<Accesory>().accesoryName);
+            }
+        }
+        return accsName;
+    }
+
+    public void SearchAccByName(string name)
+    {
+        foreach (Transform acc in transform)
+        {
+            if (acc.GetComponent<Accesory>().accesoryName == name)
+            {
+                acc.GetComponent<Accesory>().inInventory = true;
+            }
+        }
+        GetAllAccesories();
+    }
 }

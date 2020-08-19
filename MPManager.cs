@@ -48,5 +48,10 @@ public class MPManager : MonoBehaviour
         currentMP += value;
     }
 
+    public void ChangeMP(int value)
+    {
+        currentMP = value;
+    }
+
 
 }

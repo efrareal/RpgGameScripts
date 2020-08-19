@@ -249,7 +249,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void LevelChanged(int newlevel, int expToLevelUpLength, int maxValue, int minValue )
+    public void LevelChanged(int newlevel, int expToLevelUpLength, int maxValue, int minValue)
     {
         playerLevelText.text = "Level: " + newlevel; //UI LEvel text
 
@@ -258,8 +258,8 @@ public class UIManager : MonoBehaviour
             playerExpBar.enabled = false;
             return;
         }
-        playerExpBar.maxValue = playerStats.expToLevelUp[playerStats.level];
-        playerExpBar.minValue = playerStats.expToLevelUp[playerStats.level - 1];
+        playerExpBar.maxValue = maxValue;
+        playerExpBar.minValue = minValue;
 
     }
     public void ExpChanged(int exp)

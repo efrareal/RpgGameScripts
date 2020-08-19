@@ -12,9 +12,12 @@ public class GoToNewPlace : MonoBehaviour
     public int questID;
     public bool needsQuest;
 
+    private SceneTransition sceneTransition;
+
     private void Start()
     {
         questManager = FindObjectOfType<QuestManager>();
+        sceneTransition = FindObjectOfType<SceneTransition>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,7 +45,9 @@ public class GoToNewPlace : MonoBehaviour
             {
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.CHANGE_SCENE);
                 FindObjectOfType<PlayerController>().nextUuid = uuid;
-                SceneManager.LoadScene(newPlaceName);
+                //SceneManager.LoadScene(newPlaceName);
+                sceneTransition.Transition(newPlaceName);
+
             }
         }
     }

@@ -90,7 +90,7 @@ public class CharacterStats : MonoBehaviour
             //Actualiza el HUD
             uIManager.LevelChanged(level, expToLevelUp.Length, expToLevelUp[level], expToLevelUp[level - 1]);
 
-            AddStatsAtLevelUP();
+            AddStatsAtLevelUP(level-1);
 
             //Suma velocidad al Player
             playerController.speed += (float)newspeedLevels/ MAX_STAT_VAL;
@@ -108,15 +108,15 @@ public class CharacterStats : MonoBehaviour
     public int newluckLevels;
     public int newaccuracyLevels;
 
-    private void AddStatsAtLevelUP()
+    public void AddStatsAtLevelUP(int prevLevel)
     {
-        newstrengthLevels = newstrengthLevels + (strengthLevels[level] - strengthLevels[level-1]);
-        newdefenseLevels = newdefenseLevels + (defenseLevels[level] - defenseLevels[level-1]);
-        newmagicAttLevels = newmagicAttLevels + (magicAttLevels[level] - magicAttLevels[level-1]);
-        newmagicDefLevels = newmagicDefLevels + (magicDefLevels[level] - magicDefLevels[level-1]);
-        newspeedLevels = newspeedLevels + (speedLevels[level] - speedLevels[level-1]);
-        newluckLevels = newluckLevels + (luckLevels[level] - luckLevels[level-1]);
-        newaccuracyLevels = newaccuracyLevels + (accuracyLevels[level] - accuracyLevels[level-1]);
+        newstrengthLevels = newstrengthLevels + (strengthLevels[level] - strengthLevels[prevLevel]);
+        newdefenseLevels = newdefenseLevels + (defenseLevels[level] - defenseLevels[prevLevel]);
+        newmagicAttLevels = newmagicAttLevels + (magicAttLevels[level] - magicAttLevels[prevLevel]);
+        newmagicDefLevels = newmagicDefLevels + (magicDefLevels[level] - magicDefLevels[prevLevel]);
+        newspeedLevels = newspeedLevels + (speedLevels[level] - speedLevels[prevLevel]);
+        newluckLevels = newluckLevels + (luckLevels[level] - luckLevels[prevLevel]);
+        newaccuracyLevels = newaccuracyLevels + (accuracyLevels[level] - accuracyLevels[prevLevel]);
     }
 
     public void AddStatsToCharacter(int str, int def, int mat, int mdf, int spd, int lck, int acc)

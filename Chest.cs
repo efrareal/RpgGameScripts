@@ -13,6 +13,7 @@ public class Chest : MonoBehaviour
     private ArmorManager armorManager;
     private ItemsManager itemsManager;
     private MoneyManager moneyManager;
+    private AccesoryManager accManager;
     private List<GameObject> notInInventory;
     public string chestID;
     public string chestText;
@@ -32,8 +33,9 @@ public class Chest : MonoBehaviour
         armorManager = FindObjectOfType<ArmorManager>();
         itemsManager = FindObjectOfType<ItemsManager>();
         moneyManager = FindObjectOfType<MoneyManager>();
+        accManager = FindObjectOfType<AccesoryManager>();
 
-        if(PlayerPrefs.GetString(chestID)== "" || PlayerPrefs.GetString(chestID) == "closed")
+        if (PlayerPrefs.GetString(chestID)== "" || PlayerPrefs.GetString(chestID) == "closed")
         {
             PlayerPrefs.SetString(chestID, "closed");
         }
@@ -89,6 +91,19 @@ public class Chest : MonoBehaviour
                         if (narmor.GetComponent<Armor>().armorName == rewardWeaponName)
                         {
                             narmor.GetComponent<Armor>().inInventory = true;
+                        }
+                    }
+
+                }
+                if (rewardType == "Accesory")
+                {
+                    notInInventory = accManager.GetAllNotInInvetoryAccesory();
+
+                    foreach (GameObject nacc in notInInventory)
+                    {
+                        if (nacc.GetComponent<Accesory>().accesoryName == rewardWeaponName)
+                        {
+                            nacc.GetComponent<Accesory>().inInventory = true;
                         }
                     }
 

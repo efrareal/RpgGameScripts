@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
         {
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.ATTACK3);
             attacking = true;
-            weapon.DeactivateWeapon(true);
+            //weapon.DeactivateWeapon(true);
             attackTimeCounter = attackTime;
             _rigidbody.velocity = Vector2.zero;
             _animator.SetBool(ATT, true);

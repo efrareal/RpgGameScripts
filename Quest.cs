@@ -22,6 +22,13 @@ public class Quest : MonoBehaviour
     public string completeText;
 
     public Quest nextQuest;
+    public bool givesReward;
+    public string rewardType;
+    public string rewardText;
+    public string rewardName;
+    private List<GameObject> notInInventory;
+
+    private AccesoryManager accManager;
 
     /*private void OnLevelWasLoaded(int level)
     {
@@ -103,6 +110,24 @@ public class Quest : MonoBehaviour
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.M_END);
         questManager = FindObjectOfType<QuestManager>();
         questManager.ShowQuestText(title + "\n" + completeText);
+        if (givesReward)
+        {
+            if (rewardType == "Accesory")
+            {
+                accManager = FindObjectOfType<AccesoryManager>();
+                notInInventory = accManager.GetAllNotInInvetoryAccesory();
+                
+                foreach (GameObject nacc in notInInventory)
+                {
+                    if (nacc.GetComponent<Accesory>().accesoryName == rewardName)
+                    {
+                        nacc.GetComponent<Accesory>().inInventory = true;
+                    }
+                }
+
+            }
+            questManager.ShowQuestText(title + "\n" + rewardText);
+        }
         questCompleted = true;
         if(nextQuest != null)
         {

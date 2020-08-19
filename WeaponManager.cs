@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Policy;
 using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
@@ -43,7 +44,7 @@ public class WeaponManager : MonoBehaviour
             weapons[i].SetActive(false);
         }
 
-        weapons[0].SetActive(true);
+        //weapons[0].SetActive(true);
     }
 
     public void ChangeWeapon(int newWeapon)
@@ -112,6 +113,31 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
+    
+    public List<string> GetAllWeaponsName()
+    {
+        List<string> weaponsName = new List<string>();
+        foreach (Transform weapon in transform)
+        {
+            if (weapon.GetComponent<WeaponDamage>().inInventory)
+            {
+                weaponsName.Add(weapon.GetComponent<WeaponDamage>().weaponName);
+            }
+        }
+        return weaponsName;
+    }
+
+    public void SearchWeaponByName(string name)
+    {
+        foreach (Transform weapon in transform)
+        {
+            if (weapon.GetComponent<WeaponDamage>().weaponName == name)
+            {
+                weapon.GetComponent<WeaponDamage>().inInventory = true;
+            }
+        }
+        GetAllWeapons();
+    }
 }
 
 
