@@ -36,6 +36,13 @@ public class InventoryButton : MonoBehaviour
                     FindObjectOfType<ItemsManager>().UseEther();
                     itemText.text = "" + FindObjectOfType<ItemsManager>().currentEthers;
                 }
+
+                if (itemIdx == 2)
+                {
+                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
+                    itemText.text = "" + FindObjectOfType<ItemsManager>().currentPhoenixDown;
+                }
+
                 break;
             case ItemType.ARMOR:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_CHANGE_EQ);
@@ -82,8 +89,19 @@ public class InventoryButton : MonoBehaviour
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
                 //Limpia antes de mostrar
                 FindObjectOfType<UIManager>().ChangeDescriptionText();
-                FindObjectOfType<UIManager>().ChangeDescriptionText("consumable item");
+                if (itemIdx == 0)
+                {
+                    FindObjectOfType<UIManager>().ChangeDescriptionText("Potion, recovers 100 health points");
+                }
+                if (itemIdx == 1)
+                {
+                    FindObjectOfType<UIManager>().ChangeDescriptionText("Ether, recover 30 magic points");
+                }
 
+                if (itemIdx == 2)
+                {
+                    FindObjectOfType<UIManager>().ChangeDescriptionText("Phoenix Down, Revives the player. \n \n  (Used only at Game Over)");
+                }
                 break;
             case ItemType.ARMOR:
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Text;
 using UnityEditor;
-using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -25,7 +24,7 @@ public class UIManager : MonoBehaviour
     private ArmorManager armorManager;
     private AccesoryManager accesoryManager;
     private PlayerController thePlayer;
-    private SkillManager skillManager;
+    private MoneyManager moneyManager;
 
     private void Start()
     {
@@ -34,7 +33,7 @@ public class UIManager : MonoBehaviour
         armorManager = FindObjectOfType<ArmorManager>();
         accesoryManager = FindObjectOfType<AccesoryManager>();
         thePlayer = FindObjectOfType<PlayerController>();
-        skillManager = FindObjectOfType<SkillManager>();
+        moneyManager = FindObjectOfType<MoneyManager>();
         inventoryPanel.SetActive(false);
         menuPanel.SetActive(false);
         menuStats.SetActive(false);
@@ -154,6 +153,17 @@ public class UIManager : MonoBehaviour
             i = 1;
             AddItemToInventory(etherObject, InventoryButton.ItemType.ITEM, i, "" + ethersQuantity);
         }
+
+        //PDs
+        if (itemsManager.currentPhoenixDown > 0)
+        {
+            //Obtiene del ItemManager el GameObject de la potion, para poder usar su sprite
+            GameObject pdObject = itemsManager.phoenixDownObject;
+            int pdQuantity = itemsManager.currentPhoenixDown;
+            i = 2;
+            AddItemToInventory(pdObject, InventoryButton.ItemType.ITEM, i, "" + pdQuantity);
+        }
+
     }
 
     private void AddItemToInventory(GameObject item, InventoryButton.ItemType type, int pos, string valuetext)
@@ -302,40 +312,54 @@ public class UIManager : MonoBehaviour
         baseDamageDesc.text = "Damage: " +damagedesc;
     }
 
+    /// <summary>
+    /// Skills Panel
+    /// </summary>
+    public GameObject skillPanel;
+
+    public void ActivateSkillPanel()
+    {
+        skillPanel.SetActive(true);
+    }
+
+
 
     /// <summary>
     /// GameOver
     /// </summary>
     public GameObject GameOverPanel;
     public Button newStartButton;
-    public Button LoadGameButton;
+    public Button phoenixDownButton;
     public Button ExitGameButton;
 
     public void LaunchGameOver()
     {
         GameOverPanel.SetActive(true);
     }
+
+
     public void NewStart()
     {
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
-        SceneManager.LoadScene("MainScreen");
+        SceneTransition sceneTransition;
+        sceneTransition = FindObjectOfType<SceneTransition>();
+        sceneTransition.Transition("MainScreen");
+        PlayerPrefs.DeleteAll();
+        //SceneManager.LoadScene("MainScreen");
         thePlayer.isDead = false;
+        moneyManager.currentMoney = 0;
         thePlayer.DeactivateDeadAnimation();
         thePlayer.isTalking = true;
         thePlayer.canMove = false;
-        weaponManager.ResetAllWeapons();
-        thePlayer.GetComponent<CircleCollider2D>().enabled = true;
+        thePlayer.nextUuid = "StartGame";
+        //weaponManager.ResetAllWeapons();
+        //thePlayer.GetComponent<CircleCollider2D>().enabled = true;
         CharacterStats thePlayerStats = thePlayer.GetComponent<CharacterStats>();
         thePlayerStats.level = 1;
         thePlayer.GetComponent<HealthManager>().UpdateMaxHealth(thePlayerStats.hpLevels[thePlayerStats.level]);
+        thePlayerStats.level = 1;
+        thePlayerStats.InitialStats();
         GameOverPanel.SetActive(false);
-
-    }
-
-    public void LoadGame()
-    {
-        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
-        Debug.Log("En Desarrollo");
     }
     
     public void ExitGame()
@@ -344,9 +368,27 @@ public class UIManager : MonoBehaviour
         Application.Quit();
     }
 
+    public void PhoenixDown()
+    {
+        if (itemsManager.currentPhoenixDown <= 0)
+        {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
+            return;
+        }
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
+        itemsManager.UsePD();
+        thePlayer.isDead = false;
+        thePlayer.DeactivateDeadAnimation();
+        thePlayer.isTalking = false;
+        thePlayer.canMove = true;
+        thePlayer.GetComponent<CircleCollider2D>().enabled = true;
+        GameOverPanel.SetActive(false);
+    }
+
+    /*
     public void ToggleHUD()
     {
         hudObject.SetActive(!hudObject.activeInHierarchy);
     }
-
+    */
 }

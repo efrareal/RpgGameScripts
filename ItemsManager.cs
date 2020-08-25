@@ -7,13 +7,16 @@ public class ItemsManager : MonoBehaviour
     public int currentPotions;
     private HealthManager playerHealthManager;
     public int hpPointsValue= 5;
-    public int potionvalue = 50;
+    private int potionvalue = 100;
     public GameObject potionObject;
 
     public int currentEthers;
     private MPManager playerMPManager;
     public int etherValue = 20;
     public GameObject etherObject;
+
+    public int currentPhoenixDown;
+    public GameObject phoenixDownObject;
 
     private void Start()
     {
@@ -67,6 +70,28 @@ public class ItemsManager : MonoBehaviour
         if (currentEthers < 0)
         {
             currentEthers = 0;
+        }
+    }
+
+    public void AddPD(int pd)
+    {
+        currentPhoenixDown += pd;
+    }
+
+    public void UsePD()
+    {
+        if (currentPhoenixDown <= 0)
+        {
+            currentPhoenixDown = 0;
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
+            return;
+        }
+        currentPhoenixDown--;
+        playerHealthManager.AddHealthPoints(50);
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.USE_ITEM);
+        if (currentPhoenixDown < 0)
+        {
+            currentPhoenixDown = 0;
         }
     }
 

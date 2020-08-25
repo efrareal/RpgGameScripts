@@ -141,4 +141,18 @@ public class CharacterStats : MonoBehaviour
         newaccuracyLevels = newaccuracyLevels - acc;
     }
 
+    public void InitialStats()
+    {
+        newstrengthLevels = 0; 
+        newdefenseLevels = 0; 
+        newmagicAttLevels = 0; 
+        newmagicDefLevels = 0; 
+        newspeedLevels = 0; 
+        newluckLevels = 0;
+        newaccuracyLevels = 0;
+
+        AddStatsToCharacter(strengthLevels[1], defenseLevels[1], magicAttLevels[1], magicDefLevels[1], speedLevels[1], luckLevels[1], accuracyLevels[1]);
+
+    }
+
 }

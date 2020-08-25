@@ -67,7 +67,7 @@ public class HealthManager : MonoBehaviour
             if (gameObject.tag.Equals("Player"))
             {
                 GetComponent<PlayerController>().isDead = true;
-                GetComponent<CircleCollider2D>().enabled = false;
+                //GetComponent<CircleCollider2D>().enabled = false;
                 //gameObject.SetActive(false);
                 uiManager.LaunchGameOver();
 

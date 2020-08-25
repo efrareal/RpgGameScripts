@@ -35,6 +35,7 @@ public class SceneTransition : MonoBehaviour
 
     public void Transition(string scene)
     {
+        _animator = GetComponent<Animator>();
         _animator.SetBool("FadeOut", true);
         transition = true;
         levelToLoad = scene;

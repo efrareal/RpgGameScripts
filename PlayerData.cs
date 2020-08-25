@@ -8,6 +8,7 @@ public class PlayerData
 {
 	public string savePointId;
 	public string sceneName;
+	public int gold;
 	public int health;
 	public int mp;
 	public int exp;
@@ -22,5 +23,13 @@ public class PlayerData
 	public int ethers;
 	public List<int> questsStarted;
 	public List<int> questsCompleted;
+
+	public int str;
+	public int def;
+	public int mat;
+	public int mdf;
+	public int spd;
+	public int lck;
+	public int acc;
 
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Data.Common;
 
 public class SavePoint : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class SavePoint : MonoBehaviour
     private ArmorManager armorManager;
     private AccesoryManager accesoryManager;
     private QuestManager questManager;
+    private MoneyManager moneyManager;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +39,7 @@ public class SavePoint : MonoBehaviour
         accesoryManager = FindObjectOfType<AccesoryManager>();
         itemsManager = FindObjectOfType<ItemsManager>();
         questManager = FindObjectOfType<QuestManager>();
+        moneyManager = FindObjectOfType<MoneyManager>();
 
         if (!player.nextUuid.Equals(savePointId))
         {
@@ -55,6 +58,7 @@ public class SavePoint : MonoBehaviour
         PlayerData data = new PlayerData();
         data.savePointId = savePointId;
         data.sceneName = currentScene;
+        data.gold = moneyManager.currentMoney;
         data.health = healthManager.Health;
         data.level = stats.level;
         data.exp = stats.exp;
@@ -80,6 +84,13 @@ public class SavePoint : MonoBehaviour
         List<int> qsCompleted = questManager.QuestsCompleted();
         data.questsCompleted = qsCompleted;
 
+        data.str = stats.newstrengthLevels;
+        data.def = stats.newdefenseLevels;
+        data.mat = stats.newmagicAttLevels;
+        data.mdf = stats.newmagicDefLevels;
+        data.spd = stats.newspeedLevels;
+        data.lck = stats.newluckLevels;
+        data.acc = stats.newaccuracyLevels;
 
         bf.Serialize(file, data);
         file.Close();

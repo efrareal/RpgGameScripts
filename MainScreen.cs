@@ -25,15 +25,14 @@ public class MainScreen : MonoBehaviour
     private AccesoryManager accesoryManager;
     private QuestManager questManager;
     private SceneTransition sceneTransition;
-    private UIManager uIManager;
+    private MoneyManager moneyManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayerPrefs.DeleteAll();
         thePlayer = FindObjectOfType<PlayerController>();
         uiManager = FindObjectOfType<UIManager>();
-        uiManager.ToggleHUD();
+        //uiManager.ToggleHUD();
 
         healthManager = GameObject.Find("Player").GetComponent<HealthManager>();
         stats = GameObject.Find("Player").GetComponent<CharacterStats>();
@@ -46,17 +45,25 @@ public class MainScreen : MonoBehaviour
         questManager = FindObjectOfType<QuestManager>();
         sceneTransition = FindObjectOfType<SceneTransition>();
         uiManager = FindObjectOfType<UIManager>();
+        moneyManager = FindObjectOfType<MoneyManager>();
 
     }
 
     public void StartGame()
     {
+        PlayerPrefs.DeleteAll();
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
         thePlayer.isTalking = false;
         thePlayer.canMove = true;
         //SceneManager.LoadScene("Kings Room");
+        weaponManager.ChangeWeapon(0);
+        uiManager.WeaponEq();
+        armorManager.ChangeArmor(0);
+        uiManager.ArmorEq();
+        accesoryManager.ChangeAccesory(0);
+        uiManager.AccesoryEq();
         sceneTransition.Transition("Kings Room");
-        uiManager.ToggleHUD();
+        //uiManager.ToggleHUD();
 
     }
 
@@ -65,7 +72,7 @@ public class MainScreen : MonoBehaviour
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
         thePlayer.isTalking = false;
         thePlayer.canMove = true;
-        uiManager.ToggleHUD();
+        //uiManager.ToggleHUD();
         Load();
 
     }
@@ -88,6 +95,7 @@ public class MainScreen : MonoBehaviour
 
             thePlayer.nextUuid = data.savePointId;
             stats.level = data.level;
+            moneyManager.AddMoney(data.gold);
             healthManager.UpdateMaxHealth(stats.hpLevels[data.level]);
             mpManager.UpdateMaxMP(stats.mpLevels[data.level]);
             uiManager.LevelChanged(stats.level, stats.expToLevelUp.Length,
@@ -95,7 +103,17 @@ public class MainScreen : MonoBehaviour
                                    stats.expToLevelUp[stats.level -1]);
             stats.exp = data.exp;
             uiManager.ExpChanged(data.exp);
-            stats.AddStatsAtLevelUP(0);
+            
+            stats.newstrengthLevels = data.str;
+            stats.newdefenseLevels = data.def;
+            stats.newmagicAttLevels = data.mat;
+            stats.newmagicDefLevels = data.mdf;
+            stats.newspeedLevels = data.spd;
+            stats.newluckLevels = data.lck;
+            stats.newaccuracyLevels = data.acc;
+
+
+            //stats.AddStatsAtLevelUP(0);
             mpManager.ChangeMP(data.mp);
             healthManager.ChangeHealth(data.health);
             itemsManager.currentPotions = data.potions;

@@ -23,9 +23,8 @@ public class Quest : MonoBehaviour
 
     public Quest nextQuest;
     public bool givesReward;
-    public string rewardType;
-    public string rewardText;
-    public string rewardName;
+    public string[] rewardType;
+    public string[] rewardName;
     private List<GameObject> notInInventory;
 
     private AccesoryManager accManager;
@@ -112,21 +111,30 @@ public class Quest : MonoBehaviour
         questManager.ShowQuestText(title + "\n" + completeText);
         if (givesReward)
         {
-            if (rewardType == "Accesory")
+            int i = 0;
+            foreach (string type in rewardType)
             {
-                accManager = FindObjectOfType<AccesoryManager>();
-                notInInventory = accManager.GetAllNotInInvetoryAccesory();
-                
-                foreach (GameObject nacc in notInInventory)
+
+                if (type == "Accesory")
                 {
-                    if (nacc.GetComponent<Accesory>().accesoryName == rewardName)
+                    accManager = FindObjectOfType<AccesoryManager>();
+                    notInInventory = accManager.GetAllNotInInvetoryAccesory();
+
+                    foreach (GameObject nacc in notInInventory)
                     {
-                        nacc.GetComponent<Accesory>().inInventory = true;
+                        if (nacc.GetComponent<Accesory>().accesoryName == rewardName[i])
+                        {
+                            nacc.GetComponent<Accesory>().inInventory = true;
+                        }
                     }
                 }
 
+                if(type == "Skills")
+                {
+                    FindObjectOfType<UIManager>().ActivateSkillPanel();
+                }
+                i++;
             }
-            questManager.ShowQuestText(title + "\n" + rewardText);
         }
         questCompleted = true;
         if(nextQuest != null)
