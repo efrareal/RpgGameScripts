@@ -125,21 +125,25 @@ public class MainScreen : MonoBehaviour
                 weaponManager.SearchWeaponByName(data.weaponsInInventory[i]);
             }
             //Activa el arma que tenia activa
-            weaponManager.ChangeWeapon(data.activeWeapon);
+            //weaponManager.ChangeWeapon(data.activeWeapon);
+            weaponManager.activeWeapon = data.activeWeapon;
+            weaponManager.DeactivateWeapon(true);
             uiManager.WeaponEq();
             //Recupera Armors
             for (int i = 0; i < data.armorsInInventory.Count; i++)
             {
                 armorManager.SearchArmorByName(data.armorsInInventory[i]);
             }
-            armorManager.ChangeArmor(data.activeArmor);
+            //armorManager.ChangeArmor(data.activeArmor);
+            armorManager.activeArmor = data.activeArmor;
             uiManager.ArmorEq();
             //Recupera Accesorios
             for (int i = 0; i < data.accesoriesInInventory.Count; i++)
             {
                 accesoryManager.SearchAccByName(data.accesoriesInInventory[i]);
             }
-            accesoryManager.ChangeAccesory(data.activeAccesory);
+            //accesoryManager.ChangeAccesory(data.activeAccesory);
+            accesoryManager.activeAccesory = data.activeAccesory;
             uiManager.AccesoryEq();
             //Recupera quests arrancadas
             for (int i = 0; i < data.questsStarted.Count; i++)
