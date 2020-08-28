@@ -17,6 +17,10 @@ public class NPCDialogue : MonoBehaviour
     private DialogueManager dialogueManager;
     private bool playerInTheZone;
 
+    public bool isStore;
+    public GameObject storeGUI;
+    private PlayerController thePlayer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +48,12 @@ public class NPCDialogue : MonoBehaviour
     {
         if (playerInTheZone && Input.GetMouseButtonDown(1))
         {
-            if(currentQuestId >= questID.Length)
+            if (isStore)
+            {
+                Invoke("ActivateStoreGUI", 1.5f);
+            }
+
+            if (currentQuestId >= questID.Length)
             {
                 DialoguePrint(npcDialogueLines);
                 return;
@@ -74,7 +83,6 @@ public class NPCDialogue : MonoBehaviour
             }
             else
             {
-
                 string[] finalDialogue = new string[npcDialogueLines.Length];
 
                 int i = 0;
@@ -129,5 +137,12 @@ public class NPCDialogue : MonoBehaviour
             gameObject.GetComponentInParent<NPCMovement>().isTalking = true;
         }
 
+    }
+
+    void ActivateStoreGUI()
+    {
+        storeGUI.SetActive(true);
+        thePlayer = FindObjectOfType<PlayerController>();
+        thePlayer.canMove = false;
     }
 }

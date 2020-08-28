@@ -21,6 +21,7 @@ public class PlayerData
 	public int activeAccesory;
 	public int potions;
 	public int ethers;
+	public int pd;
 	public List<int> questsStarted;
 	public List<int> questsCompleted;
 

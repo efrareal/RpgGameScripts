@@ -73,7 +73,12 @@ public class QuestManager : MonoBehaviour
         {
             if (q.questID == id)
             {
-                q.questStarted = true;
+                if (!q.questCompleted)
+                {
+                    q.gameObject.SetActive(true);
+                    q.StartQuest();
+                    //q.questStarted = true;
+                }
             }
         }
     }

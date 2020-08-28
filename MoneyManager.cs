@@ -20,5 +20,9 @@ public class MoneyManager : MonoBehaviour
         //PlayerPrefs.SetInt("Money", currentMoney);
     }
 
-
+    public void SustractMoney(int susmoney)
+    {
+        currentMoney -= susmoney;
+        moneyText.text = currentMoney.ToString();
+    }
 }

@@ -118,6 +118,7 @@ public class MainScreen : MonoBehaviour
             healthManager.ChangeHealth(data.health);
             itemsManager.currentPotions = data.potions;
             itemsManager.currentEthers = data.ethers;
+            itemsManager.currentPhoenixDown = data.pd;
 
             //Recupera weapons
             for(int i = 0; i < data.weaponsInInventory.Count; i++)
@@ -145,16 +146,20 @@ public class MainScreen : MonoBehaviour
             //accesoryManager.ChangeAccesory(data.activeAccesory);
             accesoryManager.activeAccesory = data.activeAccesory;
             uiManager.AccesoryEq();
-            //Recupera quests arrancadas
-            for (int i = 0; i < data.questsStarted.Count; i++)
-            {
-                questManager.SearchQuestByIDSetStarted(data.questsStarted[i]);
-            }
+
             //Recupera quests terminadas
             for (int i = 0; i < data.questsCompleted.Count; i++)
             {
                 questManager.SearchQuestByIDSetCompleted(data.questsCompleted[i]);
             }
+
+            //Recupera quests arrancadas
+            for (int i = 0; i < data.questsStarted.Count; i++)
+            {
+                questManager.SearchQuestByIDSetStarted(data.questsStarted[i]);
+            }
+
+            
 
             sceneTransition.Transition(data.sceneName);
             //SceneManager.LoadScene(data.sceneName)

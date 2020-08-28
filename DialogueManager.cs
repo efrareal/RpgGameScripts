@@ -19,6 +19,7 @@ public class DialogueManager : MonoBehaviour
     private PlayerController thePlayer;
     private QuestManager questManager;
 
+
     private void Start()
     {
         dialogueActive = false;

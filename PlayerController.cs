@@ -76,6 +76,7 @@ public class PlayerController : MonoBehaviour
         if (isDead)
         {
             _animator.SetBool(DEAD, true);
+            _rigidbody.velocity = Vector2.zero;
             return;
         }
 
@@ -207,7 +208,7 @@ public class PlayerController : MonoBehaviour
         }
         if (spellSkill.skillName == "THUNDER")
         {
-            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.LOCK_DOOR);
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.THUNDER1);
         }
         if (spellSkill.skillName == "ICE")
         {

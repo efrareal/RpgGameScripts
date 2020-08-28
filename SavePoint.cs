@@ -65,6 +65,7 @@ public class SavePoint : MonoBehaviour
         data.mp = mpManager.MagicPoints;
         data.potions = itemsManager.currentPotions;
         data.ethers = itemsManager.currentEthers;
+        data.pd = itemsManager.currentPhoenixDown;
 
         List<string> weapons = weaponManager.GetAllWeaponsName();
         data.weaponsInInventory = weapons;
