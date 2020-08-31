@@ -24,6 +24,8 @@ public class SavePoint : MonoBehaviour
     private QuestManager questManager;
     private MoneyManager moneyManager;
 
+    public GameObject displayInfo;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -134,7 +136,11 @@ public class SavePoint : MonoBehaviour
         {
             Save();
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.LEVEL_UP);
-            
+            //Animacion del letrero de puntos
+            var clone1 = (GameObject)Instantiate(displayInfo, this.transform.position, Quaternion.Euler(Vector3.zero));
+            clone1.GetComponent<DamageNumber>().damagePoints = "Game Saved!";
+            clone1.GetComponent<DamageNumber>().damageText.color = Color.blue;
+
         }
     }
 

@@ -51,6 +51,7 @@ public class WeaponDamage : MonoBehaviour
                 else
                 {
                     totalDamage *= (Random.Range(2,4)); //HAce daño critico entre el doble y triple
+                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.CRITICAL_HIT);
 
                     //Animacion del System Particle
                     if (bloodAnim != null && hitPoint != null)
@@ -82,6 +83,12 @@ public class WeaponDamage : MonoBehaviour
                     if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.newluckLevels)
                     {
                         Destroy(Instantiate(moneyDrop, hitPoint.transform.position, hpPoints.transform.rotation), 7.0f);
+                    }
+
+                    //Suelta HP si tienes suerte
+                    if (Random.Range(0, CharacterStats.MAX_STAT_VAL) < enemyStats.newluckLevels)
+                    {
+                        Destroy(Instantiate(hpPoints, hitPoint.transform.position, hpPoints.transform.rotation), 7.0f);
                     }
 
                     //Animacion del System Particle

@@ -57,7 +57,7 @@ public class ItemPickUp : MonoBehaviour
             if (itemName == "HP point")
             {
                 int hPvalue;
-                hPvalue = Random.Range(5, 10);
+                hPvalue = collision.GetComponent<CharacterStats>().level * Random.Range(5, 10);
                 itemsManager.AddHP(hPvalue);
                 gameObject.SetActive(false);
                 var clone2 = (GameObject)Instantiate(displayInfo, this.transform.position, Quaternion.Euler(Vector3.zero));
@@ -66,21 +66,11 @@ public class ItemPickUp : MonoBehaviour
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.GATHER_DROPS);
             }
 
-            /*
-            if(itemName == "weapon")
-            {
-                this.transform.parent = GameObject.Find("Weapon").transform;
-                gameObject.SetActive(false);
-                itemHasBeenCollected = true;
-                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.GATHER_DROPS);
-            }
-            */
-
             if(itemName == "Money")
             {
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.GATHER_DROPS);
                 int moneyValue;
-                moneyValue = Random.Range(10, 50);
+                moneyValue = collision.GetComponent<CharacterStats>().level * Random.Range(5, 10);
                 moneyManager.AddMoney(moneyValue);
                 gameObject.SetActive(false);
                 var clone3 = (GameObject)Instantiate(displayInfo, this.transform.position, Quaternion.Euler(Vector3.zero));
