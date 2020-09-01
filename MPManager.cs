@@ -7,6 +7,9 @@ public class MPManager : MonoBehaviour
     public int maxMP;
     private int currentMP;
 
+    public float timeCounter;
+    public float mpChargerTime = 12;
+    public bool mpCharge;
 
     private void Start()
     {
@@ -26,9 +29,10 @@ public class MPManager : MonoBehaviour
 
         currentMP -= value;
         
-        if(currentMP < 0)
+        if(currentMP <= 0)
         {
             currentMP = 0;
+            mpCharge = true;
         }
     }
 
@@ -40,6 +44,8 @@ public class MPManager : MonoBehaviour
 
     public void AddMPPoints(int value)
     {
+        mpCharge = false;
+        timeCounter = 0;
         if ((currentMP + value) >= maxMP)
         {
             currentMP = maxMP;
@@ -53,5 +59,25 @@ public class MPManager : MonoBehaviour
         currentMP = value;
     }
 
+    public void ChargeMP()
+    {
+        mpCharge = false;
+        currentMP = maxMP;
+        timeCounter = 0;
+
+
+    }
+
+    void Update()
+    {
+        if (mpCharge || currentMP <= 0)
+        {
+            timeCounter += Time.deltaTime;
+            if(timeCounter > mpChargerTime)
+            {
+                ChargeMP();
+            }
+        }
+    }
 
 }

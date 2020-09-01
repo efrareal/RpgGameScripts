@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
         descriptionMenu.SetActive(false);
     }
 
+    public Image mpFillBar;
     // Update is called once per frame
     void Update()
     {
@@ -54,11 +55,24 @@ public class UIManager : MonoBehaviour
         stringBuilder.Append("HP: ").Append(playerHealthManager.Health).Append("/").Append(playerHealthManager.maxHealth);
         playerHealthText.text = stringBuilder.ToString();
 
-        playerMPBar.maxValue = playerMPManager.maxMP;
-        playerMPBar.value = playerMPManager.MagicPoints;
-        StringBuilder stringBuilder2 = new StringBuilder();
-        stringBuilder2.Append("MP: ").Append(playerMPManager.MagicPoints).Append("/").Append(playerMPManager.maxMP);
-        playerMPText.text = stringBuilder2.ToString();
+        if (playerMPManager.mpCharge || playerMPManager.MagicPoints <=0)
+        {
+            mpFillBar.color = Color.magenta;
+            playerMPBar.maxValue = playerMPManager.mpChargerTime;
+            playerMPBar.value = playerMPManager.timeCounter;
+            StringBuilder stringBuilder3 = new StringBuilder();
+            stringBuilder3.Append("Charging: ").Append((int)playerMPManager.timeCounter).Append("/").Append(playerMPManager.mpChargerTime);
+            playerMPText.text = stringBuilder3.ToString();
+        }
+        else
+        {
+            mpFillBar.color = Color.blue;
+            playerMPBar.maxValue = playerMPManager.maxMP;
+            playerMPBar.value = playerMPManager.MagicPoints;
+            StringBuilder stringBuilder2 = new StringBuilder();
+            stringBuilder2.Append("MP: ").Append(playerMPManager.MagicPoints).Append("/").Append(playerMPManager.maxMP);
+            playerMPText.text = stringBuilder2.ToString();
+        }
 
     }
 
@@ -344,7 +358,7 @@ public class UIManager : MonoBehaviour
         SceneTransition sceneTransition;
         sceneTransition = FindObjectOfType<SceneTransition>();
         sceneTransition.Transition("MainScreen");
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         //SceneManager.LoadScene("MainScreen");
         thePlayer.isDead = false;
         moneyManager.currentMoney = 0;

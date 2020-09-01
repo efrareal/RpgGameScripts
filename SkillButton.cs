@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SkillButton : MonoBehaviour
 {
-    public enum SkillType { FIRE = 0, BOW = 1, THUNDER = 2, ICE = 3};
+    public enum SkillType { FIRE = 0, BOW = 1, THUNDER = 2, ICE = 3, DASH = 4};
 
     public SkillType type;
 
@@ -30,7 +30,6 @@ public class SkillButton : MonoBehaviour
                 if (!thePlayer.castSpell)
                 { 
                     thePlayer.CastSpell(1.0f, thePlayer.fireSpell);
-                    //thePlayer.selectedSpell = thePlayer.fireSpell;
                 }
                 break;
             case SkillType.BOW:
@@ -43,7 +42,6 @@ public class SkillButton : MonoBehaviour
                 if (!thePlayer.castSpell)
                 {
                     thePlayer.CastSpell(1.0f, thePlayer.thunderSpell);
-                    //thePlayer.selectedSpell = thePlayer.thunderSpell;
                 }
                 break;
             case SkillType.ICE:
@@ -54,7 +52,17 @@ public class SkillButton : MonoBehaviour
                 if (!thePlayer.castSpell)
                 {
                     thePlayer.CastSpell(1.0f, thePlayer.iceSpell);
-                    //thePlayer.selectedSpell = thePlayer.iceSpell;
+                }
+                break;
+            case SkillType.DASH:
+                if (mpManager.MagicPoints <= 0)
+                {
+                    return;
+                }
+                if (!thePlayer.castSpell || !thePlayer.dashSkill)
+                {
+                    thePlayer.DashSkill();
+                    mpManager.UseMP(3);
                 }
                 break;
         }

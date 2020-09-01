@@ -5,13 +5,6 @@ using UnityEngine;
 //Script exclusivo del Enemy para hacer daño al Player
 public class DamagePlayer : MonoBehaviour
 {
-    /*
-    [Tooltip("Tiempo que tarda el player en revivir")]
-    public float timeToRevivePlayer;
-    private float timeRevivalCounter;
-    private bool playerReviving;
-    */
-
     private GameObject thePlayer;
 
     public int damage;
@@ -36,6 +29,10 @@ public class DamagePlayer : MonoBehaviour
         //Si el enemigo colisiona con el Player
         if (collision.gameObject.tag.Equals("Player"))
         {
+            if (collision.gameObject.GetComponent<PlayerController>().dashSkill)
+            {
+                return;
+            }
             //Factor de Fuerza del Enemigo
             float strFac = 1.0f + (float)_stats.strengthLevels[_stats.level] / CharacterStats.MAX_STAT_VAL;
             //Debug.Log("Fuerza del Enemigo " +strFac);

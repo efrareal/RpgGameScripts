@@ -23,6 +23,7 @@ public class Quest : MonoBehaviour
 
     public Quest nextQuest;
     public bool givesReward;
+    public int moneyValue;
     public string[] rewardType;
     public string[] rewardName;
     private List<GameObject> notInInventory;
@@ -132,6 +133,10 @@ public class Quest : MonoBehaviour
                 if(type == "Skills")
                 {
                     FindObjectOfType<UIManager>().ActivateSkillPanel();
+                }
+                if (type == "Money")
+                {
+                    FindObjectOfType<MoneyManager>().AddMoney(moneyValue);
                 }
                 i++;
             }

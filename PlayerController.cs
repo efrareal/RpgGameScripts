@@ -49,8 +49,10 @@ public class PlayerController : MonoBehaviour
     public GameObject thunderSpell;
     public Transform shootPosition;
     public float shootSpeed;
-    private SkillManager skillManager;
     private WeaponManager weapon;
+
+    public bool dashSkill;
+    public GameObject dashObject;
 
     // Start is called before the first frame update
     void Start()
@@ -94,7 +96,20 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        
+
+        if (dashSkill)
+        {
+            spellTimeCounter -= Time.deltaTime;
+            if (spellTimeCounter < 0)
+            {
+                dashSkill = false;
+                attacking = false;
+                _animator.SetBool(ATT, false);
+                dashObject.SetActive(false);
+            }
+            return;
+        }
+
         if (castSpell)
         {
             weapon.DeactivateWeapon(false);
@@ -131,7 +146,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // S = V*T
-        if((Mathf.Abs(Input.GetAxisRaw(AXIS_H)) > 0.2f) && !attacking && !castSpell)
+        if((Mathf.Abs(Input.GetAxisRaw(AXIS_H)) > 0.2f) && !attacking && !castSpell && !dashSkill)
         {
             //Vector3 translation = new Vector3(Input.GetAxisRaw(AXIS_H) * speed * Time.deltaTime, 0, 0);
             //this.transform.Translate(translation);
@@ -140,7 +155,7 @@ public class PlayerController : MonoBehaviour
             lastMovement = new Vector2(Input.GetAxisRaw(AXIS_H), 0);
         }
 
-        if ((Mathf.Abs(Input.GetAxisRaw(AXIS_V)) > 0.2f) && !attacking && !castSpell)
+        if ((Mathf.Abs(Input.GetAxisRaw(AXIS_V)) > 0.2f) && !attacking && !castSpell && !dashSkill)
         {
             //Vector3 translation = new Vector3(0, Input.GetAxisRaw(AXIS_V) * speed * Time.deltaTime, 0);
             //this.transform.Translate(translation);
@@ -152,7 +167,7 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!walking)
+        if (!walking && !dashSkill)
         {
             _rigidbody.velocity = Vector2.zero;
         }
@@ -167,8 +182,6 @@ public class PlayerController : MonoBehaviour
     {
         _animator.SetBool(DEAD, false);
     }
-
-    //public GameObject selectedSpell;
 
     public void CastSpell(float stime, GameObject selectedSpell)
     {
@@ -215,6 +228,19 @@ public class PlayerController : MonoBehaviour
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.BOSS_ATTACK);
         }
         GetComponent<MPManager>().UseMP(spellSkill.skillMP);
+    }
+
+    public void DashSkill()
+    {
+        //attacking = false;
+        //_animator.SetBool(ATT, false);
+        dashObject.SetActive(true);
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.DASH1);
+        spellTimeCounter = .40f;
+        dashSkill = true;
+        Vector2 velocityDirection = lastMovement.normalized * 20;
+        _rigidbody.velocity = velocityDirection;
+
     }
 
     
