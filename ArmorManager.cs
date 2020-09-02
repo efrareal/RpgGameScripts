@@ -80,15 +80,14 @@ public class ArmorManager : MonoBehaviour
 
     public void ResetAllArmors()
     {
-        foreach (Transform armor in transform)
-        {
-            armor.GetComponent<Armor>().inInventory = false;
-
-            for (int i = 0; i < armors.Count; i++)
+            for (int i = 1; i < armors.Count; i++)
             {
                 armors[i].SetActive(false);
+                armors[i].GetComponent<Armor>().inInventory = false;
             }
-        }
+        armors[0].SetActive(true);
+        activeArmor = 0;
+        armors[0].GetComponent<Armor>().inInventory = true;
     }
 
     public List<string> GetAllArmorsName()

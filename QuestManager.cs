@@ -93,4 +93,23 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
+
+    public void ResetAllQuests()
+    {
+        foreach (Quest q in quests)
+        {
+            q.questStarted = false;
+            q.questCompleted = false;
+            q.gameObject.SetActive(false);
+            if (q.killsEnemy)
+            {
+                Debug.Log("Match a Quest de matar enemigos");
+                q.ResetNumberOfEnemies();
+            }
+            if (q.needsItem)
+            {
+                q.ResetNumberOfItems();
+            }
+        }
+    }
 }

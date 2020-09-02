@@ -75,6 +75,7 @@ public class WeaponManager : MonoBehaviour
     public void DeactivateWeapon(bool condition)
     {
         weapons[activeWeapon].SetActive(condition);
+        FindObjectOfType<UIManager>().ChangeAvatarImage(weapons[activeWeapon].GetComponent<SpriteRenderer>().sprite);
     }
 
     public List<GameObject> GetAllNotInInvetoryWeapons()
@@ -102,15 +103,14 @@ public class WeaponManager : MonoBehaviour
 
     public void ResetAllWeapons()
     {
-        foreach (Transform weapon in transform)
-        {
-            weapon.GetComponent<WeaponDamage>().inInventory = false;
-
-            for (int i = 0; i < weapons.Count; i++)
+            for (int i = 1; i < weapons.Count; i++)
             {
                 weapons[i].SetActive(false);
+                weapons[i].GetComponent<WeaponDamage>().inInventory = false;
             }
-        }
+        weapons[0].SetActive(true);
+        activeWeapon = 0;
+        weapons[0].GetComponent<WeaponDamage>().inInventory = true;
     }
 
     

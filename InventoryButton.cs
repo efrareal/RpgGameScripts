@@ -9,7 +9,6 @@ public class InventoryButton : MonoBehaviour
 
     public int itemIdx;
     public ItemType type;
-    //private UIManager uiManager;
     public Text itemText;
 
 

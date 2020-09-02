@@ -56,11 +56,20 @@ public class MainScreen : MonoBehaviour
         thePlayer.isTalking = false;
         thePlayer.canMove = true;
         //SceneManager.LoadScene("Kings Room");
-        weaponManager.ChangeWeapon(0);
+        /*stats.AddStatsAtLevelUP(0);
+        stats.AddStatsToCharacter(stats.strengthLevels[stats.level], stats.defenseLevels[stats.level],
+                                  stats.magicAttLevels[stats.level], stats.magicDefLevels[stats.level],
+                                  stats.speedLevels[stats.level], stats.luckLevels[stats.level], stats.accuracyLevels[stats.level]);*/
+
+        weaponManager.DeactivateWeapon(true);
+        weaponManager.ResetAllWeapons();
+        armorManager.ResetAllArmors();
+        accesoryManager.ResetAllAccesories();
+
         uiManager.WeaponEq();
-        armorManager.ChangeArmor(0);
+        //armorManager.ChangeArmor(0);
         uiManager.ArmorEq();
-        accesoryManager.ChangeAccesory(0);
+        //accesoryManager.ChangeAccesory(0);
         uiManager.AccesoryEq();
         sceneTransition.Transition("Kings Room");
         //uiManager.ToggleHUD();

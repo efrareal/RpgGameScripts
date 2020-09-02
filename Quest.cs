@@ -12,10 +12,13 @@ public class Quest : MonoBehaviour
 
     public bool needsItem;
     public List<QuestItem> itemsNeeded;
-    
+    public List<QuestItem> itemsNeededConfigured;
+
     public bool killsEnemy;
     public List<QuestEnemy> enemies;
+    public List<QuestEnemy> enemiesConfigured;
     public List<int> numberOfEnemies;
+    public List<int> numberOfEnemiesConfigured;
 
     public string title;
     public string startText;
@@ -153,6 +156,18 @@ public class Quest : MonoBehaviour
     {
         nextQuest.gameObject.SetActive(true);
         nextQuest.StartQuest();
+    }
+
+    public void ResetNumberOfEnemies()
+    {
+        numberOfEnemies = new List<int>();
+        numberOfEnemies = numberOfEnemiesConfigured;
+        enemies = enemiesConfigured;
+    }
+
+    public void ResetNumberOfItems()
+    {
+        itemsNeeded = itemsNeededConfigured;
     }
 
 

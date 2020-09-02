@@ -29,7 +29,8 @@ public class DamagePlayer : MonoBehaviour
         //Si el enemigo colisiona con el Player
         if (collision.gameObject.tag.Equals("Player"))
         {
-            if (collision.gameObject.GetComponent<PlayerController>().dashSkill)
+            if (collision.gameObject.GetComponent<PlayerController>().dashSkill ||
+                collision.gameObject.GetComponent<PlayerController>().isDead)
             {
                 return;
             }

@@ -25,4 +25,10 @@ public class MoneyManager : MonoBehaviour
         currentMoney -= susmoney;
         moneyText.text = currentMoney.ToString();
     }
+
+    public void ResetMoney()
+    {
+        currentMoney = 0;
+        moneyText.text = currentMoney.ToString();
+    }
 }

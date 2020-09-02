@@ -43,13 +43,16 @@ public class StoreManager : MonoBehaviour
 
     public void BuyPotion()
     {
-        if(moneyManager.currentMoney >= potionCost)
+        if (moneyManager.currentMoney >= potionCost)
         {
             itemsManager.AddPotions(1);
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.RECEIVE_ITEM);
             moneyManager.SustractMoney(potionCost);
         }
-        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
+        else
+        {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
+        }
 
     }
 
@@ -61,7 +64,10 @@ public class StoreManager : MonoBehaviour
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.RECEIVE_ITEM);
             moneyManager.SustractMoney(etherCost);
         }
-        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
+        else
+        {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
+        }
 
     }
     public void BuyPD()
@@ -72,7 +78,10 @@ public class StoreManager : MonoBehaviour
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.RECEIVE_ITEM);
             moneyManager.SustractMoney(pdCost);
         }
-        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
+        else
+        {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
+        }
 
     }
 

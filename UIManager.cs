@@ -349,31 +349,21 @@ public class UIManager : MonoBehaviour
     public void LaunchGameOver()
     {
         GameOverPanel.SetActive(true);
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.GAME_OVER);
+        FindObjectOfType<AudioManager>().audioCanBePlayed = false;
     }
 
 
     public void NewStart()
     {
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
-        SceneTransition sceneTransition;
-        sceneTransition = FindObjectOfType<SceneTransition>();
-        sceneTransition.Transition("MainScreen");
-        //PlayerPrefs.DeleteAll();
-        //SceneManager.LoadScene("MainScreen");
-        thePlayer.isDead = false;
-        moneyManager.currentMoney = 0;
-        thePlayer.DeactivateDeadAnimation();
-        thePlayer.isTalking = true;
-        thePlayer.canMove = false;
-        thePlayer.nextUuid = "StartGame";
-        //weaponManager.ResetAllWeapons();
-        //thePlayer.GetComponent<CircleCollider2D>().enabled = true;
-        CharacterStats thePlayerStats = thePlayer.GetComponent<CharacterStats>();
-        thePlayerStats.level = 1;
-        thePlayer.GetComponent<HealthManager>().UpdateMaxHealth(thePlayerStats.hpLevels[thePlayerStats.level]);
-        thePlayerStats.level = 1;
-        thePlayerStats.InitialStats();
+
+        FindObjectOfType<SceneTransition>().Transition("MainScreen");
+
+        ResetPlayer();
+
         GameOverPanel.SetActive(false);
+        FindObjectOfType<AudioManager>().audioCanBePlayed = true;
     }
     
     public void ExitGame()
@@ -396,13 +386,41 @@ public class UIManager : MonoBehaviour
         thePlayer.isTalking = false;
         thePlayer.canMove = true;
         thePlayer.GetComponent<CircleCollider2D>().enabled = true;
+
         GameOverPanel.SetActive(false);
+        FindObjectOfType<AudioManager>().audioCanBePlayed = true;
     }
 
-    /*
-    public void ToggleHUD()
+    void ResetPlayer()
     {
-        hudObject.SetActive(!hudObject.activeInHierarchy);
+        thePlayer.isDead = false;
+        thePlayer.DeactivateDeadAnimation();
+        thePlayer.isTalking = true;
+        thePlayer.canMove = false;
+        weaponManager.DeactivateWeapon(false);
+        thePlayer.nextUuid = "StartGame";
+        CharacterStats thePlayerStats = thePlayer.GetComponent<CharacterStats>();
+        thePlayerStats.level = 1;
+        thePlayerStats.exp = 0;
+        ExpChanged(thePlayerStats.exp);
+        thePlayerStats.InitialStats();
+        thePlayer.GetComponent<HealthManager>().UpdateMaxHealth(thePlayerStats.hpLevels[thePlayerStats.level]);
+        thePlayer.GetComponent<MPManager>().UpdateMaxMP(thePlayerStats.mpLevels[thePlayerStats.level]);
+        LevelChanged(thePlayerStats.level, thePlayerStats.expToLevelUp.Length,
+                                   thePlayerStats.expToLevelUp[thePlayerStats.level],
+                                   thePlayerStats.expToLevelUp[thePlayerStats.level - 1]);
+
+
+
+        moneyManager.ResetMoney();
+        itemsManager.currentEthers = 0;
+        itemsManager.currentPotions = 0;
+        itemsManager.currentPhoenixDown = 0;
+
+        FindObjectOfType<QuestManager>().ResetAllQuests();
+
+        //weaponManager.ResetAllWeapons();
+        //armorManager.ResetAllArmors();
+        //accesoryManager.ResetAllAccesories();
     }
-    */
 }
