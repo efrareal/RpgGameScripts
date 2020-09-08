@@ -103,7 +103,6 @@ public class QuestManager : MonoBehaviour
             q.gameObject.SetActive(false);
             if (q.killsEnemy)
             {
-                Debug.Log("Match a Quest de matar enemigos");
                 q.ResetNumberOfEnemies();
             }
             if (q.needsItem)

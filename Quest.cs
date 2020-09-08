@@ -16,9 +16,9 @@ public class Quest : MonoBehaviour
 
     public bool killsEnemy;
     public List<QuestEnemy> enemies;
-    public List<QuestEnemy> enemiesConfigured;
+    public List<QuestEnemy> enemiesConfigured = new List<QuestEnemy> { };
     public List<int> numberOfEnemies;
-    public List<int> numberOfEnemiesConfigured;
+    public List<int> numberOfEnemiesConfigured = new List<int> { };
 
     public string title;
     public string startText;
@@ -160,14 +160,25 @@ public class Quest : MonoBehaviour
 
     public void ResetNumberOfEnemies()
     {
-        numberOfEnemies = new List<int>();
-        numberOfEnemies = numberOfEnemiesConfigured;
-        enemies = enemiesConfigured;
+        for(int i = 0; i < numberOfEnemiesConfigured.Count; i++)
+        {
+            numberOfEnemies.Add(numberOfEnemiesConfigured[i]);
+        }
+
+        for (int i = 0; i < enemiesConfigured.Count; i++)
+        {
+            enemies.Add(enemiesConfigured[i]);
+        }
+
     }
+
 
     public void ResetNumberOfItems()
     {
-        itemsNeeded = itemsNeededConfigured;
+        for(int i = 0; i < itemsNeededConfigured.Count; i++)
+        {
+            itemsNeeded.Add(itemsNeededConfigured[i]);
+        }
     }
 
 

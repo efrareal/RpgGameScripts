@@ -22,6 +22,7 @@ public class StartPoint : MonoBehaviour
         theCamera.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, theCamera.transform.position.z);
 
         player.lastMovement = facingDirection;
+        player.inTransition = false;
     }
 
 }

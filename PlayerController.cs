@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour
     public bool dashSkill;
     public GameObject dashObject;
 
+    public bool inTransition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -81,6 +83,14 @@ public class PlayerController : MonoBehaviour
             _rigidbody.velocity = Vector2.zero;
             return;
         }
+        if (inTransition)
+        {
+            _rigidbody.velocity = Vector2.zero;
+            _animator.SetBool(ATT, false);
+            _animator.SetBool(WALK, false);
+            return;
+        }
+
 
         if (isTalking)
         {

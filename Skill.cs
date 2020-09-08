@@ -21,6 +21,10 @@ public class Skill : MonoBehaviour
     public GameObject hpPoints;
     public GameObject moneyDrop;
 
+    private float waitCounter= 0.0f;
+    private float waitTime = 0.6f;
+    private bool isTimeWait;
+
 
     //public Sprite skillSprite;
 
@@ -36,6 +40,7 @@ public class Skill : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Enemy"))
         {
+
             CharacterStats enemyStats = collision.gameObject.GetComponent<CharacterStats>();
             float enemyFactor = 1.0f - (float)enemyStats.newmagicDefLevels / CharacterStats.MAX_STAT_VAL;
 
@@ -74,4 +79,17 @@ public class Skill : MonoBehaviour
             collision.gameObject.GetComponent<EnemyController>().EnemyWasHit();
         }
     }
+
+    private void Update()
+    {
+        if (isTimeWait)
+        {
+            waitCounter += Time.deltaTime;
+            if(waitCounter > waitTime)
+            {
+                isTimeWait = false;
+            }
+        }
+    }
+
 }
