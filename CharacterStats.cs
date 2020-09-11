@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
+    public bool statsForSkill;
+
     public const int MAX_STAT_VAL = 100;
     public const int MAX_HEALTH = 999;
 
@@ -50,7 +52,10 @@ public class CharacterStats : MonoBehaviour
         AddStatsToCharacter(strengthLevels[level],defenseLevels[level],magicAttLevels[level],magicDefLevels[level],speedLevels[level],luckLevels[level],accuracyLevels[level]);
 
         //Vida del Enemigo y Player
-        healthManager.UpdateMaxHealth(hpLevels[level]);
+        if (!statsForSkill)
+        {
+            healthManager.UpdateMaxHealth(hpLevels[level]);
+        }
 
         //Actualizar en el arranque el Level en el UI HUD. Solamente al Player!
         if (gameObject.tag.Equals("Player"))
@@ -60,10 +65,10 @@ public class CharacterStats : MonoBehaviour
         }
         
 
-        if (gameObject.tag.Equals("Enemy"))
+        if (gameObject.tag.Equals("Enemy") && !statsForSkill)
         {
             EnemyController controller = GetComponent<EnemyController>();
-            controller.speed += (1.0f + (float)newspeedLevels / MAX_STAT_VAL); 
+            controller.speed += (1.0f + (float)newspeedLevels / MAX_STAT_VAL);
         }
     }
 
