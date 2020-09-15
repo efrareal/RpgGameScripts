@@ -356,11 +356,10 @@ public class UIManager : MonoBehaviour
 
     public void NewStart()
     {
+        ResetPlayer();
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
 
         FindObjectOfType<SceneTransition>().Transition("MainScreen");
-
-        ResetPlayer();
 
         GameOverPanel.SetActive(false);
         FindObjectOfType<AudioManager>().audioCanBePlayed = true;
@@ -416,6 +415,7 @@ public class UIManager : MonoBehaviour
         itemsManager.currentEthers = 0;
         itemsManager.currentPotions = 0;
         itemsManager.currentPhoenixDown = 0;
+        itemsManager.RemoveQuestItems();
 
         FindObjectOfType<QuestManager>().ResetAllQuests();
 

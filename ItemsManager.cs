@@ -116,6 +116,17 @@ public class ItemsManager : MonoBehaviour
         return questItems;
     }
 
+    public List<string> GetQuestItemsByName()
+    {
+        List<string> listQI = new List<string>();
+        foreach(GameObject g in questItems)
+        {
+            listQI.Add(g.GetComponent<QuestItem>().itemName);
+        }
+
+        return listQI;
+    }
+
     public QuestItem GetItemAt(int idx)
     {
         return questItems[idx].GetComponent<QuestItem>();
@@ -136,5 +147,27 @@ public class ItemsManager : MonoBehaviour
     public void AddQuestItem(GameObject newItem)
     {
         questItems.Add(newItem);
+        newItem.transform.parent = this.transform; 
     }
+
+    public void RemoveQuestItems()
+    {
+        questItems.Clear();
+        GameObject go = gameObject.transform.Find("Special Material Variant").gameObject;
+        Destroy(go);
+    }
+
+    public void AddQuestItemByName(string itemname)
+    {
+        Object[] items = Resources.FindObjectsOfTypeAll<QuestItem>();
+        foreach (QuestItem item in items)
+        {
+            if (item.itemName == itemname)
+            {
+                questItems.Add(item.gameObject);
+            }
+        }
+    }
+    
+
 }

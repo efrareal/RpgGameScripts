@@ -39,7 +39,7 @@ public class GoToNewPlace : MonoBehaviour
             }
             
         }
-        if(needsQuestCompleted)
+        if (needsQuestCompleted)
         {
             Quest quest = questManager.QuestWithID(questID);
             if (quest.questCompleted)
@@ -47,13 +47,18 @@ public class GoToNewPlace : MonoBehaviour
                 Debug.Log("NeedsQuestCompleted");
                 Teleport(collision.gameObject.name);
             }
-            
+
         }
+        else {
+            Debug.Log("NeedsNothing");
+            Teleport(collision.gameObject.name);
+        }
+        /*
         if(!needsQuestStarted && !needsQuestCompleted)
         {
             Debug.Log("NeedsNothing");
             Teleport(collision.gameObject.name);
-        }
+        }*/
     }
 
 

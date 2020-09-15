@@ -101,6 +101,7 @@ public class QuestManager : MonoBehaviour
             q.questStarted = false;
             q.questCompleted = false;
             q.gameObject.SetActive(false);
+            Debug.LogFormat("La quest {0} se desactivo", q.questID);
             if (q.killsEnemy)
             {
                 q.ResetNumberOfEnemies();

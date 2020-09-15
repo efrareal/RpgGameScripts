@@ -87,6 +87,9 @@ public class SavePoint : MonoBehaviour
         List<int> qsCompleted = questManager.QuestsCompleted();
         data.questsCompleted = qsCompleted;
 
+        List<string> qItems = itemsManager.GetQuestItemsByName();
+        data.questItems = qItems;
+
         data.str = stats.newstrengthLevels;
         data.def = stats.newdefenseLevels;
         data.mat = stats.newmagicAttLevels;

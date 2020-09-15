@@ -168,7 +168,12 @@ public class MainScreen : MonoBehaviour
                 questManager.SearchQuestByIDSetStarted(data.questsStarted[i]);
             }
 
+            //Recupera Items Quest
             
+            for (int i = 0; i < data.questItems.Count; i++)
+            {
+                itemsManager.AddQuestItemByName(data.questItems[i]);
+            }
 
             sceneTransition.Transition(data.sceneName);
             //SceneManager.LoadScene(data.sceneName)

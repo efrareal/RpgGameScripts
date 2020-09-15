@@ -24,6 +24,7 @@ public class PlayerData
 	public int pd;
 	public List<int> questsStarted;
 	public List<int> questsCompleted;
+	public List<string> questItems;
 
 	public int str;
 	public int def;

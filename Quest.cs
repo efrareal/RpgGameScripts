@@ -160,11 +160,13 @@ public class Quest : MonoBehaviour
 
     public void ResetNumberOfEnemies()
     {
-        for(int i = 0; i < numberOfEnemiesConfigured.Count; i++)
+        numberOfEnemies.Clear();
+        for (int i = 0; i < numberOfEnemiesConfigured.Count; i++)
         {
             numberOfEnemies.Add(numberOfEnemiesConfigured[i]);
         }
 
+        enemies.Clear();
         for (int i = 0; i < enemiesConfigured.Count; i++)
         {
             enemies.Add(enemiesConfigured[i]);

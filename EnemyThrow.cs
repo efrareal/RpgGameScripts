@@ -19,14 +19,10 @@ public class EnemyThrow : MonoBehaviour
     public float timeBetweenThrows = 2.0f;
     public float timeBetweenThrowsCounter;
 
-    private Animator _animator;
-    private Rigidbody2D _rb;
     // Start is called before the first frame update
     void Start()
     {
         target = FindObjectOfType<PlayerController>().gameObject;
-        _animator = GetComponent<Animator>();
-        _rb = GetComponent<Rigidbody2D>();
         timeToThrowCounter = timeToThrowCounter * Random.Range(0.5f, 1.5f);
         timeBetweenThrowsCounter = timeBetweenThrows * Random.Range(0.5f, 1.5f);
     }
@@ -56,12 +52,6 @@ public class EnemyThrow : MonoBehaviour
             
         }
 
-    }
-
-    private void LateUpdate()
-    {
-        _animator.SetFloat("Horizontal", directionToThrow.x);
-        _animator.SetFloat("Vertical", directionToThrow.y);
     }
 
     void ThrowSomething()
