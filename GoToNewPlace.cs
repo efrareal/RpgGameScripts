@@ -12,6 +12,7 @@ public class GoToNewPlace : MonoBehaviour
     public int questID;
     public bool needsQuestStarted;
     public bool needsQuestCompleted;
+    public bool needsNothing;
 
 
     private SceneTransition sceneTransition;
@@ -28,28 +29,38 @@ public class GoToNewPlace : MonoBehaviour
         
         if (needsQuestStarted)
         {
-            Quest quest = questManager.QuestWithID(questID);
             Debug.Log("NeedsQuestStarted");
-            if (!quest.questCompleted)
+            Quest quest = questManager.QuestWithID(questID);
+            Debug.Log(quest);
+            if (quest.questStarted)
             {
-                if (quest.questStarted)
-                {
-                    Teleport(collision.gameObject.name);
-                }
+                Debug.Log("NeedsQuestStarted2");
+                needsNothing = true;
+                needsQuestStarted = false;
+                Teleport(collision.gameObject.name);
             }
-            
+            if (quest.questCompleted)
+            {
+                Debug.Log("NeedsQuestStarted3");
+                needsNothing = true;
+                needsQuestStarted = false;
+                Teleport(collision.gameObject.name);
+            }
+
         }
         if (needsQuestCompleted)
         {
             Quest quest = questManager.QuestWithID(questID);
             if (quest.questCompleted)
             {
+                needsNothing = true;
+                needsQuestCompleted = false;
                 Debug.Log("NeedsQuestCompleted");
                 Teleport(collision.gameObject.name);
             }
 
         }
-        else {
+        if(needsNothing) {
             Debug.Log("NeedsNothing");
             Teleport(collision.gameObject.name);
         }

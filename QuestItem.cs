@@ -15,6 +15,7 @@ public class QuestItem : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
+            Debug.Log("Colisione con el QuestItem");
             questManager = FindObjectOfType<QuestManager>();
             itemsManager = FindObjectOfType<ItemsManager>();
             Quest q = questManager.QuestWithID(questID);
@@ -29,6 +30,7 @@ public class QuestItem : MonoBehaviour
                 itemsManager.AddQuestItem(this.gameObject);
                 //this.transform.parent = collision.gameObject.transform;
                 gameObject.SetActive(false);
+                Debug.Log("recoge el item");
             }
         }
     }

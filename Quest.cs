@@ -188,11 +188,14 @@ public class Quest : MonoBehaviour
     {
         if(needsItem && (questManager.itemCollected != null))
         {
-            for(int i =0; i < itemsNeeded.Count; i++)
+            Debug.Log("needsItem");
+            for (int i =0; i < itemsNeeded.Count; i++)
             {
                 if(itemsNeeded[i].itemName == questManager.itemCollected.itemName)
                 {
+                    Debug.Log("hizo match con el item recogido");
                     itemsNeeded.RemoveAt(i);
+                    Debug.Log("removio el item de la lista");
                     questManager.itemCollected = null;
                     break;
                 }

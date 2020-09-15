@@ -19,6 +19,8 @@ public class EnemyThrow : MonoBehaviour
     public float timeBetweenThrows = 2.0f;
     public float timeBetweenThrowsCounter;
 
+    public bool isArrow;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +58,7 @@ public class EnemyThrow : MonoBehaviour
 
     void ThrowSomething()
     {
+        timeBetweenThrowsCounter = timeBetweenThrows;
         timeToThrowCounter = timeToThrow;
         directionToThrow = (target.transform.position - this.transform.position).normalized;
         GameObject newThrow = Instantiate(throwObject, this.transform.position, this.transform.rotation) as GameObject;
@@ -63,22 +66,58 @@ public class EnemyThrow : MonoBehaviour
         Skill spellSkill = newThrow.GetComponent<Skill>();
 
        newThrowRB.velocity = directionToThrow * throwSpeed;
-       SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.FIRE_SKILL);
+        if (isArrow)
+        {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.ATTACK2);
+        }
+        else
+        {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.FIRE_SKILL);
+        }
+       
        if (directionToThrow.x > 0) //Mirando hacia la derecha
        {
-           newThrow.transform.rotation = Quaternion.Euler(0, 0, 90);
+            if (isArrow)
+            {
+                newThrow.transform.rotation = Quaternion.Euler(0, 0, -45);
+            }
+            else
+            {
+                newThrow.transform.rotation = Quaternion.Euler(0, 0, 90);
+            }
        }
        if (directionToThrow.x < 0) //Mirando hacia la Izquierda
        {
-           newThrow.transform.rotation = Quaternion.Euler(0, 0, 270);
+            if (isArrow)
+            {
+                newThrow.transform.rotation = Quaternion.Euler(0, 0, -45);
+            }
+            else
+            {
+                newThrow.transform.rotation = Quaternion.Euler(0, 0, 270);
+            }
        }
        if (directionToThrow.y > 0) //Mirando hacia arriba
        {
-           newThrow.transform.rotation = Quaternion.Euler(0, 0, 180);
+            if (isArrow)
+            {
+                newThrow.transform.rotation = Quaternion.Euler(0, 0, -45);
+            }
+            else
+            {
+                newThrow.transform.rotation = Quaternion.Euler(0, 0, 180);
+            }
        }
        if (directionToThrow.y < 0) //Mirando hacia la abajo
        {
-           newThrow.transform.rotation = Quaternion.Euler(0, 0, 0);
+            if (isArrow)
+            {
+                newThrow.transform.rotation = Quaternion.Euler(0, 0, -45);
+            }
+            else
+            {
+                newThrow.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
        }
     }
 }

@@ -152,9 +152,26 @@ public class ItemsManager : MonoBehaviour
 
     public void RemoveQuestItems()
     {
+        
+        foreach(Transform t in transform)
+        {
+            if(t.gameObject.GetComponent<QuestItem>() != null)
+            {
+                if (t.gameObject.GetComponent<QuestItem>().itemName == questItems[0].GetComponent<QuestItem>().itemName)
+                {
+                    Destroy(t.gameObject);
+                }
+            }
+            
+        }
+
         questItems.Clear();
-        GameObject go = gameObject.transform.Find("Special Material Variant").gameObject;
-        Destroy(go);
+        /*GameObject go = gameObject.transform.Find("Special Material Variant").gameObject;
+        if(go != null)
+        {
+            Destroy(go);
+        }*/
+
     }
 
     public void AddQuestItemByName(string itemname)

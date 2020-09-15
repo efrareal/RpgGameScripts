@@ -21,6 +21,8 @@ public class NPCDialogue : MonoBehaviour
     public GameObject storeGUI;
     private PlayerController thePlayer;
 
+    public bool givesQuest;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,10 +30,17 @@ public class NPCDialogue : MonoBehaviour
         dialogueManager = FindObjectOfType<DialogueManager>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
+            if (currentQuestId < questID.Length)
+            {
+                if (isQuestNPC && dialogueManager.IsQuestCompleted(this.questID[currentQuestId]))
+                {
+                    currentQuestId++;
+                }
+            }
             playerInTheZone = true;
         }
     }
@@ -63,12 +72,15 @@ public class NPCDialogue : MonoBehaviour
                 //Aqui la quest no ha sido Completada
                 if (!dialogueManager.IsQuestStarted(this.questID[currentQuestId]))
                 {
-                    //Aqui la quest no ha sido disparada por dialogo
-                    dialogueManager.isQuestDialogue = true;
-                    dialogueManager.questId = this.questID[currentQuestId];
-                    DialoguePrint(npcQuestDialogues[currentQuestId].questDialogues);
-                    return;
-                    //currentQuestId++;
+                    if (givesQuest)
+                    {
+                        //Aqui la quest no ha sido disparada por dialogo
+                        dialogueManager.isQuestDialogue = true;
+                        dialogueManager.questId = this.questID[currentQuestId];
+                        DialoguePrint(npcQuestDialogues[currentQuestId].questDialogues);
+                        return;
+                        //currentQuestId++;
+                    }
                 }
 
                 //Aqui la quest si ha sido disparada por dialogo pero no ha sido completada
