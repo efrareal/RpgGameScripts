@@ -120,7 +120,7 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
-
+    /*
     private void LateUpdate()
     {
         _animator.SetBool("isWalking", isMoving);
@@ -128,7 +128,7 @@ public class EnemyController : MonoBehaviour
         _animator.SetFloat("Vertical", directionToMove.y);
         _animator.SetFloat("LastV", directionToMove.x);
         _animator.SetFloat("LastH", directionToMove.y);
-    }
+    }*/
 
     public void EnemyWasHit()
     {

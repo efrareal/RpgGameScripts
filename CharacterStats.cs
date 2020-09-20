@@ -9,6 +9,8 @@ public class CharacterStats : MonoBehaviour
     public const int MAX_STAT_VAL = 100;
     public const int MAX_HEALTH = 999;
 
+    public bool enemyWeapon = false;
+
     public int level;
     public int exp;
     public int[] expToLevelUp; //Array de enteros
@@ -67,8 +69,11 @@ public class CharacterStats : MonoBehaviour
 
         if (gameObject.tag.Equals("Enemy") && !statsForSkill)
         {
-            EnemyController controller = GetComponent<EnemyController>();
-            controller.speed += (1.0f + (float)newspeedLevels / MAX_STAT_VAL);
+            if (!enemyWeapon)
+            {
+                EnemyController controller = GetComponent<EnemyController>();
+                controller.speed += (1.0f + (float)newspeedLevels / MAX_STAT_VAL);
+            }
         }
     }
 

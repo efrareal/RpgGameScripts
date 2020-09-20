@@ -17,6 +17,7 @@ public class DamagePlayer : MonoBehaviour
     private EnemyController enemyController;
 
     public bool isSkillDamagePlayer;
+    public bool isEnemyWeapon;
 
     private void Start()
     {
@@ -74,8 +75,10 @@ public class DamagePlayer : MonoBehaviour
 
             //Resta vida al Player
             collision.gameObject.GetComponent<HealthManager>().DamageCharacter(totalDamage);
-            
-            Destroy(this.gameObject);
+            if (!isEnemyWeapon)
+            {
+                Destroy(this.gameObject);
+            }
 
         }
     }
@@ -132,7 +135,10 @@ public class DamagePlayer : MonoBehaviour
             collision.gameObject.GetComponent<HealthManager>().DamageCharacter(totalDamage);
             if (!isSkillDamagePlayer)
             {
-                enemyController.HitThePlayer();
+                if (!_stats.enemyWeapon)
+                {
+                    enemyController.HitThePlayer();
+                }
             }
 
         }
