@@ -22,6 +22,8 @@ public class Chest : MonoBehaviour
     private Animator _animator;
     private DialogueManager dialogueManager;
 
+    public GameObject questItem;
+
 
 
     // Start is called before the first frame update
@@ -59,6 +61,12 @@ public class Chest : MonoBehaviour
                 if(rewardType == "Gold")
                 {
                     moneyManager.AddMoney(goldValue);
+                }
+
+                if(rewardType == "QuestItem")
+                {
+                    var clone = (GameObject)Instantiate(questItem, collision.transform.position, Quaternion.Euler(Vector3.zero));
+                    itemsManager.AddQuestItem(clone);
                 }
 
                 if(rewardType == "Potion")

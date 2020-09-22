@@ -13,12 +13,17 @@ public class AreaBlocked : MonoBehaviour
     public bool needsQuestStarted;
     public bool needsQuestCompleted;
 
+    private ItemsManager itemsManager;
+    public bool needsItem;
+    public QuestItem item;
+
     // Start is called before the first frame update
     void Start()
     {
+        itemsManager = FindObjectOfType<ItemsManager>();
         questManager = FindObjectOfType<QuestManager>();
         quest = questManager.QuestWithID(questID);
-        if (!blockIsActive)
+        if (!blockIsActive && !needsItem)
         {
              this.gameObject.SetActive(false);
         }
@@ -28,6 +33,24 @@ public class AreaBlocked : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (needsItem)
+        {
+            if (itemsManager.HasTheQuestItem(item))
+            {
+                SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.LOCK_DOOR);
+                this.gameObject.SetActive(false);
+                blockIsActive = false;
+            }
+            else
+            {
+                if (collision.gameObject.tag.Equals("Player"))
+                {
+                    questManager.ShowQuestText(dialogueText);
+                }
+            }
+            return;
+
+        }
         
         if (blockIsActive)
         {
