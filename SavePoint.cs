@@ -23,6 +23,7 @@ public class SavePoint : MonoBehaviour
     private AccesoryManager accesoryManager;
     private QuestManager questManager;
     private MoneyManager moneyManager;
+    private UIManager uiManager;
 
     public GameObject displayInfo;
 
@@ -42,6 +43,7 @@ public class SavePoint : MonoBehaviour
         itemsManager = FindObjectOfType<ItemsManager>();
         questManager = FindObjectOfType<QuestManager>();
         moneyManager = FindObjectOfType<MoneyManager>();
+        uiManager = FindObjectOfType<UIManager>();
 
         if (!player.nextUuid.Equals(savePointId))
         {
@@ -97,6 +99,8 @@ public class SavePoint : MonoBehaviour
         data.spd = stats.newspeedLevels;
         data.lck = stats.newluckLevels;
         data.acc = stats.newaccuracyLevels;
+
+        data.activeSkills = uiManager.ReturnAllActiveSkills();
 
         bf.Serialize(file, data);
         file.Close();

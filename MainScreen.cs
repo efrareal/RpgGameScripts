@@ -175,6 +175,12 @@ public class MainScreen : MonoBehaviour
                 itemsManager.AddQuestItemByName(data.questItems[i]);
             }
 
+            //Recupera skills activas
+            for (int i = 0; i < data.activeSkills.Count; i++)
+            {
+                uiManager.ActivateSkill(data.activeSkills[i]);
+            }
+
             sceneTransition.Transition(data.sceneName);
             //SceneManager.LoadScene(data.sceneName)
         }

@@ -8,6 +8,7 @@ public class SkillButton : MonoBehaviour
     public enum SkillType { FIRE = 0, BOW = 1, THUNDER = 2, ICE = 3, DASH = 4};
 
     public SkillType type;
+    public bool inInventory;
 
     private PlayerController thePlayer;
     public MPManager mpManager;
@@ -20,6 +21,10 @@ public class SkillButton : MonoBehaviour
 
     public void ActivateSkillButton()
     {
+        if (thePlayer.isTalking || thePlayer.isDead || thePlayer.inTransition)
+        {
+            return;
+        }
         switch (type)
         {
             case SkillType.FIRE:

@@ -104,6 +104,28 @@ public class CharacterStats : MonoBehaviour
 
             //Suma velocidad al Player
             playerController.speed += (float)newspeedLevels/ MAX_STAT_VAL;
+
+            //añade Skill si le toca al nivel
+            if (level == 2)
+            {
+                uIManager.ActivateSkill("DASH");
+            }
+
+            //añade Skill si le toca al nivel
+            if (level == 4)
+            {
+                uIManager.ActivateSkill("FIRE");
+            }
+            //añade Skill si le toca al nivel
+            if (level == 6)
+            {
+                uIManager.ActivateSkill("ICE");
+            }
+            //añade Skill si le toca al nivel
+            if (level == 8)
+            {
+                uIManager.ActivateSkill("THUNDER");
+            }
         }
     }
     

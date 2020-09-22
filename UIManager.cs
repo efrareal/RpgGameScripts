@@ -46,6 +46,10 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
+            if(thePlayer.isTalking || thePlayer.isDead || thePlayer.inTransition)
+            {
+                return;
+            }
             ToggleInventory();
         }
 
@@ -92,7 +96,11 @@ public class UIManager : MonoBehaviour
 
     public void ToggleInventory()
     {
-        thePlayer.isTalking = !thePlayer.isTalking;
+        if (thePlayer.isTalking || thePlayer.isDead || thePlayer.inTransition)
+        {
+            return;
+        }
+        //thePlayer.isTalking = !thePlayer.isTalking;
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
         ChangeDescriptionText();
         inventoryPanel.SetActive(!inventoryPanel.activeInHierarchy);
@@ -264,14 +272,6 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// HUD
     /// </summary>
-    public void HealthChanged()
-    {
-
-    }
-    public void MPChanged()
-    {
-
-    }
 
     public void LevelChanged(int newlevel, int expToLevelUpLength, int maxValue, int minValue)
     {
@@ -330,7 +330,45 @@ public class UIManager : MonoBehaviour
     /// Skills Panel
     /// </summary>
     public GameObject skillPanel;
+    //public Button dashSkill;
+    //public Button fireSkill;
+    //public Button thunderSkill;
+    //public Button iceSkill;
+    public List<Button> skillList = new List<Button>();
 
+    public void ActivateSkill(string skillname)
+    {
+        foreach(Button skill in skillList)
+        {
+            if(skill.GetComponent<SkillButton>().type.ToString() == skillname)
+            {
+                skill.gameObject.SetActive(true);
+                skill.GetComponent<SkillButton>().inInventory = true;
+            }
+        }
+    }
+
+    public List<string> ReturnAllActiveSkills()
+    {
+        List<string> activeSkillList = new List<string>();
+        foreach (Button skill in skillList)
+        {
+            if (skill.GetComponent<SkillButton>().inInventory)
+            {
+                activeSkillList.Add(skill.GetComponent<SkillButton>().type.ToString());
+            }
+        }
+        return activeSkillList;
+    }
+
+    public void ResetAllSkills()
+    {
+        foreach (Button skill in skillList)
+        {
+            skill.gameObject.SetActive(false);
+            skill.GetComponent<SkillButton>().inInventory = false;
+        }
+    }
     public void ActivateSkillPanel()
     {
         skillPanel.SetActive(true);
@@ -418,6 +456,7 @@ public class UIManager : MonoBehaviour
         itemsManager.RemoveQuestItems();
 
         FindObjectOfType<QuestManager>().ResetAllQuests();
+        ResetAllSkills();
 
         //weaponManager.ResetAllWeapons();
         //armorManager.ResetAllArmors();

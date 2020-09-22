@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
         weapon = FindObjectOfType<WeaponManager>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        isTalking = false;
+        //isTalking = false;
         if (!playerCreated)
         {
             DontDestroyOnLoad(this.transform.gameObject);

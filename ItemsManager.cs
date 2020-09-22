@@ -157,10 +157,7 @@ public class ItemsManager : MonoBehaviour
         {
             if(t.gameObject.GetComponent<QuestItem>() != null)
             {
-                if (t.gameObject.GetComponent<QuestItem>().itemName == questItems[0].GetComponent<QuestItem>().itemName)
-                {
-                    Destroy(t.gameObject);
-                }
+                Destroy(t.gameObject);
             }
             
         }

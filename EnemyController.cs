@@ -17,6 +17,7 @@ public class EnemyController : MonoBehaviour
     private bool isMoving;
     private bool wasHit;
     private bool playerWasHit;
+    private bool isChasing;
 
     [Tooltip("Tiempo que tarda el enemigo entre pasos sucesivos")]
     public float timeBetweenSteps;
@@ -52,6 +53,7 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
+            isChasing = true;
             if (wasHit)
             {
                 isMoving = true;
@@ -87,11 +89,16 @@ public class EnemyController : MonoBehaviour
             isMoving = false;
             wasHit = false;
             playerWasHit = false;
+            isChasing = false;
         }
     }
     // Update is called once per frame
     void Update()
     {
+        if (isChasing)
+        {
+            return;
+        }
         if (isMoving)
         {
             timeToMakeStepCounter -= Time.deltaTime;
