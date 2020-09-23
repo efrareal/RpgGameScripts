@@ -26,6 +26,7 @@ public class PlayerData
 	public List<int> questsCompleted;
 	public List<string> questItems;
 	public List<string> activeSkills;
+	public Dictionary<string, string> chests;
 
 	public int str;
 	public int def;

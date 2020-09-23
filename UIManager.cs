@@ -458,8 +458,8 @@ public class UIManager : MonoBehaviour
         FindObjectOfType<QuestManager>().ResetAllQuests();
         ResetAllSkills();
 
-        //weaponManager.ResetAllWeapons();
-        //armorManager.ResetAllArmors();
-        //accesoryManager.ResetAllAccesories();
+        weaponManager.ResetAllWeapons();
+        armorManager.ResetAllArmors();
+        accesoryManager.ResetAllAccesories();
     }
 }

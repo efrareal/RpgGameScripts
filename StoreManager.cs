@@ -48,7 +48,10 @@ public class StoreManager : MonoBehaviour
         potionValueText.text = potionCost.ToString();
         etherValueText.text = etherCost.ToString();
         pdValueText.text = pdCost.ToString();
-        weaponValueText.text = weaponCost.ToString();
+        if (weaponValueText != null)
+        {
+            weaponValueText.text = weaponCost.ToString();
+        }
     }
 
     public void BuyPotion()

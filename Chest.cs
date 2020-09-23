@@ -55,6 +55,8 @@ public class Chest : MonoBehaviour
                 
                 _animator.SetBool("isOpened", true);
                 PlayerPrefs.SetString(chestID, "opened");
+                itemsManager.chestsDict.Add(chestID, "opened");
+                Debug.Log(itemsManager.chestsDict[chestID]);
                 SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.RECEIVE_ITEM);
                 dialogueManager.ShowDialogue(new string[] { "Chest: \n" + chestText }, rewardSprite);
 

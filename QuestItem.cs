@@ -27,10 +27,9 @@ public class QuestItem : MonoBehaviour
             if (q.questStarted && !q.questCompleted)
             {
                 questManager.itemCollected = this;
-                itemsManager.AddQuestItem(this.gameObject);
-                //this.transform.parent = collision.gameObject.transform;
                 gameObject.SetActive(false);
                 Debug.Log("recoge el item");
+                itemsManager.AddQuestItem(this.gameObject);
             }
         }
     }

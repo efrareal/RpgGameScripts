@@ -101,6 +101,7 @@ public class SavePoint : MonoBehaviour
         data.acc = stats.newaccuracyLevels;
 
         data.activeSkills = uiManager.ReturnAllActiveSkills();
+        data.chests = itemsManager.chestsDict;
 
         bf.Serialize(file, data);
         file.Close();

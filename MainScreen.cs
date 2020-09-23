@@ -52,6 +52,10 @@ public class MainScreen : MonoBehaviour
     public void StartGame()
     {
         PlayerPrefs.DeleteAll();
+        if (File.Exists(Application.persistentDataPath + "/slot1.dat"))
+        {
+            File.Delete(Application.persistentDataPath + "/slot1.dat");
+        }
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
         thePlayer.isTalking = false;
         thePlayer.canMove = true;
@@ -96,6 +100,8 @@ public class MainScreen : MonoBehaviour
     {
         if (File.Exists(Application.persistentDataPath + "/slot1.dat"))
         {
+            PlayerPrefs.DeleteAll();
+
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/slot1.dat", FileMode.Open);
 
@@ -179,6 +185,13 @@ public class MainScreen : MonoBehaviour
             for (int i = 0; i < data.activeSkills.Count; i++)
             {
                 uiManager.ActivateSkill(data.activeSkills[i]);
+            }
+
+            itemsManager.chestsDict = data.chests;
+            // Recupera los chests
+            foreach (KeyValuePair<string, string> entry in data.chests)
+            {
+                PlayerPrefs.SetString(entry.Key, entry.Value);
             }
 
             sceneTransition.Transition(data.sceneName);

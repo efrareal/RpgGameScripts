@@ -18,6 +18,8 @@ public class ItemsManager : MonoBehaviour
     public int currentPhoenixDown;
     public GameObject phoenixDownObject;
 
+    public Dictionary<string, string> chestsDict = new Dictionary<string, string>();
+
     private void Start()
     {
         playerHealthManager = GetComponentInParent<HealthManager>();
@@ -147,7 +149,8 @@ public class ItemsManager : MonoBehaviour
     public void AddQuestItem(GameObject newItem)
     {
         questItems.Add(newItem);
-        newItem.transform.parent = this.transform; 
+        newItem.transform.parent = this.transform;
+        newItem.SetActive(false);
     }
 
     public void RemoveQuestItems()
