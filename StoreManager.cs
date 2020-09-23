@@ -19,8 +19,16 @@ public class StoreManager : MonoBehaviour
     public Text pdValueText;
     public int pdCost;
 
+    public Button weaponButton;
+    public Text weaponValueText;
+    public int weaponCost;
+    public string weaponName;
+
+    private List<GameObject> notInInventory;
+
     private ItemsManager itemsManager;
     private MoneyManager moneyManager;
+    private WeaponManager weaponManager;
 
     public Button exitButton;
     public Text inStockText;
@@ -34,11 +42,13 @@ public class StoreManager : MonoBehaviour
     {
         itemsManager = FindObjectOfType<ItemsManager>();
         moneyManager = FindObjectOfType<MoneyManager>();
+        weaponManager = FindObjectOfType<WeaponManager>();
         thePlayer = FindObjectOfType<PlayerController>();
 
         potionValueText.text = potionCost.ToString();
         etherValueText.text = etherCost.ToString();
         pdValueText.text = pdCost.ToString();
+        weaponValueText.text = weaponCost.ToString();
     }
 
     public void BuyPotion()
@@ -85,6 +95,28 @@ public class StoreManager : MonoBehaviour
 
     }
 
+    public void BuyWeapon()
+    {
+        if (moneyManager.currentMoney >= weaponCost)
+        {
+            notInInventory = weaponManager.GetAllNotInInvetoryWeapons();
+            foreach (GameObject nweapon in notInInventory)
+            {
+                if (nweapon.GetComponent<WeaponDamage>().weaponName == weaponName)
+                {
+                    nweapon.GetComponent<WeaponDamage>().inInventory = true;
+                }
+            }
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.RECEIVE_ITEM);
+            moneyManager.SustractMoney(weaponCost);
+        }
+        else
+        {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
+        }
+
+    }
+
     public void ShowPotionsInStock()
     {
         inStockText.text = "In Stock; " + itemsManager.currentPotions.ToString();
@@ -106,6 +138,7 @@ public class StoreManager : MonoBehaviour
 
     public void CloseStoreGUI()
     {
+        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_SELECT);
         storePanel.SetActive(false);
         thePlayer = FindObjectOfType<PlayerController>();
         thePlayer.canMove = true;

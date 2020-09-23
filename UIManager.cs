@@ -46,7 +46,7 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if(thePlayer.isTalking || thePlayer.isDead || thePlayer.inTransition)
+            if(thePlayer.isTalking || thePlayer.isDead || thePlayer.inTransition || !thePlayer.canMove)
             {
                 return;
             }
@@ -96,7 +96,7 @@ public class UIManager : MonoBehaviour
 
     public void ToggleInventory()
     {
-        if (thePlayer.isTalking || thePlayer.isDead || thePlayer.inTransition)
+        if (thePlayer.isTalking || thePlayer.isDead || thePlayer.inTransition || !thePlayer.canMove)
         {
             return;
         }
