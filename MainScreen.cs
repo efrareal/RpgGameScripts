@@ -82,11 +82,7 @@ public class MainScreen : MonoBehaviour
 
     public void LoadGame()
     {
-        thePlayer.isTalking = false;
-        thePlayer.canMove = true;
-        //uiManager.ToggleHUD();
         Load();
-
     }
 
     public void ExitGame()
@@ -99,6 +95,8 @@ public class MainScreen : MonoBehaviour
     {
         if (File.Exists(Application.persistentDataPath + "/slot1.dat"))
         {
+            thePlayer.isTalking = false;
+            thePlayer.canMove = true;
             PlayerPrefs.DeleteAll();
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
 

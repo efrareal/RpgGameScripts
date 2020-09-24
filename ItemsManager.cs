@@ -180,6 +180,7 @@ public class ItemsManager : MonoBehaviour
         foreach (QuestItem item in items)
         {
             Debug.Log("Item guardado: " + itemname);
+            Debug.Log("Item En Resources: " + item.itemName);
             if (item.itemName == itemname)
             {
                 Debug.Log("Item En resources: " + item.itemName + "es igual al item por parametro: " + itemname);
