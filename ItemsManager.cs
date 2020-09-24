@@ -179,8 +179,10 @@ public class ItemsManager : MonoBehaviour
         Object[] items = Resources.FindObjectsOfTypeAll<QuestItem>();
         foreach (QuestItem item in items)
         {
+            Debug.Log("Item guardado: " + itemname);
             if (item.itemName == itemname)
             {
+                Debug.Log("Item En resources: " + item.itemName + "es igual al item por parametro: " + itemname);
                 questItems.Add(item.gameObject);
             }
         }

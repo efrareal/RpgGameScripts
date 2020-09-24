@@ -80,11 +80,20 @@ public class AccesoryManager : MonoBehaviour
 
     public void ResetAllAccesories()
     {
-            for (int i = 1; i < accesories.Count; i++)
+            for (int i = 0; i < accesories.Count; i++)
             {
                 accesories[i].SetActive(false);
                 accesories[i].GetComponent<Accesory>().inInventory = false;
             }
+    }
+
+    public void ResetAccesoriesToInitial()
+    {
+        for (int i = 1; i < accesories.Count; i++)
+        {
+            accesories[i].SetActive(false);
+            accesories[i].GetComponent<Accesory>().inInventory = false;
+        }
         accesories[0].SetActive(true);
         activeAccesory = 0;
         accesories[0].GetComponent<Accesory>().inInventory = true;
@@ -113,5 +122,10 @@ public class AccesoryManager : MonoBehaviour
             }
         }
         GetAllAccesories();
+    }
+
+    public void ActivateAcc(bool condition)
+    {
+        accesories[activeAccesory].SetActive(condition);
     }
 }

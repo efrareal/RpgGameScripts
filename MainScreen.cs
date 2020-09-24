@@ -66,9 +66,9 @@ public class MainScreen : MonoBehaviour
                                   stats.speedLevels[stats.level], stats.luckLevels[stats.level], stats.accuracyLevels[stats.level]);*/
 
         weaponManager.DeactivateWeapon(true);
-        weaponManager.ResetAllWeapons();
-        armorManager.ResetAllArmors();
-        accesoryManager.ResetAllAccesories();
+        weaponManager.ResetToInitialWeapon();
+        armorManager.ResetArmorsToInitial();
+        accesoryManager.ResetAccesoriesToInitial();
 
         uiManager.WeaponEq();
         //armorManager.ChangeArmor(0);
@@ -82,7 +82,6 @@ public class MainScreen : MonoBehaviour
 
     public void LoadGame()
     {
-        SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
         thePlayer.isTalking = false;
         thePlayer.canMove = true;
         //uiManager.ToggleHUD();
@@ -101,6 +100,7 @@ public class MainScreen : MonoBehaviour
         if (File.Exists(Application.persistentDataPath + "/slot1.dat"))
         {
             PlayerPrefs.DeleteAll();
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
 
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/slot1.dat", FileMode.Open);
@@ -152,6 +152,7 @@ public class MainScreen : MonoBehaviour
             }
             //armorManager.ChangeArmor(data.activeArmor);
             armorManager.activeArmor = data.activeArmor;
+            armorManager.ActivateArmor(true);
             uiManager.ArmorEq();
             //Recupera Accesorios
             for (int i = 0; i < data.accesoriesInInventory.Count; i++)
@@ -160,6 +161,7 @@ public class MainScreen : MonoBehaviour
             }
             //accesoryManager.ChangeAccesory(data.activeAccesory);
             accesoryManager.activeAccesory = data.activeAccesory;
+            accesoryManager.ActivateAcc(true);
             uiManager.AccesoryEq();
 
             //Recupera quests terminadas
@@ -178,6 +180,7 @@ public class MainScreen : MonoBehaviour
             
             for (int i = 0; i < data.questItems.Count; i++)
             {
+                Debug.Log(data.questItems[i]);
                 itemsManager.AddQuestItemByName(data.questItems[i]);
             }
 
@@ -196,6 +199,10 @@ public class MainScreen : MonoBehaviour
 
             sceneTransition.Transition(data.sceneName);
             //SceneManager.LoadScene(data.sceneName)
+        }
+        else
+        {
+            SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
         }
 
     }

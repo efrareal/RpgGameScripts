@@ -103,17 +103,25 @@ public class WeaponManager : MonoBehaviour
 
     public void ResetAllWeapons()
     {
-            for (int i = 1; i < weapons.Count; i++)
+            for (int i = 0; i < weapons.Count; i++)
             {
                 weapons[i].SetActive(false);
                 weapons[i].GetComponent<WeaponDamage>().inInventory = false;
             }
+    }
+
+    public void ResetToInitialWeapon()
+    {
+        for (int i = 1; i < weapons.Count; i++)
+        {
+            weapons[i].SetActive(false);
+            weapons[i].GetComponent<WeaponDamage>().inInventory = false;
+        }
         weapons[0].SetActive(true);
         activeWeapon = 0;
         weapons[0].GetComponent<WeaponDamage>().inInventory = true;
     }
 
-    
     public List<string> GetAllWeaponsName()
     {
         List<string> weaponsName = new List<string>();

@@ -80,11 +80,20 @@ public class ArmorManager : MonoBehaviour
 
     public void ResetAllArmors()
     {
-            for (int i = 1; i < armors.Count; i++)
+            for (int i = 0; i < armors.Count; i++)
             {
                 armors[i].SetActive(false);
                 armors[i].GetComponent<Armor>().inInventory = false;
             }
+    }
+
+    public void ResetArmorsToInitial()
+    {
+        for (int i = 1; i < armors.Count; i++)
+        {
+            armors[i].SetActive(false);
+            armors[i].GetComponent<Armor>().inInventory = false;
+        }
         armors[0].SetActive(true);
         activeArmor = 0;
         armors[0].GetComponent<Armor>().inInventory = true;
@@ -113,6 +122,11 @@ public class ArmorManager : MonoBehaviour
             }
         }
         GetAllArmors();
+    }
+
+    public void ActivateArmor(bool condition)
+    {
+        armors[activeArmor].SetActive(condition);
     }
 
 }
