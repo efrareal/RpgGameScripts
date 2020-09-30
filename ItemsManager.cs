@@ -89,7 +89,7 @@ public class ItemsManager : MonoBehaviour
             return;
         }
         currentPhoenixDown--;
-        playerHealthManager.AddHealthPoints(50);
+        playerHealthManager.AddHealthPoints(75);
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.USE_ITEM);
         if (currentPhoenixDown < 0)
         {

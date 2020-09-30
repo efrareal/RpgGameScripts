@@ -217,6 +217,7 @@ public class MainScreen : MonoBehaviour
 
     void ResetPlayer()
     {
+        itemsManager.chestsDict.Clear();
         thePlayer.isDead = false;
         thePlayer.DeactivateDeadAnimation();
         thePlayer.isTalking = true;
