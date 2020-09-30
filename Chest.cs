@@ -67,8 +67,7 @@ public class Chest : MonoBehaviour
 
                 if(rewardType == "QuestItem")
                 {
-                    var clone = (GameObject)Instantiate(questItem, collision.transform.position, Quaternion.Euler(Vector3.zero));
-                    itemsManager.AddQuestItem(clone);
+                    itemsManager.AddQuestItem(questItem.GetComponent<QuestItem>().itemName);
                 }
 
                 if(rewardType == "Potion")

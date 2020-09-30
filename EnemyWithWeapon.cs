@@ -46,7 +46,6 @@ public class EnemyWithWeapon : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-
             if (Vector2.Distance(thePlayer.position, this.transform.position) <= attackRange)
             {
                 Debug.Log("Llego a la zona de ataque");
@@ -68,11 +67,8 @@ public class EnemyWithWeapon : MonoBehaviour
                 _animator.SetFloat("Horizontal", directionToMove.normalized.x);
                 _animator.SetFloat("Vertical", directionToMove.normalized.y);
             }
-
-
         }
     }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Player"))

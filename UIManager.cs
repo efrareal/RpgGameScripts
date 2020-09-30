@@ -100,7 +100,7 @@ public class UIManager : MonoBehaviour
         {
             return;
         }
-        //thePlayer.isTalking = !thePlayer.isTalking;
+        thePlayer.inInventory = !thePlayer.inInventory;
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
         ChangeDescriptionText();
         inventoryPanel.SetActive(!inventoryPanel.activeInHierarchy);
@@ -394,7 +394,8 @@ public class UIManager : MonoBehaviour
 
     public void NewStart()
     {
-        ResetPlayer();
+        //ResetPlayer();
+        thePlayer.nextUuid = "StartGame";
         SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_START_MENU_SELECT);
 
         FindObjectOfType<SceneTransition>().Transition("MainScreen");

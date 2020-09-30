@@ -7,7 +7,7 @@ public class ItemsManager : MonoBehaviour
     public int currentPotions;
     private HealthManager playerHealthManager;
     public int hpPointsValue= 5;
-    private int potionvalue = 100;
+    private int potionvalue = 150;
     public GameObject potionObject;
 
     public int currentEthers;
@@ -27,7 +27,7 @@ public class ItemsManager : MonoBehaviour
     }
 
 
-    private List<GameObject> questItems = new List<GameObject>();
+    public List<GameObject> questItems = new List<GameObject>();
     private List<GameObject> regularItems = new List<GameObject>();
 
     public void AddPotions(int potionCollected)
@@ -115,7 +115,15 @@ public class ItemsManager : MonoBehaviour
 
     public List<GameObject> GetQuestItems()
     {
-        return questItems;
+        List<GameObject> questItemInInventory = new List<GameObject>();
+        foreach(GameObject qitem in questItems)
+        {
+            if (qitem.GetComponent<QuestItem>().inInventory)
+            {
+                questItemInInventory.Add(qitem);
+            }
+        }
+        return questItemInInventory;
     }
 
     public List<string> GetQuestItemsByName()
@@ -123,7 +131,10 @@ public class ItemsManager : MonoBehaviour
         List<string> listQI = new List<string>();
         foreach(GameObject g in questItems)
         {
-            listQI.Add(g.GetComponent<QuestItem>().itemName);
+            if (g.GetComponent<QuestItem>().inInventory)
+            {
+                listQI.Add(g.GetComponent<QuestItem>().itemName);
+            }
         }
 
         return listQI;
@@ -138,7 +149,7 @@ public class ItemsManager : MonoBehaviour
     {
         foreach(GameObject qi in questItems)
         {
-            if(qi.GetComponent<QuestItem>().itemName == item.itemName)
+            if((qi.GetComponent<QuestItem>().itemName == item.itemName) && qi.GetComponent<QuestItem>().inInventory)
             {
                 return true;
             }
@@ -146,45 +157,34 @@ public class ItemsManager : MonoBehaviour
         return false;
     }
 
-    public void AddQuestItem(GameObject newItem)
+    public void AddQuestItem(string iname)
     {
-        questItems.Add(newItem);
-        newItem.transform.parent = this.transform;
-        newItem.SetActive(false);
+        foreach (GameObject qitem in questItems)
+        {
+            if (qitem.GetComponent<QuestItem>().itemName == iname)
+            {
+                qitem.GetComponent<QuestItem>().inInventory = true;
+            }
+        }
+
     }
 
     public void RemoveQuestItems()
     {
-        
-        foreach(Transform t in transform)
+        foreach (GameObject qitem in questItems)
         {
-            if(t.gameObject.GetComponent<QuestItem>() != null)
-            {
-                Destroy(t.gameObject);
-            }
-            
+             qitem.GetComponent<QuestItem>().inInventory = false;
+
         }
-
-        questItems.Clear();
-        /*GameObject go = gameObject.transform.Find("Special Material Variant").gameObject;
-        if(go != null)
-        {
-            Destroy(go);
-        }*/
-
     }
 
     public void AddQuestItemByName(string itemname)
     {
-        Object[] items = Resources.FindObjectsOfTypeAll<QuestItem>();
-        foreach (QuestItem item in items)
+        foreach (GameObject item in questItems)
         {
-            Debug.Log("Item guardado: " + itemname);
-            Debug.Log("Item En Resources: " + item.itemName);
-            if (item.itemName == itemname)
+            if (item.GetComponent<QuestItem>().itemName == itemname)
             {
-                Debug.Log("Item En resources: " + item.itemName + "es igual al item por parametro: " + itemname);
-                questItems.Add(item.gameObject);
+                item.GetComponent<QuestItem>().inInventory = true;
             }
         }
     }

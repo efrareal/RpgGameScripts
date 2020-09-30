@@ -30,6 +30,7 @@ public class SkillButton : MonoBehaviour
             case SkillType.FIRE:
                 if (mpManager.MagicPoints <= 0)
                 {
+                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
                     return;
                 }
                 if (!thePlayer.castSpell)
@@ -42,6 +43,7 @@ public class SkillButton : MonoBehaviour
             case SkillType.THUNDER:
                 if (mpManager.MagicPoints <= 0)
                 {
+                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
                     return;
                 }
                 if (!thePlayer.castSpell)
@@ -52,6 +54,7 @@ public class SkillButton : MonoBehaviour
             case SkillType.ICE:
                 if (mpManager.MagicPoints <= 0)
                 {
+                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
                     return;
                 }
                 if (!thePlayer.castSpell)
@@ -62,6 +65,7 @@ public class SkillButton : MonoBehaviour
             case SkillType.DASH:
                 if (mpManager.MagicPoints <= 0)
                 {
+                    SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
                     return;
                 }
                 if (!thePlayer.castSpell || !thePlayer.dashSkill)

@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     public bool canMove = false;
     public bool isTalking = true;
     public bool isDead;
+    public bool inInventory;
     
     public bool castSpell;
     public float spellTime;
@@ -77,6 +78,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (inInventory)
+        {
+            return;
+        }
         if (isDead)
         {
             _animator.SetBool(DEAD, true);

@@ -177,7 +177,8 @@ public class Quest : MonoBehaviour
 
     public void ResetNumberOfItems()
     {
-        for(int i = 0; i < itemsNeededConfigured.Count; i++)
+        itemsNeeded.Clear();
+        for (int i = 0; i < itemsNeededConfigured.Count; i++)
         {
             itemsNeeded.Add(itemsNeededConfigured[i]);
         }
@@ -188,14 +189,14 @@ public class Quest : MonoBehaviour
     {
         if(needsItem && (questManager.itemCollected != null))
         {
-            Debug.Log("needsItem");
+            //Debug.Log("needsItem");
             for (int i =0; i < itemsNeeded.Count; i++)
             {
                 if(itemsNeeded[i].itemName == questManager.itemCollected.itemName)
                 {
-                    Debug.Log("hizo match con el item recogido");
+                    //Debug.Log("hizo match con el item recogido");
                     itemsNeeded.RemoveAt(i);
-                    Debug.Log("removio el item de la lista");
+                    //Debug.Log("removio el item de la lista");
                     questManager.itemCollected = null;
                     break;
                 }
@@ -210,7 +211,7 @@ public class Quest : MonoBehaviour
 
         if(killsEnemy && questManager.enemyKilled != null)
         {
-            Debug.Log("Tenemos un enemigo recien matado");
+            //Debug.Log("Tenemos un enemigo recien matado");
             for(int i = 0; i < enemies.Count; i++)
             {
                 if(enemies[i].enemyName == questManager.enemyKilled.enemyName)

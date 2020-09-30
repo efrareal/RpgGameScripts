@@ -14,6 +14,7 @@ public class MainScreen : MonoBehaviour
     private PlayerController thePlayer;
 
     private UIManager uiManager;
+    private bool alreadyLoading;
 
 
     private HealthManager healthManager;
@@ -47,10 +48,13 @@ public class MainScreen : MonoBehaviour
         uiManager = FindObjectOfType<UIManager>();
         moneyManager = FindObjectOfType<MoneyManager>();
 
+        alreadyLoading = false;
+
     }
 
     public void StartGame()
     {
+        ResetPlayer();
         PlayerPrefs.DeleteAll();
         if (File.Exists(Application.persistentDataPath + "/slot1.dat"))
         {
@@ -82,7 +86,13 @@ public class MainScreen : MonoBehaviour
 
     public void LoadGame()
     {
-        Load();
+        if (!alreadyLoading)
+        {
+            ResetPlayer();
+            Load();
+            alreadyLoading = true;
+        }
+        
     }
 
     public void ExitGame()
@@ -178,7 +188,7 @@ public class MainScreen : MonoBehaviour
             
             for (int i = 0; i < data.questItems.Count; i++)
             {
-                Debug.Log(data.questItems[i]);
+                //Debug.Log(data.questItems[i]);
                 itemsManager.AddQuestItemByName(data.questItems[i]);
             }
 
@@ -203,5 +213,40 @@ public class MainScreen : MonoBehaviour
             SFXManager.SharedInstance.PlaySFX(SFXType.SoundType.UI_MENU_ERROR);
         }
 
+    }
+
+    void ResetPlayer()
+    {
+        thePlayer.isDead = false;
+        thePlayer.DeactivateDeadAnimation();
+        thePlayer.isTalking = true;
+        thePlayer.canMove = false;
+        weaponManager.DeactivateWeapon(false);
+        //thePlayer.nextUuid = "StartGame";
+        CharacterStats thePlayerStats = thePlayer.GetComponent<CharacterStats>();
+        thePlayerStats.level = 1;
+        thePlayerStats.exp = 0;
+        uiManager.ExpChanged(thePlayerStats.exp);
+        thePlayerStats.InitialStats();
+        thePlayer.GetComponent<HealthManager>().UpdateMaxHealth(thePlayerStats.hpLevels[thePlayerStats.level]);
+        thePlayer.GetComponent<MPManager>().UpdateMaxMP(thePlayerStats.mpLevels[thePlayerStats.level]);
+        uiManager.LevelChanged(thePlayerStats.level, thePlayerStats.expToLevelUp.Length,
+                                   thePlayerStats.expToLevelUp[thePlayerStats.level],
+                                   thePlayerStats.expToLevelUp[thePlayerStats.level - 1]);
+
+
+
+        moneyManager.ResetMoney();
+        itemsManager.currentEthers = 0;
+        itemsManager.currentPotions = 0;
+        itemsManager.currentPhoenixDown = 0;
+        itemsManager.RemoveQuestItems();
+
+        FindObjectOfType<QuestManager>().ResetAllQuests();
+        uiManager.ResetAllSkills();
+
+        weaponManager.ResetAllWeapons();
+        armorManager.ResetAllArmors();
+        accesoryManager.ResetAllAccesories();
     }
 }

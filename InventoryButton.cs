@@ -54,7 +54,7 @@ public class InventoryButton : MonoBehaviour
                 FindObjectOfType<UIManager>().AccesoryEq();
                 break;
             case ItemType.SPECIAL_ITEMS:
-                Debug.Log("Equipar anillo, pendiente");
+                //Debug.Log("Equipar anillo, pendiente");
                 break;
 
         }
@@ -90,7 +90,7 @@ public class InventoryButton : MonoBehaviour
                 FindObjectOfType<UIManager>().ChangeDescriptionText();
                 if (itemIdx == 0)
                 {
-                    FindObjectOfType<UIManager>().ChangeDescriptionText("Potion, recovers 100 health points");
+                    FindObjectOfType<UIManager>().ChangeDescriptionText("Potion, recovers 150 health points");
                 }
                 if (itemIdx == 1)
                 {

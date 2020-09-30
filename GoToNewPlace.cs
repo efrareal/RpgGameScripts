@@ -29,19 +29,19 @@ public class GoToNewPlace : MonoBehaviour
         
         if (needsQuestStarted)
         {
-            Debug.Log("NeedsQuestStarted");
+
             Quest quest = questManager.QuestWithID(questID);
             Debug.Log(quest);
             if (quest.questStarted)
             {
-                Debug.Log("NeedsQuestStarted2");
+
                 needsNothing = true;
                 needsQuestStarted = false;
                 Teleport(collision.gameObject.name);
             }
             if (quest.questCompleted)
             {
-                Debug.Log("NeedsQuestStarted3");
+
                 needsNothing = true;
                 needsQuestStarted = false;
                 Teleport(collision.gameObject.name);
@@ -55,13 +55,11 @@ public class GoToNewPlace : MonoBehaviour
             {
                 needsNothing = true;
                 needsQuestCompleted = false;
-                Debug.Log("NeedsQuestCompleted");
                 Teleport(collision.gameObject.name);
             }
 
         }
         if(needsNothing) {
-            Debug.Log("NeedsNothing");
             Teleport(collision.gameObject.name);
         }
         /*

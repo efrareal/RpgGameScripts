@@ -9,13 +9,14 @@ public class QuestItem : MonoBehaviour
     private QuestManager questManager;
     public string itemName;
     private ItemsManager itemsManager;
+    public bool inInventory;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals("Player"))
         {
-            Debug.Log("Colisione con el QuestItem");
+            //Debug.Log("Colisione con el QuestItem");
             questManager = FindObjectOfType<QuestManager>();
             itemsManager = FindObjectOfType<ItemsManager>();
             Quest q = questManager.QuestWithID(questID);
@@ -28,8 +29,8 @@ public class QuestItem : MonoBehaviour
             {
                 questManager.itemCollected = this;
                 gameObject.SetActive(false);
-                Debug.Log("recoge el item");
-                itemsManager.AddQuestItem(this.gameObject);
+                //Debug.Log("recoge el item");
+                itemsManager.AddQuestItem(this.itemName);
             }
         }
     }

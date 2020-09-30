@@ -19,14 +19,14 @@ public class MoveObjectIf : MonoBehaviour
         
         if (collision.gameObject.tag.Equals("Player"))
         {
-            Debug.Log("Colisiono con el Player");
+
             if (questManager.quests[7].questCompleted &&
                questManager.quests[8].questCompleted &&
                questManager.quests[9].questCompleted &&
                questManager.quests[10].questCompleted &&
                questManager.quests[11].questCompleted)
             {
-                Debug.Log("Ejecuta MoveObject");
+
                 MoveObjectTo();
             }
         }

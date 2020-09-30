@@ -91,11 +91,11 @@ public class SavePoint : MonoBehaviour
 
         List<string> qItems = itemsManager.GetQuestItemsByName();
         data.questItems = qItems;
-
+        /*
         for (int i = 0; i < qItems.Count; i++)
         {
             Debug.Log(qItems[i]);
-        }
+        }*/
 
 
         data.str = stats.newstrengthLevels;
